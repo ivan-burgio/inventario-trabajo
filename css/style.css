@@ -1,0 +1,59 @@
+* {
+    margin: 0 auto;
+    padding: 0 auto;
+}
+
+.header {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border: 2px solid black;
+};
+
+
+a img {
+
+    width: 100px;
+}
+
+.container {
+
+    display: flex;
+    align-items: center;
+    margin-top: 5%;
+    width: 90%;
+    min-height: 500px;
+    height: auto;
+    border: 1px solid black;
+}
+
+#form {
+
+    display: grid;
+    gap: 10px;
+    grid-template-rows: 1fr;
+}
+
+label,
+input {
+
+    width: 60%;
+}
+
+/* spacing */
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid red;
+}
+   
+th,
+td {
+    padding: 20px;
+    text-align: center;
+}
+  
