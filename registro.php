@@ -13,6 +13,8 @@
 
     <div class="container">
 
+        <a href="index.php">Volver</a>
+        
         <form id="form" action="includes/consultas_sql.php" method="POST">
 
             <h2>Alta de productos</h2>
@@ -47,7 +49,7 @@
             <label for="description">Descripcion</label>
             <textarea name="description"></textarea>
 
-            <input id="submit" type="submit" value="Registrar producto" />
+            <input id="submit" type="submit" value="Registrar" />
         </form>
     </div>
     <script src="js/main.js"></script>
