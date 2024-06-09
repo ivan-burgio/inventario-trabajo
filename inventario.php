@@ -13,6 +13,8 @@
 
     <div class="container">
 
+        <a href="index.php">Volver</a>
+
         <?php if(mysqli_num_rows($select) == 0) : ?>
 
             <h2> No hay productos guardados en la base de datos</h2>
@@ -48,7 +50,7 @@
                                 <td><?=$producto['modelo']?></td>
                                 <td><?=$producto['stock']?></td>
                                 <td>
-                                    <a href="producto.php">X</a> 
+                                    <a href="producto.php?modelo=<?=$producto['modelo']?>">X</a> 
                                     <a href="#">V</a> 
                                     <a href="#">O</a>
                                 </td>
