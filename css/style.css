@@ -1,0 +1,67 @@
+* {
+    margin: 0 auto;
+    padding: 0 auto;
+}
+
+.header {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border: 2px solid black;
+};
+
+img {
+
+    width: 50px;
+}
+
+.container {
+
+    margin-top: 5%;
+    width: 90%;
+    min-height: 500px;
+    height: auto;
+    border: 1px solid black;
+}
+
+#form {
+
+    display: grid;
+    width: 80%;
+    grid-template-rows: 1fr;
+    justify-items: center;
+}
+
+label,
+input,
+select,
+textarea {
+
+    width: 80%;
+    margin: 0px;
+    padding: 0px;
+    height: 30px;
+}
+
+label {
+    
+    margin-top: 10px;
+}
+
+/* spacing */
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid red;
+}
+   
+th,
+td {
+    padding: 20px;
+    text-align: center;
+}
+  
