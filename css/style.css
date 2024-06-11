@@ -12,7 +12,10 @@
     border: 2px solid black;
 };
 
-img {
+
+
+a img {
+
 
     width: 50px;
 }
@@ -49,6 +52,7 @@ label {
     
     margin-top: 10px;
 }
+
 
 input[type="submit"] {
 

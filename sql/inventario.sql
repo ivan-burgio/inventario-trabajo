@@ -1,3 +1,4 @@
+
 CREATE TABLE sectores (
 
 id_sector       INT PRIMARY KEY,
