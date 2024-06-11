@@ -116,7 +116,7 @@ require_once '../lib/producto_sql.php';
                                 <td><?=$torre['alta']?></td>
                                 <td><?=$torre['descripcion']?></td>
                                 <td>
-                                    <a href="producto.php?id=<?=$torre['id'];?>">Eliminar</a>
+                                    <a href="../lib/eliminar_sql.php?id=<?=$torre['id'];?>">Eliminar</a>
                                     <a href="modificar.php?id=<?=$torre['id'];?>">Modificar</a>
                                     <a href="producto.php?id=<?=$torre['id'];?>">Comentarios</a>
                                 </td>
