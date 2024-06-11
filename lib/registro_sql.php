@@ -1,6 +1,5 @@
 <?php
-
-require_once 'conexion.php';
+require_once '../includes/conexion.php';
 
 //Validar e ingresar los datos de los productos que se ingresan a la tabla productos.
 
@@ -14,7 +13,6 @@ if($_POST) {
     $procesador = isset($_POST['proce']) ? $_POST['proce'] : false;
     $ram = isset($_POST['ram']) ? $_POST['ram'] : false;
     $almacenamiento = isset($_POST['almace']) ? $_POST['almace'] : false;
-    $fecha = isset($_POST['fecha']) ? $_POST['fecha'] : false;
     $descripcion = isset($_POST['description']) ? $_POST['description'] : false;
 
     $errores = array();
@@ -32,11 +30,6 @@ if($_POST) {
     if(empty($modelo)) {
 
         $errores['modelo'] = "Ingrese un modelo";
-    };
-
-    if(empty($fecha)) {
-
-        $errores['fecha'] = "Ingrese la fecha de alta del equipo";
     };
 
     if(empty($descripcion) || strlen($descripcion) < 20) {
@@ -71,7 +64,7 @@ if($_POST) {
             $almace_verify = mysqli_real_escape_string($conexion, $almacenamiento);
             $descripcion_verify = mysqli_real_escape_string($conexion, $descripcion);
         
-            $sql2 = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify', '$proce_verify', '$ram_verify', '$almace_verify', '$fecha', '$descripcion_verify');";
+            $sql2 = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify', '$proce_verify', '$ram_verify', '$almace_verify', CURDATE(), '$descripcion_verify');";
         
             $insert = mysqli_query($conexion, $sql2);
     
@@ -89,7 +82,7 @@ if($_POST) {
             $modelo_verify = mysqli_real_escape_string($conexion, $modelo);
             $descripcion_verify = mysqli_real_escape_string($conexion, $descripcion);
         
-            $sql3 = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify',NULL, NULL, NULL, '$fecha', '$descripcion_verify');";
+            $sql3 = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify',NULL, NULL, NULL, CURDATE(), '$descripcion_verify');";
         
             $insert = mysqli_query($conexion, $sql3);
     
@@ -106,38 +99,6 @@ if($_POST) {
 
 
 
-    header('Location: ../registro.php');
+    header('Location: ../pages/registro.php');
     
 };
-
-//Seleccionar los datos de la tabla productos
-
-if(!isset($_SESSION)) {
-    
-    session_start();
-};
-
-$sql = "SELECT id, marca, modelo, COUNT(modelo) AS stock FROM productos GROUP BY modelo;";
-
-$select = mysqli_query($conexion, $sql);
-
-
-//Traer una lista de los elementos que se llamen al momento de seleccionar un elemento de una tabla
-
-if(isset($_GET)) {
-
-    $modelo_get = isset($_GET['modelo']) ? $_GET['modelo'] : false;
-
-    $select_pro = "SELECT * FROM productos WHERE modelo = '$modelo_get';";
-    $select_query = mysqli_query($conexion, $select_pro);
-
-
-    //Eliminar un elemento de la lista a través de su ID
-
-    $id_get = isset($_GET['id']) ? $_GET['id'] : false;
-
-    $delete_pro = "DELETE FROM productos WHERE id = '$id_get';";
-    $delete_query = mysqli_query($conexion, $delete_pro);
-};
-
-

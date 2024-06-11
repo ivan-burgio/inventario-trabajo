@@ -1,21 +1,38 @@
-<?php require_once 'includes/lib.php'; ?>
+<?php require_once '../includes/helpers.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
     <title>Registro</title>
 </head>
 <body>
-    <?php require_once 'includes/header.php';?>
+
+    <header class="header">
+        <ul class="list">
+            <a href="inventario.php">
+                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
+            </a>
+            <a href="registro.php">
+                <img src="../assets/img-registro.png" alt="imagen de registro" />
+            </a>
+            <a href="#">
+                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
+            </a>
+            <a href="#">
+                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
+            </a>
+        </ul>
+    </header>
+
 
     <div class="container">
 
-        <a href="index.php">Volver</a>
+        <a href="../index.php">Volver</a>
         
-        <form id="form" action="includes/consultas_sql.php" method="POST">
+        <form id="form" action="../lib/registro_sql.php" method="POST">
 
             <h2>Alta de productos</h2>
 
@@ -41,10 +58,6 @@
 
             </select>
 
-            <?=mostrarErrores('errores', 'fecha'); ?>
-            <label for="fecha">Fecha de alta</label>
-            <input type="date" id="fecha" name="fecha"/>
-
             <?=mostrarErrores('errores', 'descripcion'); ?>
             <label for="description">Descripcion</label>
             <textarea name="description"></textarea>
@@ -52,6 +65,6 @@
             <input id="submit" type="submit" value="Registrar" />
         </form>
     </div>
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>

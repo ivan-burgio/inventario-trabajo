@@ -1,23 +1,39 @@
-<?php require_once 'includes/consultas_sql.php'; ?>
+<?php require_once '../lib/inventario_sql.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
     <title>Inventario</title>
 </head>
 <body>
-    <?php require_once 'includes/header.php'?>
+
+    <header class="header">
+        <ul class="list">
+            <a href="inventario.php">
+                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
+            </a>
+            <a href="registro.php">
+                <img src="../assets/img-registro.png" alt="imagen de registro" />
+            </a>
+            <a href="#">
+                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
+            </a>
+            <a href="#">
+                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
+            </a>
+        </ul>
+    </header>
 
     <div class="container">
 
-        <a href="index.php">Volver</a>
+        <a href="../index.php">Volver</a>
 
         <?php if(mysqli_num_rows($select) == 0) : ?>
 
-            <h2> No hay productos guardados en la base de datos</h2>
+            <h2> No hay productos guardados en el inventario</h2>
             
         <?php else : ?>
 

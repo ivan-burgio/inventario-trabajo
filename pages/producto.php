@@ -1,5 +1,5 @@
 <?php
-require_once 'includes/consultas_sql.php';
+require_once '../lib/producto_sql.php';
 ?>
 
 <!DOCTYPE html>
@@ -7,11 +7,28 @@ require_once 'includes/consultas_sql.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
     <title>Producto</title>
 </head>
 <body>
-    <?=require_once 'includes/header.php';?>
+
+    <header class="header">
+        <ul class="list">
+            <a href="inventario.php">
+                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
+            </a>
+            <a href="registro.php">
+                <img src="../assets/img-registro.png" alt="imagen de registro" />
+            </a>
+            <a href="#">
+                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
+            </a>
+            <a href="#">
+                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
+            </a>
+        </ul>
+    </header>
+
 
     <div class="container">
 
@@ -52,7 +69,6 @@ require_once 'includes/consultas_sql.php';
                                 <td><?=$torre['descripcion']?></td>
                                 <td>
                                     <a href="producto.php?id=<?=$torre['id'];?>">Eliminar</a>
-                                    <a href="includes/modificar.php?id=<?$torre['id'];?>">Modificar</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -79,7 +95,7 @@ require_once 'includes/consultas_sql.php';
                                     RAM
                                 </th>
                                 <th>
-                                    ALMACENAMIENTO
+                                    MEMORIA
                                 </th>
                                 <th>
                                     ALTA
@@ -101,8 +117,8 @@ require_once 'includes/consultas_sql.php';
                                 <td><?=$torre['descripcion']?></td>
                                 <td>
                                     <a href="producto.php?id=<?=$torre['id'];?>">Eliminar</a>
-                                    <a href="#">Modificar</a>
-                                    <a href="#">Comentarios</a>
+                                    <a href="modificar.php?id=<?=$torre['id'];?>">Modificar</a>
+                                    <a href="producto.php?id=<?=$torre['id'];?>">Comentarios</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -114,7 +130,7 @@ require_once 'includes/consultas_sql.php';
 
         <?php else :?>
 
-            <?php echo "<h1>No hay torres para mostrar</h1>"; ?>
+            <?php echo "<h1>No hay productos para mostrar</h1>"; ?>
 
         <?php endif; ?>
         

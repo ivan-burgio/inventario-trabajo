@@ -50,6 +50,12 @@ label {
     margin-top: 10px;
 }
 
+input[type="submit"] {
+
+    margin: 20px;
+
+}
+
 /* spacing */
 
 table {
