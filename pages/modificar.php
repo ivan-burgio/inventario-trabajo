@@ -48,7 +48,7 @@ if($_GET) {
 
         <?php while($product = mysqli_fetch_assoc($modificar_query)): ?>
             
-            <form id="form" action="../includes/modificar_sql.php" method="POST">
+            <form id="form" action="../lib/modificar_sql.php" method="POST">
 
                 <h2>Modificar productos</h2>
 
