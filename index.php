@@ -13,6 +13,26 @@ require_once 'includes/conexion.php';
 </head>
 <body>
 
-    <?php require_once 'includes/header.php' ?>
+    <header class="header">
+            <ul class="list">
+                <a href="pages/inventario.php">
+                    <img src="assets/img-inventario.png" alt="imagen de inventario" />
+                </a>
+                <a href="pages/registro.php">
+                    <img src="assets/img-registro.png" alt="imagen de registro" />
+                </a>
+                <a href="#">
+                    <img src="assets/img-inventario.png" alt="imagen de inventario" />
+                </a>
+                <a href="#">
+                    <img src="assets/img-inventario.png" alt="imagen de inventario" />
+                </a>
+            </ul>
+    </header>
+
+    <div class="container">
+        <h1>Bienvenido al inventario - Skytel Avanza</h1>
+    </div>
+
 </body>
 </html>

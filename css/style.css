@@ -13,7 +13,9 @@
 };
 
 
+
 a img {
+
 
     width: 50px;
 }
@@ -33,7 +35,7 @@ a img {
     justify-content: center;
     width: 80%;
     grid-template-rows: 1fr;
-    justify-items: start;
+    justify-items: center;
 }
 
 h2 {
@@ -56,6 +58,13 @@ textarea {
 label {
     
     margin-top: 10px;
+}
+
+
+input[type="submit"] {
+
+    margin: 20px;
+
 }
 
 /* spacing */
