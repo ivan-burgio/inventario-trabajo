@@ -1,6 +1,6 @@
 <?php
 
-require_once '../lib/conexion.php';
+require_once '../includes/conexion.php';
 
 if($_POST) {
 
@@ -17,5 +17,6 @@ if($_POST) {
 
     $update_query = mysqli_query($conexion, $update);
 
-    header('Location: ../pages/inventario.php');
-}
+};
+
+header('Location: ../pages/inventario.php');
