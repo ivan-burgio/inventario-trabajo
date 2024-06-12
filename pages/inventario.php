@@ -37,39 +37,31 @@
             
         <?php else : ?>
 
-                <?php while($producto = mysqli_fetch_assoc($select)) : ?>
+            <?php while($producto = mysqli_fetch_assoc($select)) : ?>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>
-                                    ID
-                                </th>
-                                <th>
-                                    MARCA
-                                </th>
-                                <th>
-                                    MODELO
-                                </th>
-                                <th>
-                                    STOCK
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><?=$producto['id']?></td>
-                                <td><?=$producto['marca']?></td>
-                                <td><?=$producto['modelo']?></td>
-                                <td><?=$producto['stock']?></td>
-                                <td>
-                                    <a href="producto.php?modelo=<?=$producto['modelo']?>">Ver</a> 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><?=$producto['id']?></td>
+                            <td><?=$producto['marca']?></td>
+                            <td><?=$producto['modelo']?></td>
+                            <td><?=$producto['stock']?></td>
+                            <td>
+                                <a href="producto.php?modelo=<?=$producto['modelo']?>">Ver</a> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                <?php endwhile;?>
+            <?php endwhile;?>
             
         <?php endif; ?>
 

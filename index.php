@@ -1,5 +1,6 @@
 <?php
 require_once 'includes/conexion.php';
+require_once 'lib/login_sql.php';
 ?>
 
 
@@ -31,7 +32,31 @@ require_once 'includes/conexion.php';
     </header>
 
     <div class="container">
-        <h1>Bienvenido al inventario - Skytel Avanza</h1>
+
+        <?php if($_SESSION['login'] == true) : ?>
+
+            <?php while($user = mysqli_fetch_assoc($select_query)): ?>
+
+                <h1>Bienvenido al inventario <?=$user['nombre']?> <?=$user['apellido']?></h1>
+
+            <?php endwhile; ?>
+        
+        <?php else : ?>
+
+            <form action="lib/login_sql.php" method="POST">
+            
+                <label for="user">Usuario</label>
+                <input type="text" id="user" name="user" />
+
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" />
+
+                <input type="submit" value="Ingresar" />
+
+            </form>
+
+        <?php endif; ?>
+
     </div>
 
 </body>

@@ -4,7 +4,7 @@ require_once '../includes/conexion.php';
 
 if($_POST) {
 
-    $coment = isset($_POST['coment']) ? $_POST['coment'] : false;
+    $coment = isset($_POST['coment']) ? $_POST['coment'] : false; 
 }
 
 if(isset($_GET)) {

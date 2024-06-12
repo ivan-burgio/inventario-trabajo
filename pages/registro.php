@@ -1,4 +1,9 @@
-<?php require_once '../includes/helpers.php'; ?>
+<?php 
+
+require_once '../includes/helpers.php'; 
+require_once '../includes/conexion.php';
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +40,7 @@
         <form id="form" action="../lib/registro_sql.php" method="POST">
 
             <h2>Alta de productos</h2>
-
+            
             <?=mostrarErrores('errores', 'id'); ?>
             <label for="id">ID</label>
             <input type="text" id="id" name="id" />

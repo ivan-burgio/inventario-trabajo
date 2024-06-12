@@ -43,21 +43,11 @@ require_once '../lib/producto_sql.php';
                     <table>
                         <thead>
                             <tr>
-                                <th>
-                                    ID
-                                </th>
-                                <th>
-                                    MARCA
-                                </th>
-                                <th>
-                                    MODELO
-                                </th>
-                                <th>
-                                    ALTA
-                                </th>
-                                <th>
-                                    DESCRIPCION
-                                </th>
+                                <th>Id</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Alta</th>
+                                <th>Descripcion</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,17 +90,16 @@ require_once '../lib/producto_sql.php';
                                 <td><?=$torre['almacenamiento']?></td>
                                 <td><?=$torre['alta']?></td>
                                 <td><?=$torre['descripcion']?></td>
-                                <td><?=$torre['comentarios']?>...<a href="comentarios.php?<?=$torre['id']?>">Ver todos</a></td>
                                 <td>
-                                    <a href="../lib/eliminar_sql.php?id=<?=$torre['id'];?>">Eliminar</a>
-                                    <a href="modificar.php?id=<?=$torre['id'];?>">Modificar</a>
-                                    <a href="producto.php?id=<?=$torre['id'];?>">Comentarios</a>
+                                    <a href="../lib/eliminar_sql.php?id=<?=$torre['id']?>">Eliminar</a>
+                                    <a href="modificar.php?id=<?=$torre['id']?>">Modificar</a>
+                                    <a href="producto.php?id=<?=$torre['id']?>">Comentarios</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
 
-                <?php endif; ?>
+                <?php endif;?>
 
             <?php endwhile;?>
 
@@ -120,7 +109,6 @@ require_once '../lib/producto_sql.php';
 
         <?php endif; ?>
         
-
     </div>
 </body>
 </html>
