@@ -79,30 +79,15 @@ require_once '../lib/producto_sql.php';
                     <table>
                         <thead>
                             <tr>
-                                <th>
-                                    ID
-                                </th>
-                                <th>
-                                    MARCA
-                                </th>
-                                <th>
-                                    MODELO
-                                </th>
-                                <th>
-                                    PROCESADOR
-                                </th>
-                                <th>
-                                    RAM
-                                </th>
-                                <th>
-                                    MEMORIA
-                                </th>
-                                <th>
-                                    ALTA
-                                </th>
-                                <th>
-                                    DESCRIPCION
-                                </th>
+                                <th>Id</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Procesador</th>
+                                <th>Ram</th>
+                                <th>Memoria</th>
+                                <th>Alta</th>
+                                <th>Descripcion</th>
+                                <th>Comentarios</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -115,6 +100,7 @@ require_once '../lib/producto_sql.php';
                                 <td><?=$torre['almacenamiento']?></td>
                                 <td><?=$torre['alta']?></td>
                                 <td><?=$torre['descripcion']?></td>
+                                <td><?=$torre['comentarios']?>...<a href="comentarios.php?<?=$torre['id']?>">Ver todos</a></td>
                                 <td>
                                     <a href="../lib/eliminar_sql.php?id=<?=$torre['id'];?>">Eliminar</a>
                                     <a href="modificar.php?id=<?=$torre['id'];?>">Modificar</a>
