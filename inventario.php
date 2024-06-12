@@ -38,9 +38,6 @@
                                 <th>
                                     STOCK
                                 </th>
-                                <th>
-                                    ESTADO
-                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,9 +47,7 @@
                                 <td><?=$producto['modelo']?></td>
                                 <td><?=$producto['stock']?></td>
                                 <td>
-                                    <a href="producto.php?modelo=<?=$producto['modelo']?>">X</a> 
-                                    <a href="#">V</a> 
-                                    <a href="#">O</a>
+                                    <a href="producto.php?modelo=<?=$producto['modelo']?>">Ver</a> 
                                 </td>
                             </tr>
                         </tbody>

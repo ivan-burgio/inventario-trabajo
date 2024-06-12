@@ -32,9 +32,16 @@ a img {
 #form {
 
     display: grid;
+    justify-content: center;
     width: 80%;
     grid-template-rows: 1fr;
     justify-items: center;
+}
+
+h2 {
+
+    text-transform: uppercases;
+    font: bold;
 }
 
 label,
@@ -42,7 +49,7 @@ input,
 select,
 textarea {
 
-    width: 80%;
+    width: 100%;
     margin: 0px;
     padding: 0px;
     height: 30px;
@@ -71,7 +78,11 @@ table {
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
-    border: 3px solid red;
+    border: 0px 3px 3px 3px solid red;
+}
+
+table :first-child {
+    border: 3px 3px 0px 3px solid red;
 }
    
 th,

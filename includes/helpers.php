@@ -9,4 +9,6 @@ function mostrarErrores($errores, $campo) {
 
         echo '';
     }
+
 };
+

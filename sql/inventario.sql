@@ -31,3 +31,25 @@ alta            DATE,
 descripcion     TEXT
 
 )ENGINE=InnoDB;
+
+CREATE TABLE admin (
+
+id_admin            INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nombre              CHAR(30),
+apellido            CHAR(30),
+email               CHAR(50),
+contraseña          VARCHAR(255)
+
+)ENGINE=InnoDB;
+
+CREATE TABLE comentarios(
+
+id_comentario       INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id_admin            INT NOT NULL,
+id_producto         VARCHAR(50) NOT NULL,
+comentarios         TEXT,
+
+FOREIGN KEY (id_admin) REFERENCES admin (id_admin),
+FOREIGN KEY (id_producto) REFERENCES productos (id)
+
+)ENGINE=InnoDB;

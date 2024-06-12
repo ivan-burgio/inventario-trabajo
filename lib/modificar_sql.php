@@ -2,6 +2,7 @@
 
 require_once '../includes/conexion.php';
 
+
 if($_GET) {
 
     $id_producto = isset($_GET['id']) ? $_GET['id'] : false;
@@ -25,7 +26,6 @@ if($_POST) {
                 SET marca = '$marca', modelo = '$modelo', procesador = '$procesador', ram = '$ram', almacenamiento = '$almacenamiento', descripcion = '$descripcion' WHERE id = '$id';";
 
     $update_query = mysqli_query($conexion, $update);
-
 
 };
 

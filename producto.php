@@ -50,6 +50,10 @@ require_once 'includes/consultas_sql.php';
                                 <td><?=$torre['modelo']?></td>
                                 <td><?=$torre['alta']?></td>
                                 <td><?=$torre['descripcion']?></td>
+                                <td>
+                                    <a href="#">Borrar</a>
+                                    <a href="#">Modificar</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -95,6 +99,10 @@ require_once 'includes/consultas_sql.php';
                                 <td><?=$torre['almacenamiento']?></td>
                                 <td><?=$torre['alta']?></td>
                                 <td><?=$torre['descripcion']?></td>
+                                <td>
+                                    <a href="#">Borrar</a>
+                                    <a href="#">Modificar</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
