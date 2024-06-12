@@ -1,5 +1,6 @@
 <?php
 
+require_once '../includes/conexion.php';
 
 if(isset($_GET)) {
 
@@ -9,4 +10,6 @@ if(isset($_GET)) {
 
     $delete_pro = "DELETE FROM productos WHERE id = '$id_get';";
     $delete_query = mysqli_query($conexion, $delete_pro);
-}
+};
+
+header('Location: ../pages/inventario.php');

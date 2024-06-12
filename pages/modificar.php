@@ -1,16 +1,7 @@
 <?php
 
 require_once '../includes/conexion.php';
-
-if($_GET) {
-
-    $id_producto = isset($_GET['id']) ? $_GET['id'] : false;
-
-    $modificar_pro = "SELECT * FROM productos WHERE id = '$id_producto';";
-    $modificar_query = mysqli_query($conexion, $modificar_pro);
-};
-
-
+require_once '../lib/modificar_sql.php';
 
 ?>
 
@@ -48,7 +39,7 @@ if($_GET) {
 
         <?php while($product = mysqli_fetch_assoc($modificar_query)): ?>
             
-            <form id="form" action="../includes/modificar_sql.php" method="POST">
+            <form id="form" action="../lib/modificar_sql.php" method="POST">
 
                 <h2>Modificar productos</h2>
 

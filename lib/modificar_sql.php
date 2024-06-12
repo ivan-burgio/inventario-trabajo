@@ -1,6 +1,15 @@
 <?php
 
-require_once '../lib/conexion.php';
+require_once '../includes/conexion.php';
+
+if($_GET) {
+
+    $id_producto = isset($_GET['id']) ? $_GET['id'] : false;
+
+    $modificar_pro = "SELECT * FROM productos WHERE id = '$id_producto';";
+    $modificar_query = mysqli_query($conexion, $modificar_pro);
+};
+
 
 if($_POST) {
 
@@ -17,5 +26,7 @@ if($_POST) {
 
     $update_query = mysqli_query($conexion, $update);
 
-    header('Location: ../pages/inventario.php');
-}
+
+};
+
+header('Location: ../pages/inventario.php');
