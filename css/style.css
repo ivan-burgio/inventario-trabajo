@@ -67,24 +67,21 @@ input {
 input[type="submit"] {
 
     margin: 20px;
-
 }
 
 /* spacing */
 
-table :first-child {
-    border: 3px 3px 0px 3px solid red;
-}
-
 table {
+
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
-    border: 0px 3px 3px 3px solid red;
+    border: 3px solid red;
 }
    
 th,
 td {
+
     padding: 20px;
     text-align: center;
 }
