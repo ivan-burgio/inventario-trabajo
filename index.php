@@ -1,11 +1,7 @@
-<?php
-require_once 'includes/conexion.php';
-require_once 'lib/login_sql.php';
-?>
-
+<?php require_once 'lib/login_sql.php'; ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +29,7 @@ require_once 'lib/login_sql.php';
 
     <div class="container">
 
-        <?php if($_SESSION['login'] == true) : ?>
+        <?php if(isset($_SESSION['login']) && $_SESSION['login'] == true) : ?>
 
             <?php while($user = mysqli_fetch_assoc($select_query)): ?>
 

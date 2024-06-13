@@ -31,7 +31,7 @@ a img {
 
     display: grid;
     justify-content: center;
-    width: 80%;
+    width: 100%;
     grid-template-rows: 1fr;
     justify-items: center;
 }
@@ -67,6 +67,11 @@ input {
 input[type="submit"] {
 
     margin: 20px;
+}
+
+textarea {
+
+    height: 100px;
 }
 
 /* spacing */
