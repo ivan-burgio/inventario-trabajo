@@ -27,6 +27,24 @@ a img {
     border: 1px solid black;
 }
 
+.container-login {
+    
+    width: 100%;
+    height: auto;
+    min-height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #313638;
+}
+
+#form-login {
+
+    width: 30%;
+    height: 400px;
+    background-color: rgb(232, 233, 235, 0.5);
+}
+
 #form {
 
     display: grid;

@@ -109,5 +109,7 @@ if($_POST) {
 
     //Redirigue la ubicación de la página hacia el registro
     header('Location: ../pages/registro.php');
-    
+    exit();
 };
+
+?>

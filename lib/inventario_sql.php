@@ -8,3 +8,5 @@ $sql = "SELECT id, marca, modelo, COUNT(modelo) AS stock FROM productos GROUP BY
 
 //Se inserta la consulta en la BD
 $select = mysqli_query($conexion, $sql);
+
+?>

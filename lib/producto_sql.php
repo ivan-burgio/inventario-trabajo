@@ -12,6 +12,7 @@ if(isset($_GET)) {
 
     //Se inserta la consulta en la BD
     $select_query = mysqli_query($conexion, $select_pro);
-
+    exit();
 };
 
+?>

@@ -34,5 +34,7 @@ if($_POST) {
 
     //Se redirecciona a la página del inventario
     header('Location: ../pages/inventario.php');
-
+    exit();
 };
+
+?>

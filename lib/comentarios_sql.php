@@ -16,6 +16,8 @@ if(isset($_GET)) {
                     WHERE c.id_producto = '$id';";
 
     $comentarios_query = mysqli_query($conexion, $comentarios);
+    exit();
 
 };
 
+?>

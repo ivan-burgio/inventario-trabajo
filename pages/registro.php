@@ -35,7 +35,7 @@ require_once '../includes/conexion.php';
 
     <div class="container">
 
-        <a href="../index.php">Volver</a>
+        <a href="../login.php">Volver</a>
         
         <form id="form" action="../lib/registro_sql.php" method="POST">
 

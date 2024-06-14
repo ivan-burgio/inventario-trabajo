@@ -29,7 +29,7 @@
 
     <div class="container">
 
-        <a href="../index.php">Volver</a>
+        <a href="../login.php">Volver</a>
 
         <?php if(mysqli_num_rows($select) == 0) : ?>
 

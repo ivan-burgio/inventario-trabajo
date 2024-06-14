@@ -1,27 +1,57 @@
 <?php
 
-require_once '../includes/conexion.php';
+require_once 'C:\xampp\htdocs\inventario\includes\conexion.php';
 
-if($_POST) {
+if(!isset($_SESSION)) {
 
-    $email = isset($_POST['user']) ? $_POST['user'] : false;
-    $password = isset($_POST['password']) ? $_POST['password'] : false;
+    session_start();
+};
 
-    $select_log = "SELECT * FROM admin WHERE email = '$email' AND contraseña = '$password';";
-    $select_query = mysqli_query($conexion, $select_log);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $login = false;
+    $email = isset($_POST['user']) ? mysqli_real_escape_string($conexion, $_POST['user']) : false;
+    $password = isset($_POST['password']) ? mysqli_real_escape_string($conexion, $_POST['password']) : false;
 
-    if(mysqli_num_rows($select_query) == 1) {
+    $errores_log = array();
 
-        $login = true;
-        $_SESSION['login'] = $login;
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+        $errores_log['email'] = "El email ingresado no es valido";
+    };
+
+    if (empty($password)) {
+
+        $errores_log['password'] = "Ingrese una contraseña valida";
+    };
+
+    if (count($errores_log) == 0) {
+
+        $select_log = "SELECT * FROM admin WHERE email = '$email';";
+        $select_query = mysqli_query($conexion, $select_log);
+    
+        if (mysqli_num_rows($select_query) == 1) {
+
+            $user = mysqli_fetch_assoc($select_query);
+            $verify = password_verify($password, $user['contraseña']);
+
+            if($verify) {
+
+                $_SESSION['user'] = $user;
+            
+            } else {
+
+                $_SESSION['error_login'] = "Login incorrecto";
+            }
+
+        }
 
     } else {
 
-        $login = false;
-        $_SESSION['login'] = $login;
-    }
+        $_SESSION['errores_log'] = $errores_log;
+    };
 
-    header('Location: ../index.php');
+    header('Location: ../login.php');
+
 };
+
+?>
