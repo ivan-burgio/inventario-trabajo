@@ -26,7 +26,9 @@ if(!isset($_SESSION)) {
 
         <div class="container-login">
 
-            <form id="from-login" action="lib/login_sql.php" method="POST">
+            <h1>Inventario - <span class="title">Skytel</span> Avanza <span class="title">Uruguay</span></h1>
+
+            <form id="form-login" action="lib/login_sql.php" method="POST">
 
                 <label for="user">Usuario</label>
                 <input type="email" name="user" id="user"/>
