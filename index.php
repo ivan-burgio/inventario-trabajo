@@ -46,25 +46,17 @@ if(!isset($_SESSION)) {
 
         <header class="header">
             <ul class="list">
-                <a href="pages/inventario.php">
-                    <img src="assets/img-inventario.png" alt="imagen de inventario" />
-                </a>
-                <a href="pages/registro.php">
-                    <img src="assets/img-registro.png" alt="imagen de registro" />
-                </a>
-                <a href="#">
-                    <img src="assets/img-inventario.png" alt="imagen de inventario" />
-                </a>
-                <a href="#">
-                    <img src="assets/img-inventario.png" alt="imagen de inventario" />
-                </a>
+                <a href="inventario.php">Inventario</a>
+                <a href="registro.php">Registro</a>
+                <a href="#">Altas de equipos</a>
+                <a href="#">Bajas de equipos</a>
             </ul>
-
-            <div class="container-login">
-                <h1>Bienvenido, <?=$_SESSION['user']['nombre'];?> <?=$_SESSION['user']['apellido'];?></h1>
-                <a href="includes/cerrar_login.php">X</a>
-            </div>
         </header>
+
+        <div class="container">
+            <h1>Bienvenido, <?=$_SESSION['user']['nombre'];?> <?=$_SESSION['user']['apellido'];?></h1>
+            <a href="includes/cerrar_login.php">X</a>
+        </div>
 
     <?php endif; ?>
     

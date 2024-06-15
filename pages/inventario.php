@@ -12,24 +12,16 @@
 
     <header class="header">
         <ul class="list">
-            <a href="inventario.php">
-                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
-            </a>
-            <a href="registro.php">
-                <img src="../assets/img-registro.png" alt="imagen de registro" />
-            </a>
-            <a href="#">
-                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
-            </a>
-            <a href="#">
-                <img src="../assets/img-inventario.png" alt="imagen de inventario" />
-            </a>
+            <a href="inventario.php">Inventario</a>
+            <a href="registro.php">Registro</a>
+            <a href="#">Altas de equipos</a>
+            <a href="#">Bajas de equipos</a>
         </ul>
     </header>
 
     <div class="container">
 
-        <a href="../login.php">Volver</a>
+        <a href="../index.php">Volver</a>
 
         <?php if(mysqli_num_rows($select) == 0) : ?>
 

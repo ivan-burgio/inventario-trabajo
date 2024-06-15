@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['errores_log'] = $errores_log;
     };
 
-    header('Location: ../login.php');
+    header('Location: ../index.php');
 
 };
 

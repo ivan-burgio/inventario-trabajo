@@ -12,14 +12,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 100px;
     border: 2px solid black;
+    background-color: #19323C;
 };
 
-a img {
+.list {
 
+    justify-content: space-around;
+}
 
-    width: 50px;
+.list a {
+
+    font-size: 50px;
+    text-decoration: none;
 }
 
 .container {
@@ -117,7 +123,8 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
 
-    animation-duration: 2s;
+    cursor: pointer;
+    animation-duration: 3s;
     animation-name: hover;
     animation-iteration-count: infinite;
 }
