@@ -18,16 +18,16 @@ require_once '../lib/modificar_sql.php';
 
     <header class="header">
         <ul class="list">
-            <a href="inventario.php">Inventario</a>
-            <a href="registro.php">Registro</a>
-            <a href="#">Altas de equipos</a>
-            <a href="#">Bajas de equipos</a>
+        <li><a href="inventario.php">Inventario</a></li>
+        <li><a href="registro.php">Registro</a></li>
+        <li><a href="#">Altas de equipos</a></li>
+        <li><a href="#">Bajas de equipos</a></li>
         </ul>
     </header>
 
-    <div class="container">
+    <div class="container container-regYMod">
 
-        <a href="inventario.php">Volver</a>
+        <a href="inventario.php"><img src="../assets/back.svg" alt="Volver" /></a>
 
         <?php while($product = mysqli_fetch_assoc($modificar_query)): ?>
             

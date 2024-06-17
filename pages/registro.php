@@ -17,17 +17,17 @@ require_once '../includes/conexion.php';
 
     <header class="header">
         <ul class="list">
-            <a href="inventario.php">Inventario</a>
-            <a href="registro.php">Registro</a>
-            <a href="#">Altas de equipos</a>
-            <a href="#">Bajas de equipos</a>
+            <li><a href="inventario.php">Inventario</a></li>
+            <li><a href="registro.php">Registro</a></li>
+            <li><a href="#">Altas de equipos</a></li>
+            <li><a href="#">Bajas de equipos</a></li>
         </ul>
     </header>
 
 
-    <div class="container">
+    <div class="container container-regYMod">
 
-        <a href="../index.php">Volver</a>
+        <a href="../index.php"><img src="../assets/back.svg" alt="Volver" /></a>
         
         <form id="form" action="../lib/registro_sql.php" method="POST">
 
@@ -49,7 +49,7 @@ require_once '../includes/conexion.php';
             <label for="select">Equipo</label>
             <select id="select" name="select">
 
-                <option value="seleccione" selected>--seleccione una opcion--</option>
+                <option value="seleccione" selected>--seleccione una opción--</option>
                 <option value="torre">Torre</option>
                 <option value="perife">Periferico</option>
 

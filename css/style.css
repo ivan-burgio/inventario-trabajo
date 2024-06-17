@@ -13,41 +13,64 @@
     justify-content: center;
     align-items: center;
     height: 100px;
-    border: 2px solid black;
+    border-bottom: 2px solid #F2E863;
     background-color: #19323C;
-};
+}
 
 .list {
 
+    width: 100%;
+    display: flex;
     justify-content: space-around;
+}
+
+.list li {
+
+    list-style: none;
 }
 
 .list a {
 
-    font-size: 50px;
+    font-size: 20px;
+    color: #F2E863;
     text-decoration: none;
 }
 
 .container {
 
-    margin-top: 5%;
-    width: 90%;
-    min-height: 500px;
+    width: 100%;
+    min-height: 700px;
     height: auto;
-    border: 1px solid black;
+    background-color: #77BA99;
 }
 
-.container-login {
-    
-    width: 100%;
+a img {
+
+    justify-self: start;
+    width: 30px;
+}
+
+.container-producto {
+
+    box-sizing: unset;
+}
+
+.container-regYMod {
+
     color: white;
-    height: auto;
-    min-height: 700px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #77BA99;
+}
+
+.container-login {
+    
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #form-login {
@@ -62,10 +85,9 @@
 #form {
 
     display: grid;
-    justify-content: center;
-    width: 100%;
+    width: 50%;
     grid-template-rows: 1fr;
-    justify-items: center;
+    justify-self: center;
 }
 
 h1 {
@@ -74,11 +96,6 @@ h1 {
     color: #19323C;
     margin-bottom: 7%;
     text-transform: uppercase;
-}
-
-.title {
-
-    color: white;
 }
 
 h2 {
@@ -99,6 +116,11 @@ textarea {
     height: 40px;
 }
 
+textarea {
+
+    padding: 5px;
+}
+
 label {
     
     font-size: 20px;
@@ -108,7 +130,6 @@ label {
 input {
 
     font-size: 18px;
-    text-transform: uppercase;
     width: 100%;
     margin-bottom: 20px;
     padding: 3px;
@@ -162,7 +183,8 @@ table {
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
-    border: 3px solid red;
+    border: 3px solid #F0A868;
+    background-color: #E4FFE1;
 }
    
 th,
@@ -172,3 +194,7 @@ td {
     text-align: center;
 }
   
+td a img {
+
+    width: 30px;
+}

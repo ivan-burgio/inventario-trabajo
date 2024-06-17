@@ -24,7 +24,7 @@ if(!isset($_SESSION)) {
 
     <?php if(!isset($_SESSION['user'])) :?>
 
-        <div class="container-login">
+        <div class="container container-login">
 
             <h1>Inventario - <span class="title">Skytel</span> Avanza <span class="title">Uruguay</span></h1>
 
@@ -46,10 +46,10 @@ if(!isset($_SESSION)) {
 
         <header class="header">
             <ul class="list">
-                <a href="inventario.php">Inventario</a>
-                <a href="registro.php">Registro</a>
-                <a href="#">Altas de equipos</a>
-                <a href="#">Bajas de equipos</a>
+            <li><a href="pages/inventario.php">Inventario</a></li>
+            <li><a href="pages/registro.php">Registro</a></li>
+            <li><a href="#">Altas de equipos</a></li>
+            <li><a href="#">Bajas de equipos</a></li>
             </ul>
         </header>
 

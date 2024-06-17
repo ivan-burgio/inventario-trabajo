@@ -14,17 +14,17 @@ require_once '../lib/producto_sql.php';
 
     <header class="header">
         <ul class="list">
-            <a href="inventario.php">Inventario</a>
-            <a href="registro.php">Registro</a>
-            <a href="#">Altas de equipos</a>
-            <a href="#">Bajas de equipos</a>
+        <li><a href="inventario.php">Inventario</a></li>
+        <li><a href="registro.php">Registro</a></li>
+        <li><a href="#">Altas de equipos</a></li>
+        <li><a href="#">Bajas de equipos</a></li>
         </ul>
     </header>
 
 
-    <div class="container">
+    <div class="container container-producto">
 
-        <a href="inventario.php">Volver</a>
+        <a href="inventario.php"><img src="../assets/back.svg" alt="Volver" /></a>
 
         <?php if(mysqli_num_rows($select_query) > 0) : ?>
 
@@ -50,7 +50,7 @@ require_once '../lib/producto_sql.php';
                                 <td><?=$torre['alta']?></td>
                                 <td><?=$torre['descripcion']?></td>
                                 <td>
-                                    <a href="producto.php?id=<?=$torre['id'];?>">Eliminar</a>
+                                    <a href="producto.php?id=<?=$torre['id'];?>"><img src="../assets/trash.svg" alt="Eliminar" /></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -83,9 +83,9 @@ require_once '../lib/producto_sql.php';
                                 <td><?=$torre['alta']?></td>
                                 <td><?=$torre['descripcion']?></td>
                                 <td>
-                                    <a href="../lib/eliminar_sql.php?id=<?=$torre['id']?>">Eliminar</a>
-                                    <a href="modificar.php?id=<?=$torre['id']?>">Modificar</a>
-                                    <a href="producto.php?id=<?=$torre['id']?>">Comentarios</a>
+                                    <a href="../lib/eliminar_sql.php?id=<?=$torre['id']?>"><img src="../assets/trash.svg" alt="Eliminar" /></a>
+                                    <a href="modificar.php?id=<?=$torre['id']?>"><img src="../assets/edit.svg" alt="Editar" /></a>
+                                    <a href="producto.php?id=<?=$torre['id']?>"><img src="../assets/comments.svg" alt="Modificar" /></a>
                                 </td>
                             </tr>
                         </tbody>
