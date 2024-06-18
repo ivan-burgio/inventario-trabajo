@@ -66,6 +66,6 @@ require_once '../includes/conexion.php';
             <input id="submit" type="submit" value="Registrar" />
         </form>
     </div>
-    <script src="../js/main.js"></script>
+    <script src="../js/registro.js"></script>
 </body>
 </html>
