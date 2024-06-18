@@ -1,5 +1,10 @@
 <?php
 require_once '../lib/producto_sql.php';
+
+if(!isset($_SESSION['user'])) {
+
+    header('Location: ../index.php');
+}
 ?>
 
 <!DOCTYPE html>

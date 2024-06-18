@@ -3,6 +3,11 @@
 require_once '../includes/conexion.php';
 require_once '../lib/modificar_sql.php';
 
+if(!isset($_SESSION['user'])) {
+
+    header('Location: ../index.php');
+}
+
 ?>
 
 

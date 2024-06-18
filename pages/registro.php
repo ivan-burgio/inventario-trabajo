@@ -3,6 +3,11 @@
 require_once '../includes/helpers.php'; 
 require_once '../includes/conexion.php';
 
+if(!isset($_SESSION['user'])) {
+
+    header('Location: ../index.php');
+}
+
 ?>
 
 <!DOCTYPE html>

@@ -2,6 +2,11 @@
 
 require_once '../lib/altas_sql.php';
 
+if(!isset($_SESSION['user'])) {
+
+    header('Location: ../index.php');
+}
+
 ?>
 
 

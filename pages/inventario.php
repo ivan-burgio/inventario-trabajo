@@ -1,4 +1,13 @@
-<?php require_once '../lib/inventario_sql.php'; ?>
+<?php 
+
+require_once '../lib/inventario_sql.php'; 
+
+if(!isset($_SESSION['user'])) {
+
+    header('Location: ../index.php');
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
