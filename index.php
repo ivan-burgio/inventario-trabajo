@@ -44,19 +44,7 @@ if(!isset($_SESSION)) {
 
     <?php else : ?>    
 
-        <header class="header">
-            <ul class="list">
-            <li><a href="pages/inventario.php">Inventario</a></li>
-            <li><a href="pages/registro.php">Registro</a></li>
-            <li><a href="#">Altas de equipos</a></li>
-            <li><a href="#">Bajas de equipos</a></li>
-            </ul>
-        </header>
-
-        <div class="container">
-            <h1>Bienvenido, <?=$_SESSION['user']['nombre'];?> <?=$_SESSION['user']['apellido'];?></h1>
-            <a href="includes/cerrar_login.php">X</a>
-        </div>
+        <?php header('Location: pages/inventario.php');?>
 
     <?php endif; ?>
     

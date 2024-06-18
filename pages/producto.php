@@ -13,6 +13,10 @@ require_once '../lib/producto_sql.php';
 <body>
 
     <header class="header">
+        <div class="user">
+            <h1 class="name">Bienvenido, <?=$_SESSION['user']['nombre'];?> <?=$_SESSION['user']['apellido'];?></h1>
+            <a href="../includes/cerrar_login.php"><img src="../assets/close.svg" alt="Cerrar sesión" /></a>
+        </div>
         <ul class="list">
         <li><a href="inventario.php">Inventario</a></li>
         <li><a href="registro.php">Registro</a></li>
@@ -82,6 +86,7 @@ require_once '../lib/producto_sql.php';
                                 <td><?=$torre['almacenamiento']?></td>
                                 <td><?=$torre['alta']?></td>
                                 <td><?=$torre['descripcion']?></td>
+                                <td>No hay comentarios</td>
                                 <td>
                                     <a href="../lib/eliminar_sql.php?id=<?=$torre['id']?>"><img src="../assets/trash.svg" alt="Eliminar" /></a>
                                     <a href="modificar.php?id=<?=$torre['id']?>"><img src="../assets/edit.svg" alt="Editar" /></a>
