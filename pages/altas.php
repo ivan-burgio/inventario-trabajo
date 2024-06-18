@@ -42,13 +42,27 @@ require_once '../lib/altas_sql.php';
 
             </select>
 
-            <label for="id">Id de equipo</label>
-            <input type="text" id="id" name="id" />
+            <label for="input_func">Funcionario</label>
+            <input type="text" id="input_func" name="input_func" />
 
-            <label for="ubic">Ubicación</label>
+            <select id="select_func" name="select_func">
+                
+                <option value="select_def">--Funcionario--</option>
 
-            <label for="funcionario">Funcionario</label>
-            <input type="text" name="funcionario" id="funcionario" />
+                <?php if(mysqli_num_rows($list_query) > 0) : ?>
+
+                    <?php while($result = mysqli_fetch_assoc($list_query)) : ?>
+
+                        <option value="<?=$result['id_funcionario'];?>">N°<?=$result['id_funcionario'].', '.$result['nombre'].' '.$result['apellido'].', '.$result['nombre_sector'];?></option>
+
+                    <?php endwhile; ?>
+
+                <?php else : ?>
+                        
+                        <option value="null">No hay funcionarios con los datos ingresados</option>
+                
+                <?php endif; ?>
+            </select>
 
             <label for="description">Descripcion</label>
             <textarea name="description"></textarea>
@@ -56,5 +70,6 @@ require_once '../lib/altas_sql.php';
             <input id="submit" type="submit" value="Registrar" />
         </form>
     </div>
+    <script src="../js/alta_func.js"></script>
 </body>
 </html>
