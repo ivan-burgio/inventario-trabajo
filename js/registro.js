@@ -5,9 +5,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('#form');
     const submit = document.querySelector('#submit');
 
-    function addForm() {
 
-        if(select.value === 'torre') {
+    select.addEventListener('change', addForm); //Se llama la función cada vez que hagan cambios en el select
+
+
+    //--------------------------FUNCIONES--------------------------------
+
+
+    function addForm() { //Función que genera campos dependiendo del valor del select con id 'select'
+
+        if(select.value === 'torre') { //Si el select tiene valor 'torre' se crean campos
 
             let labelPro = document.createElement('label');
             labelPro.setAttribute('for', 'proce');
@@ -36,14 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
             inputAlmace.setAttribute('name', 'almace');
             inputAlmace.setAttribute('id', 'almace');
     
-            form.insertBefore(labelPro, submit);
+            //Se insertan antes que el boton de submit
+            form.insertBefore(labelPro, submit); 
             form.insertBefore(inputPro, submit);
             form.insertBefore(labelRam, submit);
             form.insertBefore(inputRam, submit);
             form.insertBefore(labelAlmace, submit);
             form.insertBefore(inputAlmace, submit);
     
-        } else {
+        } else { //Si no tiene el valor de 'torre', se valida si existen para eliminarlos
 
             const inputPro = document.querySelector('#proce');
             const labelPro = document.querySelector('label[for="proce"]');
@@ -52,8 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const inputAlmace = document.querySelector('#almace');
             const labelAlmace = document.querySelector('label[for="almace"]');
 
-            if(inputPro && labelPro && inputRam && labelRam && inputAlmace && labelAlmace) {
+            if(inputPro && labelPro && inputRam && labelRam && inputAlmace && labelAlmace) { //Se gestiona validación de existencia
 
+                //Se remueven del DOM
                 inputPro.remove();
                 labelPro.remove();
                 inputRam.remove();
@@ -63,7 +72,4 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         }
     }
-
-    select.addEventListener('change', addForm);
-
 });
