@@ -42,13 +42,35 @@ if(!isset($_SESSION['user'])) {
             <select id="ubic" name="ubic">
 
                 <option value="default">--Seleccione la ubicación--</option>
-                <option value="home">Tele-trabajo</option>
+                <option value="home">Tele trabajo</option>
                 <option value="plataforma">Plataforma</option>
 
             </select>
 
+            <label for="input_prod">Equipo</label>
+            <input type="text" id="input_prod" name="input_prod"  placeholder="Ingrese el equipo (Ej. Etiqueta, marca, modelo)"/>
+
+            <select id="select_prod" name="select_prod">
+                
+                <option value="select_def_prod">--Equipo--</option>
+
+                <?php if(mysqli_num_rows($list_prod_query) > 0) : ?>
+
+                    <?php while($result_prod = mysqli_fetch_assoc($list_prod_query)) : ?>
+
+                        <option value="<?=$result_prod['id'];?>">ID: <?=$result_prod['id'].', '.$result_prod['marca'].', '.$result_prod['modelo'];?></option>
+
+                    <?php endwhile; ?>
+
+                <?php else : ?>
+                        
+                        <option value="null">No hay funcionarios con los datos ingresados</option>
+                
+                <?php endif; ?>
+            </select>
+
             <label for="input_func">Funcionario</label>
-            <input type="text" id="input_func" name="input_func" />
+            <input type="text" id="input_func" name="input_func" placeholder="Ingrese al funcionario (Ej. N° Funcionario, nombre, sector)"/>
 
             <select id="select_func" name="select_func">
                 
@@ -69,7 +91,7 @@ if(!isset($_SESSION['user'])) {
                 <?php endif; ?>
             </select>
 
-            <label for="description">Descripcion</label>
+            <label id="label_area" for="description">Descripcion</label>
             <textarea name="description"></textarea>
 
             <input id="submit" type="submit" value="Registrar" />
