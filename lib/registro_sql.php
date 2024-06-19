@@ -87,7 +87,7 @@ if($_POST) {
             $descripcion_verify = mysqli_real_escape_string($conexion, $descripcion);       //Se aplica función para evitar inyecciones SQL
         
             //Se genera la consulta para la BD
-            $sql3 = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify',NULL, NULL, NULL, CURDATE(), '$descripcion_verify');";
+            $sql3 = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify',NULL, NULL, NULL, CURDATE(), '$descripcion_verify', 1);";
             
             //Se inserta la consulta en la BD
             $insert = mysqli_query($conexion, $sql3);
