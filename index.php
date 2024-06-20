@@ -1,7 +1,6 @@
 <?php 
 
 require_once 'lib/login_sql.php'; 
-require_once 'includes/conexion.php';
 
 if(!isset($_SESSION)) {
 

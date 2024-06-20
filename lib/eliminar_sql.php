@@ -19,4 +19,6 @@ if(isset($_GET)) {
 //Se redirecciona hacia la página de inventario
 header('Location: ../pages/inventario.php');
 
+mysqli_close($conexion);
+
 ?>

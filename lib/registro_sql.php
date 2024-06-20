@@ -66,7 +66,7 @@ if($_POST) {
             $descripcion_verify = mysqli_real_escape_string($conexion, $descripcion);       //Se aplica función para evitar inyecciones SQL
         
             //Se genera la consulta para la BD
-            $sql2 = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify', '$proce_verify', '$ram_verify', '$almace_verify', CURDATE(), '$descripcion_verify');";
+            $sql2 = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify', '$proce_verify', '$ram_verify', '$almace_verify', CURDATE(), '$descripcion_verify', 1);";
             
             //Se inserta la consulta en la BD
             $insert = mysqli_query($conexion, $sql2);
@@ -111,5 +111,7 @@ if($_POST) {
     header('Location: ../pages/registro.php');
     exit();
 };
+
+mysqli_close($conexion);
 
 ?>

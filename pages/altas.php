@@ -1,11 +1,12 @@
 <?php 
 
 require_once '../lib/altas_sql.php';
+require_once '../includes/helpers.php';
 
 if(!isset($_SESSION['user'])) {
 
     header('Location: ../index.php');
-}
+};
 
 ?>
 
@@ -35,15 +36,18 @@ if(!isset($_SESSION['user'])) {
 
     <div class="container container-regYMod">
 
-        <form id="form" action="../lib/registro_sql.php" method="POST">
+        <form id="form" action="../lib/altas_sql.php" method="POST">
 
             <h2>Alta de productos para funcionarios</h2>
 
+            <?=mostrarErrores('estados', 'exito');?>
+            <label for="ubic">Lugar de trabajo</label>
             <select id="ubic" name="ubic">
 
                 <option value="default">--Seleccione la ubicación--</option>
                 <option value="home">Tele trabajo</option>
                 <option value="plataforma">Plataforma</option>
+                <option value="admin">Administración</option>
 
             </select>
 

@@ -37,4 +37,6 @@ if($_POST) {
     exit();
 };
 
+mysqli_close($conexion);
+
 ?>

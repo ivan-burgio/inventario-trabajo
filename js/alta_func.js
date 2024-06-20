@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    //------------------------VARIABLES--------------------------------
+
     const form_altas = document.querySelector('#form');
     const input = document.querySelector('#input_func');
     const input_prod = document.querySelector('#input_prod');
@@ -8,7 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const select_ubic = document.querySelector('#ubic');
     const label_area = document.querySelector('#label_area');
 
-    input_prod.addEventListener('input', getProduct);
+    //-------------------------EVENTOS----------------------------------
+
+    input_prod.addEventListener('input', getProduct); //Se llama la función cada vez que hayan cambios en el select
     input.addEventListener('input', getEmployee); //Se llama la función cada vez que se escriba sobre el input
     select_ubic.addEventListener('change', addForm); //Se llama la función cada vez que hayan cambios en el select
 
@@ -55,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function addForm() { //Se agregan campos según el valor del select con id 'ubic'
 
-        console.log(select_ubic.value);
         // Eliminar cualquier elemento existente relacionado con 'direc' o 'box'
         const label_direccion_exist = document.querySelector('label[for="direc"]');
         const input_direccion_exist = document.querySelector('#direc');
@@ -76,13 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     
         // Obtener el valor seleccionado en el select con id 'ubic'
-        const ubicValue = select_ubic.value;
+        const ubicValue = select_ubic.value.trim();
 
         switch (ubicValue) {
 
-  
+            case 'home':
 
-            case 'Tele trabajo':
                 let label_direccion = document.createElement('label');
                 let input_direccion = document.createElement('input');
     
@@ -93,24 +95,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 input_direccion.setAttribute('id', 'direc');
                 input_direccion.setAttribute('name', 'direc');
     
-                form_altas.insertBefore(label_direccion, label_area.nextSibling);
-                form_altas.insertBefore(input_direccion, label_area.nextSibling);
+                form_altas.insertBefore(label_direccion, label_area);
+                form_altas.insertBefore(input_direccion, label_area);
                 break;
     
-            case 'Plataforma':
+            case 'plataforma':
 
                 let label_box = document.createElement('label');
                 let input_box = document.createElement('input');
     
                 label_box.setAttribute('for', 'box');
-                label_box.textContent = 'N° de BOX';
+                label_box.textContent = 'N° de BOX y sector o departamento';
     
                 input_box.setAttribute('type', 'text');
                 input_box.setAttribute('id', 'box');
                 input_box.setAttribute('name', 'box');
     
-                form_altas.insertBefore(label_box, label_area.nextSibling);
-                form_altas.insertBefore(input_box, label_area.nextSibling);
+                form_altas.insertBefore(label_box, label_area);
+                form_altas.insertBefore(input_box, label_area);
                 break;
     
             default:
