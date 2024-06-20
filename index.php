@@ -47,7 +47,7 @@ if(!isset($_SESSION)) {
 
     <?php endif; ?>
     
-
+    <?php require_once 'includes/footer.php';?>
 
 </body>
 </html>

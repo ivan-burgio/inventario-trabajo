@@ -237,3 +237,13 @@ td a img {
 
     width: 30px;
 }
+
+.footer {
+
+    height: 50px;
+    font-size: 20px;
+    line-height: 50px;
+    background-color: #19323C;
+    text-align: center;
+    color:#F2E863;
+}
