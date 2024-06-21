@@ -1,6 +1,7 @@
 <?php
 
 require_once '../includes/conexion.php';
+require_once '../includes/helpers.php';
 
 //--------------CONSULTAS MYSQL---------------------
 
@@ -61,10 +62,15 @@ if(isset($_POST['ubic'])) {
 
             $insert_query = mysqli_query($conexion, $insert_alta_tt); 
 
+            $fecha = date('d-m-Y');
+
+            archivoTT($funcionario, $nombre);
+
             if(!$insert_query) {
 
             $error = mysqli_error($insert_query);
             echo $error;
+
             exit();
 
             }

@@ -1,0 +1,1 @@
+Nombre; N° de funcionario; Fecha de entrega de activos;
