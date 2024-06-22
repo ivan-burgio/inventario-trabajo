@@ -64,7 +64,7 @@ if(isset($_POST['ubic'])) {
 
             $fecha = date('d-m-Y');
 
-            archivoTT($funcionario, $nombre);
+            archivoTT($funcionario, $nombre, $fecha);
 
             if(!$insert_query) {
 

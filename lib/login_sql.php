@@ -1,6 +1,6 @@
 <?php
 
-require_once 'C:\xampp\htdocs\inventario\includes\conexion.php';
+require_once 'C:\wamp64\www\prog\inventario-trabajo\includes\conexion.php';
 
 if(!isset($_SESSION)) {
 

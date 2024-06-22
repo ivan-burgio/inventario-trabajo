@@ -61,8 +61,11 @@ id_producto         VARCHAR(50),
 marca_produ         VARCHAR(100),
 nombre_func         VARCHAR(60),
 fecha               DATE,
+direccion           VARCHAR(200),
+descripcion         TEXT,
+usuario             VARCHAR(50),
 status              INT,
 
-FOREIGN KEY (id_funcionario) REFERENCES funcionario(id_funcionario),
+FOREIGN KEY (id_funcionario) REFERENCES funcionarios(id_funcionario),
 FOREIGN KEY (id_producto) REFERENCES productos(id)
 )ENGINE=InnoDB;

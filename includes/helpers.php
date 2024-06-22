@@ -16,54 +16,192 @@ function mostrarErrores($errores, $campo) {
 
 };
 
-function archivoTT($id_func, $nombre) {
+function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cuando se de de alta un producto hacia funcionario
 
-    // Definir la clase PDF extendida de FPDF
     class PDF extends FPDF {
 
-        function LoadData($file) {
+        function Header() { //Función para crear la cabecera del PDF
 
-            $lineas = file($file);
-            $data = array();
-            foreach($lineas as $line) {
-                $data[] = explode(';', trim($line));
-            }
-            return $data;
+            $this->SetFont('Arial','B',10);
+            // Título
+            $titulo = mb_convert_encoding('ENTREGA/DEVOLUCIÓN DE ACTIVOS', 'ISO-8859-1', 'UTF-8');
+            $this->Cell(0, 8, $titulo, 1,0,'C');
+            // Salto de línea
+            $this->Ln(15);
         }
 
-        function BasicTable($header, $data) {
-
+        function FuncTable($header, $data) { //Función para crear la tabla de los datos del funcionario
+            // Anchura de las celdas incrementada a 60 unidades
+            $cellWidth = 60;
+            $cellHeight = 8;
+            $cellBorder = 1; // Borde completo
+    
+            // Imprimir la cabecera
             foreach($header as $col) {
-
-                $this->Cell(50, 7, $col, 1);
+                $this->SetFont('Arial','B', 8);
+                $this->SetFillColor(95, 114, 100);
+                $this->Cell($cellWidth, $cellHeight, $col, $cellBorder, 0, 'L', true);
             }
             $this->Ln();
-
+    
+            // Imprimir los datos
             foreach($data as $row) {
+                foreach($row as $col) {
+                    // Verificar si el contenido se sale del margen derecho
+                    if($this->GetStringWidth($col) > $cellWidth) {
+                        // Dividir el texto para que se ajuste dentro de la celda
+                        $this->SetFont('Arial','', 7);
+                        $this->MultiCell($cellWidth, 7, $col, $cellBorder);
+                    } else {
+                        $this->Cell($cellWidth, 7, $col, $cellBorder);
+                    }
+                }
+                $this->Ln();
+    
+                // Verificar si hay que agregar una nueva página
+                if($this->GetY() + $cellHeight > $this->PageBreakTrigger) {
+                    $this->AddPage();
+                    // Imprimir la cabecera nuevamente
+                    foreach($header as $col) {
+                        $this->Cell($cellWidth, 7, $col, $cellBorder);
+                    }
+                    $this->Ln();
+                }
+            }
+        }
 
-                $this->Cell(50, 6, $col, 1);
+        function ActivesTables($headerActives, $actives) { //Función para crear la tabla de los productos
+
+            // Anchura de las celdas incrementada a 60 unidades
+            $cellWidth = 60;
+            $cellHeight = 8;
+            $cellBorder = 1; // Borde completo
+
+            // Imprimir la cabecera
+            foreach($headerActives as $col) {
+                $this->SetFont('Arial','B', 8);
+                $this->SetFillColor(95, 114, 100);
+                $this->Cell($cellWidth, $cellHeight, $col, $cellBorder, 0, 'L',true);
             }
             $this->Ln();
+
+            // Imprimir los datos
+            foreach($actives as $row) {
+                foreach($row as $col) {
+                    // Verificar si el contenido se sale del margen derecho
+                    if($this->GetStringWidth($col) > $cellWidth) {
+                        // Dividir el texto para que se ajuste dentro de la celda
+                        $this->SetFont('Arial','', 6);
+                        $this->MultiCell($cellWidth, 7, $col, $cellBorder);
+                    } else {
+                        $this->Cell($cellWidth, 7, $col, $cellBorder);
+                    }
+                }
+                $this->Ln();
+    
+                // Verificar si hay que agregar una nueva página
+                if($this->GetY() + $cellHeight > $this->PageBreakTrigger) {
+                    // Reiniciar la posición a la guardada al inicio de ActivesTables
+                    $this->SetY($startY);
+                    $this->AddPage();
+                    // Imprimir la cabecera nuevamente
+                    foreach($headerActives as $col) {
+                        $this->Cell($cellWidth, 7, $col, $cellBorder);
+                    }
+                    $this->Ln();
+                }
+            }            
         }
+
+        function BasesAndConditions($texto) { //Función para crear el texto de las bases y condiciones
+
+            $this->SetFont('Arial', '', 8);
+            $this->MultiCell(0, 5, $texto);
+        }
+
+        function SignatureFunc() { //Función para crear la sección de la firma
+
+            $texto = mb_convert_encoding('FIRMA Y ACLARACIÓN DEL FUNCIONARIO', 'ISO-8859-1', 'UTF-8');;
+            $this->SetFont('Arial', 'B', 11);
+            $this->Cell(0, 20, $texto, 'B');
+        }
+
+        function Footer() {
+            $this->SetFont('Arial', '', 6);
+            $footer_text = "Avanza Uruguay; Casa central: Vazquez 1386 Montevideo - Uruguay; Telefono: (+598) 24008761 | Mail: operaciones@avanzasa.com; Web: www.avanzauruguay.com";
         
+            // Dividir el texto en líneas separadas por ";"
+            $lines = explode(";", $footer_text);
+            
+            // Establecer la posición para el texto
+            $this->SetY(-25); // Establece la posición a 25 mm del final de la página
+        
+            // Imprimir cada línea del texto
+            foreach ($lines as $line) {
+                $this->Cell(0, 5, trim($line), 0, 1, 'L');
+            }
+        
+            // Colocar la imagen a la derecha del footer y más arriba
+            $image_path = '../assets/Avanza-Outsourcing.png';
+            $image_width = 20; // Ancho de la imagen
+            $image_height = 0; // Altura automática según la proporción
+        
+            // Posición X para la imagen (derecha)
+            $image_x = $this->GetPageWidth() - $image_width - 10; // 10 unidades de margen
+        
+            // Posición Y para la imagen (más arriba)
+            $image_y = $this->GetY() - 15; // Ajuste para colocar la imagen más arriba
+        
+            // Insertar la imagen
+            $this->Image($image_path, $image_x, $image_y, $image_width);
+        
+            // Mover la posición Y hacia arriba para evitar superposiciones con la imagen
+            $this->SetY($this->GetY() - $image_height - 10); // Ajuste para margen inferior
+        
+        }
     }
 
-    // Definir la ruta y nombre del archivo PDF
-    $ruta = "../archivos_teletrabajo/archivo_{$id_func}_{$nombre}.pdf";
-    $texto = "../FPDF/txt/altas_producto.txt";
-    $tabla_nombre = "../FPDF/txt/tabla_datos.txt";
-    $txt = file_get_contents($texto);
-
+    $archivo = "../archivos_teletrabajo/archivo_{$id_func}_{$nombre}.pdf";
     
-    // Crear una instancia de la clase PDF
+    // Crear PDF
     $pdf = new PDF();
-    $header = array('Nombre', 'N° de funcionario', 'Fecha de entrega de activos');
-    $data = $pdf->LoadData($tabla_nombre);
-    $pdf->SetFont('Arial', '', 14);
     $pdf->AddPage();
-    $pdf->BasicTable($header, $data);
-    $pdf->MultiCell(0, 3, $txt, 0, 'L');
+    $pdf->SetFont('Arial', '', 12);
+    
+    $numeroFunc = mb_convert_encoding('N° de funcionario', 'ISO-8859-1', 'UTF-8');
 
-    // Generar y guardar el PDF en la ruta especificada
-    $pdf->Output($ruta, 'F');
+    $header = array('Nombre', $numeroFunc, 'Fecha de entrega de activos');
+    $data = array(
+                array($nombre, $id_func, $fecha)
+            );
+
+            
+    $headerActives = array("Lista de activos", "Entregado/DevolucionSi/No", "Observaciones");
+    $actives = array(
+                array('Pc (Devolucion)', '', ''),
+                array('Monitor (Devolucion)', '', ''),
+                array('Teclado (Devolucion)', '', ''),
+                array('Mouse (Devolucion)', '', ''),
+                array('(*) Silla (Devolucion)', '', ''),
+                array('Vincha (1)', '', ''),
+                array('Monitor', '', ''),
+                array('Pc', '', ''),
+                array('Pincho ADSL', '', ''),
+                array('Teclado', '', ''),
+                array('Mouse', '', ''),
+                array('Cables / Adaptadores', '', ''),
+                array('(*) Silla', '', '')
+    );
+
+    $texto_bases = file_get_contents("../FPDF/txt/altas_producto.txt");
+    $texto_with_code = mb_convert_encoding($texto_bases, 'ISO-8859-1', 'UTF-8');
+
+
+    $pdf->FuncTable($header, $data);
+    $pdf->Ln(5);
+    $pdf->ActivesTables($headerActives, $actives);
+    $pdf->BasesAndConditions($texto_with_code);
+    $pdf->SignatureFunc();
+    $pdf->Output($archivo, 'F');
+    
 };
