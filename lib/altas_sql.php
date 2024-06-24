@@ -15,7 +15,6 @@ $list_prod_query = mysqli_query($conexion, $list_prod);
 
 //------------VALIDACIÓN DE CAMPOS-------------------
 
-
 if(isset($_POST['ubic'])) {
 
     $equipo = isset($_POST['select_prod']) ? $_POST['select_prod'] : false;
@@ -40,6 +39,8 @@ if(isset($_POST['ubic'])) {
 
     if(count($estado) == 0) {
 
+        $hora = date('H:i:s');
+
         $sql_marca_prod = "SELECT modelo FROM productos WHERE id = '$equipo';";
         $select_marca_prod = mysqli_query($conexion, $sql_marca_prod);
         $marca_prod = mysqli_fetch_assoc($select_marca_prod);
@@ -55,7 +56,7 @@ if(isset($_POST['ubic'])) {
         if($_POST['ubic'] == 'home') {
 
             $insert_alta_tt = "INSERT INTO altas_productos 
-            VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$domicilio', '$descripcion', '$user', 1);";
+            VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora','$domicilio', '', '$descripcion', '$user', 1);";
 
             $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
             $modify_query = mysqli_query($conexion, $modify_status);
@@ -78,7 +79,7 @@ if(isset($_POST['ubic'])) {
         } else if($_POST['ubic'] == 'plataforma') {
 
             $insert_alta_tt = "INSERT INTO altas_productos 
-            VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$plataforma', '$descripcion', '$user', 2);";
+            VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora', '$plataforma', 'BOX 145', '$descripcion', '$user', 2);";
 
             $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
             $modify_query = mysqli_query($conexion, $modify_status);

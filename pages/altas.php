@@ -30,28 +30,15 @@ if(!isset($_SESSION['user'])) {
             <li><a href="inventario.php">Inventario</a></li>
             <li><a href="registro.php">Registro</a></li>
             <li><a href="altas.php">Altas de equipos</a></li>
-            <li><a href="#">Bajas de equipos</a></li>
+            <li><a href="bajas.php">Bajas de equipos</a></li>
         </ul>
     </header>
 
     <div class="container container-regYMod">
 
-        <fieldset>
-            <legend>Seleccione si es alta o baja:</legend>
-
-            <div>
-                <input type="radio" id="alta" class="checks" name="radio" value="alta" checked />
-                <label for="alta">Alta</label>
-            </div>
-
-            <div>
-                <input type="radio" id="baja" class="checks" name="radio" value="baja" />
-                <label for="baja">Baja</label>
-            </div>
-
-        </fieldset>
-
         <form id="form" action="../lib/altas_sql.php" method="POST">
+
+            <h2>Alta de productos para funcionarios</h2>
 
             <?=mostrarErrores('estados', 'exito');?>
             <label for="ubic" id="ubic_label">Lugar de trabajo</label>
@@ -60,11 +47,10 @@ if(!isset($_SESSION['user'])) {
                 <option value="default">--Seleccione la ubicación--</option>
                 <option value="home">Tele trabajo</option>
                 <option value="plataforma">Plataforma</option>
-                <option value="admin">Administración</option>
 
             </select>
 
-            <label for="input_prod">Equipo</label>
+            <label for="input_prod" id="label_prod">Equipo</label>
             <input type="text" id="input_prod" name="input_prod"  placeholder="Ingrese el equipo (Ej. Etiqueta, marca, modelo)"/>
 
             <select id="select_prod" name="select_prod">
@@ -109,11 +95,12 @@ if(!isset($_SESSION['user'])) {
             </select>
 
             <label id="label_area" for="description">Descripcion</label>
-            <textarea name="description"></textarea>
+            <textarea id="text_area" name="description"></textarea>
 
             <input id="submit" type="submit" value="Registrar" />
         </form>
     </div>
     <script src="../js/alta_func.js"></script>
+    <?php require_once '../includes/footer.php'; ?>
 </body>
 </html>

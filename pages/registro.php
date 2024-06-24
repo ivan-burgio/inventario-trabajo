@@ -29,14 +29,12 @@ if(!isset($_SESSION['user'])) {
             <li><a href="inventario.php">Inventario</a></li>
             <li><a href="registro.php">Registro</a></li>
             <li><a href="altas.php">Altas de equipos</a></li>
-            <li><a href="#">Bajas de equipos</a></li>
+            <li><a href="bajas.php">Bajas de equipos</a></li>
         </ul>
     </header>
 
 
     <div class="container container-regYMod">
-
-        <a href="../index.php"><img src="../assets/back.svg" alt="Volver" /></a>
         
         <form id="form" action="../lib/registro_sql.php" method="POST">
 
@@ -71,6 +69,7 @@ if(!isset($_SESSION['user'])) {
             <input id="submit" type="submit" value="Registrar" />
         </form>
     </div>
+    <?php require_once '../includes/footer.php'; ?>
     <script src="../js/registro.js"></script>
 </body>
 </html>

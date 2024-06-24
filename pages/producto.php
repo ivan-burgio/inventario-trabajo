@@ -25,8 +25,8 @@ if(!isset($_SESSION['user'])) {
         <ul class="list">
         <li><a href="inventario.php">Inventario</a></li>
         <li><a href="registro.php">Registro</a></li>
-        <li><a href="#">Altas de equipos</a></li>
-        <li><a href="#">Bajas de equipos</a></li>
+        <li><a href="altas.php">Altas de equipos</a></li>
+        <li><a href="bajas.php">Bajas de equipos</a></li>
         </ul>
     </header>
 
@@ -112,5 +112,6 @@ if(!isset($_SESSION['user'])) {
         <?php endif; ?>
         
     </div>
+    <?php require_once '../includes/footer.php'; ?>
 </body>
 </html>

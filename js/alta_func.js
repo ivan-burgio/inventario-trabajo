@@ -5,9 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const form_altas = document.querySelector('#form');
     const input = document.querySelector('#input_func');
     const input_prod = document.querySelector('#input_prod');
-    const radioCheck = document.querySelectorAll('.checks');
-    const label_place = document.querySelector('#ubic_label');
-    const select_place = document.querySelector('#ubic');
     const select_prod = document.querySelector('#select_prod');
     const select_func = document.querySelector('#select_func');
     const select_ubic = document.querySelector('#ubic');
@@ -19,10 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     input.addEventListener('input', getEmployee); //Se llama la función cada vez que se escriba sobre el input
     select_ubic.addEventListener('change', addForm); //Se llama la función cada vez que hayan cambios en el select
     
-    radioCheck.forEach(radio => { //Se recorre los input para aplicar el evento
-
-        radio.addEventListener('click', showSelect);
-    });
 
     //----------------------------FUNCIONES-----------------------------
     
@@ -128,19 +121,5 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    function showSelect() { //Funcion para mostrar los campos de lugar de trabajo en caso de que sea o no la opción de baja
-
-        radioCheck.forEach(radio => { //Recorrer cada input
-            
-            let isHidden = false; //Variable para definir el booleano de hidden
-            radioCheck.forEach(radio => { //Se recorren los input
-                if (radio.checked && radio.value === 'baja') { //Se valian las condiciones
-                    isHidden = true; //Se pone en true
-                }
-            });
-            label_place.hidden = isHidden; //Se indica el valor de hidden con la variable indicada
-            select_place.hidden = isHidden;
-        });
-    };
 
 });

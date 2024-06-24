@@ -2,6 +2,7 @@
 
 require_once 'conexion.php';
 require('../FPDF/fpdf.php');
+date_default_timezone_set('America/Montevideo');
 
 //Función creada para mostrar los errores en los campos de registro
 function mostrarErrores($errores, $campo) {
@@ -17,6 +18,8 @@ function mostrarErrores($errores, $campo) {
 };
 
 function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cuando se de de alta un producto hacia funcionario
+
+    $fecha_y_hora = date("Y-m-d_H-i-s");
 
     class PDF extends FPDF {
 
@@ -70,7 +73,7 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
             }
         }
 
-        function ActivesTables($headerActives, $actives) { //Función para crear la tabla de los productos
+        function ActivesTables($headerActives, $actives, $fecha) { //Función para crear la tabla de los productos
 
             // Anchura de las celdas incrementada a 60 unidades
             $cellWidth = 60;
@@ -161,7 +164,7 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
         }
     }
 
-    $archivo = "../archivos_teletrabajo/archivo_{$id_func}_{$nombre}.pdf";
+    $archivo = "../archivos_teletrabajo/archivo_{$fecha_y_hora}_N°{$id_func}_{$nombre}.pdf";
     
     // Crear PDF
     $pdf = new PDF();
@@ -199,7 +202,7 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
 
     $pdf->FuncTable($header, $data);
     $pdf->Ln(5);
-    $pdf->ActivesTables($headerActives, $actives);
+    $pdf->ActivesTables($headerActives, $actives, $fecha);
     $pdf->BasesAndConditions($texto_with_code);
     $pdf->SignatureFunc();
     $pdf->Output($archivo, 'F');
