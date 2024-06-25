@@ -59,7 +59,7 @@ if(!isset($_SESSION['user'])) {
                                 <td><?=$torre['alta']?></td>
                                 <td><?=$torre['descripcion']?></td>
                                 <td>
-                                    <a href="producto.php?id=<?=$torre['id'];?>"><img src="../assets/trash.svg" alt="Eliminar" /></a>
+                                    <a href="../lib/eliminar_sql.php?id=<?=$torre['id'];?>"><img src="../assets/trash.svg" alt="Eliminar" /></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -95,7 +95,7 @@ if(!isset($_SESSION['user'])) {
                                 <td>
                                     <a href="../lib/eliminar_sql.php?id=<?=$torre['id']?>"><img src="../assets/trash.svg" alt="Eliminar" /></a>
                                     <a href="modificar.php?id=<?=$torre['id']?>"><img src="../assets/edit.svg" alt="Editar" /></a>
-                                    <a href="producto.php?id=<?=$torre['id']?>"><img src="../assets/comments.svg" alt="Modificar" /></a>
+                                    <a href="comentarios.php?id=<?=$torre['id']?>"><img src="../assets/comments.svg" alt="Modificar" /></a>
                                 </td>
                             </tr>
                         </tbody>

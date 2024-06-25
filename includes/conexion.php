@@ -17,3 +17,5 @@ if(mysqli_connect_errno()) {
 
     $db = mysqli_select_db($conexion, 'inventario');
 };
+
+?>

@@ -28,7 +28,9 @@ procesador      CHAR(20),
 ram             CHAR(10),
 almacenamiento  CHAR(10),
 alta            DATE,
-descripcion     TEXT
+descripcion     TEXT,
+usuario         VARCHAR(50),
+status          INT
 
 )ENGINE=InnoDB;
 
@@ -61,7 +63,9 @@ id_producto         VARCHAR(50),
 marca_produ         VARCHAR(100),
 nombre_func         VARCHAR(60),
 fecha               DATE,
-direccion           VARCHAR(200),
+hora                TIME,
+lugar_trabajo       VARCHAR(200),
+puesto              VARCHAR(50),
 descripcion         TEXT,
 usuario             VARCHAR(50),
 status              INT,

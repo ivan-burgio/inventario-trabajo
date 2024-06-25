@@ -12,13 +12,13 @@ $select_altas_query = mysqli_query($conexion, $select_altas);
 
 if($_POST) {
 
-    $id_func = isset($_POST['select_func']) ? $_POST['select_func'] : false;
+    $id_product = isset($_POST['select_func']) ? $_POST['select_func'] : false;
     $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;
     $user = $_SESSION['user']['nombre'].' '.$_SESSION['user']['apellido'];
 
     $update_alta = "UPDATE altas_productos 
                     SET status = 0, usuario = '$user', descripcion = '$descripcion', fecha = CURDATE() 
-                    WHERE id_funcionario = '$id_func';";
+                    WHERE id_producto = '$id_product';";
 
     $update_alta_query = mysqli_query($conexion, $update_alta);
 

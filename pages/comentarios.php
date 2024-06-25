@@ -7,6 +7,7 @@ if(!isset($_SESSION['user'])) {
     header('Location: ../index.php');
 }
 
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +15,8 @@ if(!isset($_SESSION['user'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comentarios de </title>
+    <link rel="stylesheet" href="../css/style.css" type="text/css" />
+    <title>Comentarios del producto <?=$id?></title>
 </head>
 <body>
 
@@ -31,24 +33,37 @@ if(!isset($_SESSION['user'])) {
         </ul>
     </header>
     
-    <div class="container">
+    <a href="inventario.php"><img src="../assets/back.svg" alt="Volver" /></a>
+    <div class="container container-comments">
 
-        <form action="../lib/comentarios_sql.php" method="POST">
+        <h2>Ingrese un comentario o vea los comentarios para el equipo <span class="visual"><?=$id?></span></h2>
 
-            <label for="coment">Agregar comentario</label>
-            <textarea name="coment"></textarea>
+        <form id="form_comments" action="../lib/comentarios_sql.php?id=<?=$_SESSION['user']['id_admin']?>&id_prod=<?=$id?>" method="POST">
+
+            <textarea name="coment" placeholder="Ingrese un comentario aqui..."></textarea>
 
             <input type="submit" value="Guardar" />
 
         </form>
 
 
-        <div>
-            <h3>Usuario</h3>
-            <p></p>
-            <span></span>
-        </div>
+        <?php if(mysqli_num_rows($comentarios_query) > 0) :?>
 
+            <?php while($result_comment = mysqli_fetch_assoc($comentarios_query)) : ?>
+
+                <div class="comments">
+                    <h3><?=$result_comment['nombre'].' '.$result_comment['apellido']?></h3>
+                    <p><?=$result_comment['comentarios']?></p>
+                    <span><?=$result_comment['fecha']?></span>
+                </div>
+
+            <?php endwhile; ?>
+
+        <?php else :?>
+
+            <h2> No hay comentarios para este producto</h2>
+
+        <?php endif; ?>
     </div>
     <?php require_once '../includes/footer.php'; ?>
 </body>

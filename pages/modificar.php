@@ -34,9 +34,9 @@ if(!isset($_SESSION['user'])) {
         </ul>
     </header>
 
-    <div class="container container-regYMod">
+    <a href="inventario.php"><img src="../assets/back.svg" alt="Volver" /></a>
 
-        <a href="inventario.php"><img src="../assets/back.svg" alt="Volver" /></a>
+    <div class="container container-regYMod">
 
         <?php while($product = mysqli_fetch_assoc($modificar_query)): ?>
             

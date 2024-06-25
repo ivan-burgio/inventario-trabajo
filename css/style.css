@@ -5,6 +5,12 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    
+}
+
+body {
+
+    background-color: #77BA99;
 }
 
 .header {
@@ -50,6 +56,11 @@
     color: #F2E863;
 }
 
+.visual{
+
+    color:#F2E863;
+}
+
 .list {
 
     width: 100%;
@@ -75,18 +86,57 @@
     font-size: 25px;
 }
 
+.comments {
+
+    padding: 5px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    width: 80%;
+    border: 1px solid #F0A868;
+    background-color: #E4FFE1;
+}
+
+.comments h3 {
+
+    padding: 5px;
+    width: 20%;
+}
+
+.comments p {
+
+    padding: 5px;
+    width: 60%;
+}
+
+.comments span {
+
+    padding: 5px;
+    width: 20%;
+}
+
+.comments:last-child {
+    
+    margin-bottom: 5%;
+}
+
 .container {
 
     width: 100%;
-    min-height: 700px;
+    min-height: 100vh;
     height: auto;
-    background-color: #77BA99;
 }
 
-a img {
+.container-comments {
 
-    justify-self: start;
-    width: 30px;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+}
+
+.container-comments h2{
+
+    color:#E4FFE1;
 }
 
 .container-producto {
@@ -110,6 +160,28 @@ a img {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#form_comments {
+
+    display: flex;
+    align-items: center;
+    width: 80%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+#form_comments input[type="submit"] {
+
+    margin-left: 50px;
+    padding: 4px;
+    width: 100px;
+}
+
+#form_comments textarea {
+
+    width: 60%;
+    margin-left: 10%;
 }
 
 #form-login {
@@ -141,6 +213,7 @@ h2 {
 
     text-transform: uppercase;
     font: bold;
+    margin-top: 5%;
 }
 
 label,
@@ -153,6 +226,12 @@ textarea {
     margin: 0px;
     padding: 0px;
     height: 40px;
+}
+
+a img {
+
+    justify-self: start;
+    width: 30px;
 }
 
 textarea {

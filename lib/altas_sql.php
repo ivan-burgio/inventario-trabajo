@@ -20,7 +20,7 @@ if(isset($_POST['ubic'])) {
     $equipo = isset($_POST['select_prod']) ? $_POST['select_prod'] : false;
     $funcionario = isset($_POST['select_func']) ? $_POST['select_func'] : false;
     $domicilio = isset($_POST['direc']) ? $_POST['direc'] : false;
-    $plataforma = isset($_POST['box']) ? $_POST['box'] : false;
+    $sector = isset($_POST['sect']) ? $_POST['sect'] : false;
     $descripcion = isset($_POST['description']) ? $_POST['description'] : false;
 
     $estado = array();
@@ -56,7 +56,7 @@ if(isset($_POST['ubic'])) {
         if($_POST['ubic'] == 'home') {
 
             $insert_alta_tt = "INSERT INTO altas_productos 
-            VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora','$domicilio', '', '$descripcion', '$user', 1);";
+            VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora','$domicilio', NULL, '$descripcion', '$user', 1);";
 
             $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
             $modify_query = mysqli_query($conexion, $modify_status);
@@ -78,8 +78,10 @@ if(isset($_POST['ubic'])) {
 
         } else if($_POST['ubic'] == 'plataforma') {
 
+            $puesto = isset($_POST['box']) ? $_POST['box'] : false;
+
             $insert_alta_tt = "INSERT INTO altas_productos 
-            VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora', '$plataforma', 'BOX 145', '$descripcion', '$user', 2);";
+            VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora', '$sector', '$puesto', '$descripcion', '$user', 2);";
 
             $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
             $modify_query = mysqli_query($conexion, $modify_status);

@@ -62,6 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Eliminar cualquier elemento existente relacionado con 'direc' o 'box'
         const label_direccion_exist = document.querySelector('label[for="direc"]');
         const input_direccion_exist = document.querySelector('#direc');
+        const label_sect_exist = document.querySelector('label[for="sect"]');
+        const input_sect_exist = document.querySelector('#sect');
         const label_box_exist = document.querySelector('label[for="box"]');
         const input_box_exist = document.querySelector('#box');
     
@@ -70,6 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (input_direccion_exist) {
             form_altas.removeChild(input_direccion_exist);
+        }
+        if (label_sect_exist) {
+            form_altas.removeChild(label_sect_exist);
+        }
+        if (input_sect_exist) {
+            form_altas.removeChild(input_sect_exist);
         }
         if (label_box_exist) {
             form_altas.removeChild(label_box_exist);
@@ -101,18 +109,30 @@ document.addEventListener('DOMContentLoaded', () => {
     
             case 'plataforma':
 
+                let label_sect = document.createElement('label');
+                let input_sect = document.createElement('input');
                 let label_box = document.createElement('label');
                 let input_box = document.createElement('input');
     
+                label_sect.setAttribute('for', 'sect');
+                label_sect.textContent = 'Sector';
+
+                input_sect.setAttribute('type', 'text');
+                input_sect.setAttribute('id', 'sect');
+                input_sect.setAttribute('name', 'sect');
+
                 label_box.setAttribute('for', 'box');
-                label_box.textContent = 'N° de BOX y sector o departamento';
-    
+                label_box.textContent = 'Puesto';
+
                 input_box.setAttribute('type', 'text');
                 input_box.setAttribute('id', 'box');
                 input_box.setAttribute('name', 'box');
     
+                form_altas.insertBefore(label_sect, label_area);
+                form_altas.insertBefore(input_sect, label_area);
                 form_altas.insertBefore(label_box, label_area);
                 form_altas.insertBefore(input_box, label_area);
+
                 break;
     
             default:
