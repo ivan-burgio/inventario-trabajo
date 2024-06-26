@@ -53,7 +53,7 @@ if(!isset($_SESSION['user'])) {
                 <label for="modelo">Modelo</label>
                 <input type="text" name="modelo" value="<?=$product['modelo'];?>">
 
-                <label for="description">Descripcion</label>
+                <label for="description">Comentario</label>
                 <textarea name="descripcion"><?=$product['descripcion'];?></textarea>
 
                 <label for="proce">Procesador</label>

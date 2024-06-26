@@ -14,6 +14,7 @@ if($_POST) {
     $almacenamiento = isset($_POST['almace']) ? $_POST['almace'] : false;           //Se valida la existencia de datos enviados por POST
     $descripcion = isset($_POST['description']) ? $_POST['description'] : false;    //Se valida la existencia de datos enviados por POST
     $user = $_SESSION['user']['nombre'].' '.$_SESSION['user']['apellido'];
+    $user_admin = $_SESSION['user']['id_admin'];
 
     $errores = array();     //Se crea array de errores
 
@@ -33,7 +34,7 @@ if($_POST) {
         $errores['modelo'] = "Ingrese un modelo";
     };
 
-    if(empty($descripcion) || strlen($descripcion) < 20) {
+    if(empty($descripcion)) {
 
         $errores['descripcion'] = "Ingrese una descripcion mayor a 20 caracteres";
     };
@@ -67,10 +68,12 @@ if($_POST) {
             $descripcion_verify = mysqli_real_escape_string($conexion, $descripcion);       //Se aplica función para evitar inyecciones SQL
         
             //Se genera la consulta para la BD
-            $sql2 = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify', '$proce_verify', '$ram_verify', '$almace_verify', CURDATE(), '$descripcion_verify', '$user', 1);";
-            
+            $registro_equip = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify', '$proce_verify', '$ram_verify', '$almace_verify', CURDATE(), '$descripcion_verify', '$user', 1);";
+            $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_admin', '$id_verify', '$descripcion_verify', NOW());";
+
             //Se inserta la consulta en la BD
-            $insert = mysqli_query($conexion, $sql2);
+            $insert = mysqli_query($conexion, $registro_equip);
+            $insert_comment = mysqli_query($conexion, $comentario_inicial);
     
         } else {
     
@@ -88,10 +91,10 @@ if($_POST) {
             $descripcion_verify = mysqli_real_escape_string($conexion, $descripcion);       //Se aplica función para evitar inyecciones SQL
         
             //Se genera la consulta para la BD
-            $sql3 = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify',NULL, NULL, NULL, CURDATE(), '$descripcion_verify', '$user', 1);";
+            $registro_perife = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify',NULL, NULL, NULL, CURDATE(), '$descripcion_verify', '$user', 1);";
             
             //Se inserta la consulta en la BD
-            $insert = mysqli_query($conexion, $sql3);
+            $insert = mysqli_query($conexion, $registro_perife);
     
         } else {
             

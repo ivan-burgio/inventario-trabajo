@@ -23,13 +23,16 @@ if($_POST) {
     $procesador = isset($_POST['proce']) ? $_POST['proce'] : false;                 //Se valida la existencia de datos enviados por POST
     $ram = isset($_POST['ram']) ? $_POST['ram'] : false;                            //Se valida la existencia de datos enviados por POST
     $almacenamiento = isset($_POST['almace']) ? $_POST['almace'] : false;           //Se valida la existencia de datos enviados por POST
-    $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;    //Se valida la existencia de datos enviados por POST
+    $comentario = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;    //Se valida la existencia de datos enviados por POST
+    $user_admin = $_SESSION['user']['id_admin'];
 
     //Se genera la consulta para la BD
     $update = "UPDATE productos 
-                SET marca = '$marca', modelo = '$modelo', procesador = '$procesador', ram = '$ram', almacenamiento = '$almacenamiento', descripcion = '$descripcion' WHERE id = '$id';";
-
+                SET marca = '$marca', modelo = '$modelo', procesador = '$procesador', ram = '$ram', almacenamiento = '$almacenamiento' WHERE id = '$id';";
+    $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_admin', '$id', '$comentario', NOW());";
+    
     //Se inserta la consulta en la BD
+    $insert_comentario = mysqli_query($conexion, $comentario_inicial);
     $update_query = mysqli_query($conexion, $update);
 
     //Se redirecciona a la página del inventario

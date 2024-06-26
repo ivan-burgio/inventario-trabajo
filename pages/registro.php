@@ -63,7 +63,7 @@ if(!isset($_SESSION['user'])) {
             </select>
 
             <?=mostrarErrores('errores', 'descripcion'); ?>
-            <label for="description">Descripcion</label>
+            <label for="description">Descripcion y comentario inicial</label>
             <textarea name="description"></textarea>
 
             <input id="submit" type="submit" value="Registrar" />

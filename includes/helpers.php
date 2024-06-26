@@ -2,6 +2,7 @@
 
 require_once 'conexion.php';
 require('../FPDF/fpdf.php');
+include('../EMAIL/mail/enviar.php');
 date_default_timezone_set('America/Montevideo');
 
 //Función creada para mostrar los errores en los campos de registro
@@ -165,6 +166,8 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
     }
 
     $archivo = "../archivos_teletrabajo/archivo_{$fecha_y_hora}_N°{$id_func}_{$nombre}.pdf";
+
+    enviarMail($archivo, $id_func, $nombre);
     
     // Crear PDF
     $pdf = new PDF();

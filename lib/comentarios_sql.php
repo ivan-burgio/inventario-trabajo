@@ -20,7 +20,7 @@ if(isset($_GET)) {
         
         $comentario = isset($_POST['coment']) ? $_POST['coment'] : false;
         
-        $insert_coment = "INSERT INTO comentarios VALUES(NULL, '$id_funcionario', '$id_producto', '$comentario', CURDATE());";
+        $insert_coment = "INSERT INTO comentarios VALUES(NULL, '$id_funcionario', '$id_producto', '$comentario', NOW());";
         $insert_coment_query = mysqli_query($conexion, $insert_coment);
 
         header('Location: ../pages/inventario.php');

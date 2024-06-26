@@ -94,7 +94,7 @@ if(!isset($_SESSION['user'])) {
                 <?php endif; ?>
             </select>
 
-            <label id="label_area" for="description">Descripcion</label>
+            <label id="label_area" for="description">Descripcion y comentario</label>
             <textarea id="text_area" name="description"></textarea>
 
             <input id="submit" type="submit" value="Registrar" />

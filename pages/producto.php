@@ -60,6 +60,7 @@ if(!isset($_SESSION['user'])) {
                                 <td><?=$torre['descripcion']?></td>
                                 <td>
                                     <a href="../lib/eliminar_sql.php?id=<?=$torre['id'];?>"><img src="../assets/trash.svg" alt="Eliminar" /></a>
+                                    <a href="comentarios.php?id=<?=$torre['id']?>"><img src="../assets/comments.svg" alt="Modificar" /></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -77,8 +78,8 @@ if(!isset($_SESSION['user'])) {
                                 <th>Ram</th>
                                 <th>Memoria</th>
                                 <th>Alta</th>
-                                <th>Descripcion</th>
-                                <th>Comentarios</th>
+                                <th>Descripción</th>
+                                <th>Último comentario</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,7 +92,7 @@ if(!isset($_SESSION['user'])) {
                                 <td><?=$torre['almacenamiento']?></td>
                                 <td><?=$torre['alta']?></td>
                                 <td><?=$torre['descripcion']?></td>
-                                <td>No hay comentarios</td>
+                                <td>"<?=$torre['ultimo_comentario']?>"</td>
                                 <td>
                                     <a href="../lib/eliminar_sql.php?id=<?=$torre['id']?>"><img src="../assets/trash.svg" alt="Eliminar" /></a>
                                     <a href="modificar.php?id=<?=$torre['id']?>"><img src="../assets/edit.svg" alt="Editar" /></a>
@@ -107,7 +108,7 @@ if(!isset($_SESSION['user'])) {
 
         <?php else :?>
 
-            <?php echo "<h1>No hay productos para mostrar</h1>"; ?>
+            <?php echo "<h1>No hay productos para mostrar</h1>";?>
 
         <?php endif; ?>
         
