@@ -11,7 +11,7 @@ function get_mailinfo($_nombrearchivoadjunto, $id_func, $nombre){
 
     $mail= array ( 
         "cuerpomail" => "Se adjunta el PDF de alta de producto para el funcionario $id_func $nombre.<br><br>Buena Jornada",	
-        "destinatariomail" => array('yangivan19@gmail.com','Ivan Yang','','','','','','','','','',''),
+        "destinatariomail" => array('ivan.yang@skytel.com.uy','Ivan Yang','','','','','','','','','',''),
         //"destinatariomail" => array('christian.camacho@avanzauruguay.com','Christian Camacho','','','','','','','','','',''),
         "asuntomail" => 'ALTA DE PRODUCTO PARA FUNCIONARIO N°'.$id_func.' '.$nombre.' en la fecha '.$fechahoy,
         "archivoadjunto" => $_nombrearchivoadjunto,
