@@ -9,7 +9,7 @@ if(isset($_GET)) {
 
     //Se genera la consulta para la BD
     $select_pro = "SELECT 
-                   p.id, p.marca, p.modelo, p.procesador, p.ram, p.almacenamiento, 
+                   p.id, p.id_prod, p.marca, p.modelo, p.procesador, p.ram, p.almacenamiento, 
                    p.alta, p.descripcion, p.usuario, 
                    c.comentarios AS ultimo_comentario
                    FROM productos p

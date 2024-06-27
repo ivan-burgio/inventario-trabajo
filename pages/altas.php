@@ -61,7 +61,7 @@ if(!isset($_SESSION['user'])) {
 
                     <?php while($result_prod = mysqli_fetch_assoc($list_prod_query)) : ?>
 
-                        <option value="<?=$result_prod['id'];?>">ID: <?=$result_prod['id'].', '.$result_prod['marca'].', '.$result_prod['modelo'];?></option>
+                        <option value="<?=$result_prod['id'];?>">ID: <?=$result_prod['id_prod'].', '.$result_prod['marca'].', '.$result_prod['modelo'];?></option>
 
                     <?php endwhile; ?>
 

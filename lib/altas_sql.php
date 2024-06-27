@@ -10,7 +10,7 @@ $list = "SELECT f.id_funcionario, f.nombre, f.apellido, s.nombre AS nombre_secto
 $list_query = mysqli_query($conexion, $list);
 
 
-$list_prod = "SELECT id, marca, modelo FROM productos WHERE status = 1;";
+$list_prod = "SELECT id, id_prod, marca, modelo FROM productos WHERE status = 1;";
 $list_prod_query = mysqli_query($conexion, $list_prod);
 
 //------------VALIDACIÓN DE CAMPOS-------------------
@@ -56,7 +56,7 @@ if(isset($_POST['ubic'])) {
         if($_POST['ubic'] == 'home') {
 
             $insert_alta_tt = "INSERT INTO altas_productos 
-            VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora','$domicilio', NULL, '$descripcion', '$user', 1);";
+            VALUES(NULL, '$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora','$domicilio', NULL, '$descripcion', '$user', 1);";
 
             $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
             $modify_query = mysqli_query($conexion, $modify_status);

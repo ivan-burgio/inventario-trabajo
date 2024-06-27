@@ -45,7 +45,7 @@ require_once '../lib/bajas_sql.php';
 
                     <?php while($result = mysqli_fetch_assoc($select_altas_query)) : ?>
 
-                        <option value="<?=$result['id_producto'];?>">N°<?=$result['id_funcionario'].' | '.$result['id_producto'].' | '.$result['nombre_func'].' | '.$result['fecha'].' | '.$result['lugar_trabajo'];?></option>
+                        <option value="<?=$result['id_producto'];?>">N°<?=$result['id_funcionario'].' | '.$result['id_prod'].' | '.$result['nombre_func'].' | '.$result['fecha'].' | '.$result['lugar_trabajo'];?></option>
 
                     <?php endwhile; ?>
 

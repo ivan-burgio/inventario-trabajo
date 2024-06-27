@@ -84,7 +84,7 @@ if(!isset($_SESSION['user'])) {
                         </thead>
                         <tbody>
                             <tr>
-                                <td><?=$torre['id']?></td>
+                                <td><?=$torre['id_prod']?></td>
                                 <td><?=$torre['marca']?></td>
                                 <td><?=$torre['modelo']?></td>
                                 <td><?=$torre['procesador']?></td>

@@ -2,7 +2,7 @@
 
 require_once 'conexion.php';
 require('../FPDF/fpdf.php');
-include('../EMAIL/mail/enviar.php');
+require_once '../mail/enviar.php';
 date_default_timezone_set('America/Montevideo');
 
 //Función creada para mostrar los errores en los campos de registro
@@ -16,7 +16,7 @@ function mostrarErrores($errores, $campo) {
         echo '';
     }
 
-};
+}
 
 function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cuando se de de alta un producto hacia funcionario
 
@@ -166,8 +166,6 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
     }
 
     $archivo = "../archivos_teletrabajo/archivo_{$fecha_y_hora}_N°{$id_func}_{$nombre}.pdf";
-
-    enviarMail($archivo, $id_func, $nombre);
     
     // Crear PDF
     $pdf = new PDF();
@@ -210,4 +208,8 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
     $pdf->SignatureFunc();
     $pdf->Output($archivo, 'F');
     
-};
+    enviarMail($archivo, $id_func, $nombre, $fecha_y_hora);
+
+}
+
+

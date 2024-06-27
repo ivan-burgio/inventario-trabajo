@@ -53,7 +53,7 @@ if(!isset($_SESSION['user'])) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td><?=$producto['id']?></td>
+                            <td><?=$producto['id_prod']?></td>
                             <td><?=$producto['marca']?></td>
                             <td><?=$producto['modelo']?></td>
                             <td><?=$producto['stock']?></td>

@@ -21,7 +21,8 @@ CONSTRAINT fk_sectores FOREIGN KEY(sector) REFERENCES sectores(id_sector)
 
 CREATE TABLE productos (
 
-id              VARCHAR(50) NOT NULL PRIMARY KEY,
+id              INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+id_prod         VARCHAR(50) NOT NULL,
 marca           VARCHAR(100) NOT NULL,
 modelo          VARCHAR(100) NOT NULL,
 procesador      CHAR(20),
@@ -48,18 +49,19 @@ CREATE TABLE comentarios(
 
 id_comentario       INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 id_admin            INT NOT NULL,
-id_producto         VARCHAR(50) NOT NULL,
+id_producto         INT,
 comentarios         TEXT,
 
-FOREIGN KEY (id_admin) REFERENCES admin (id_admin),
-FOREIGN KEY (id_producto) REFERENCES productos (id)
+FOREIGN KEY (id_admin) REFERENCES admin(id_admin),
+FOREIGN KEY (id_producto) REFERENCES productos(id)
 
 )ENGINE=InnoDB;
 
 CREATE TABLE altas_productos (
 
+id,                 INT NOT NULL AUTO_INCREMENT,
 id_funcionario      INT,
-id_producto         VARCHAR(50),
+id_producto         INT,
 marca_produ         VARCHAR(100),
 nombre_func         VARCHAR(60),
 fecha               DATE,

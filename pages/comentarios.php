@@ -36,7 +36,7 @@ if(!isset($_SESSION['user'])) {
     <a href="inventario.php"><img src="../assets/back.svg" alt="Volver" /></a>
     <div class="container container-comments">
 
-        <h2>Ingrese un comentario o vea los comentarios para el equipo <span class="visual"><?=$id?></span></h2>
+        <h2>Ingrese un comentario o vea los comentarios para el equipo</h2>
 
         <form id="form_comments" action="../lib/comentarios_sql.php?id=<?=$_SESSION['user']['id_admin']?>&id_prod=<?=$id?>" method="POST">
 

@@ -620,45 +620,43 @@ class SMTP {
     $max_line_length = 998; // used below; set here for ease in change
 
     foreach ($lines as $line) {
-      $lines_out = null;
+      $lines_out = [];
+  
       if ($line == '' && $in_headers) {
           $in_headers = false;
       }
-
-      // ok we need to break this line up into several smaller lines
-      while(strlen($line) > $max_line_length) {
-        $pos = strrpos(substr($line, 0, $max_line_length), ' ');
-
-        // Patch to fix DOS attack
-        if(!$pos) {
-          $pos = $max_line_length - 1;
-          $lines_out[] = substr($line, 0, $pos);
-          $line = substr($line, $pos);
-        } else {
-          $lines_out[] = substr($line, 0, $pos);
-          $line = substr($line, $pos + 1);
-        }
-
-        /* if processing headers add a LWSP-char to the front of new line
-         * rfc 822 on long msg headers
-         */
-        if($in_headers) {
-          $line = "\t" . $line;
-        }
+  
+      // Break long lines into smaller chunks
+      while (strlen($line) > $max_line_length) {
+          $pos = strrpos(substr($line, 0, $max_line_length), ' ');
+  
+          // Patch to fix DOS attack
+          if (!$pos) {
+              $pos = $max_line_length - 1;
+              $lines_out[] = substr($line, 0, $pos);
+              $line = substr($line, $pos);
+          } else {
+              $lines_out[] = substr($line, 0, $pos);
+              $line = substr($line, $pos + 1);
+          }
+  
+          // If processing headers, add a LWSP-char to the front of new line
+          if ($in_headers) {
+              $line = "\t" . $line;
+          }
       }
+  
       $lines_out[] = $line;
-
-      // send the lines to the server
+  
+      // Send the lines to the server
       foreach ($lines_out as $line_out) {
-          if (strlen($line_out) > 0) {
-              if (substr($line_out, 0, 1) == '.') {
-                  $line_out = '.' . $line_out;
-              }
+          if (strlen($line_out) > 0 && substr($line_out, 0, 1) == '.') {
+              $line_out = '.' . $line_out;
           }
           $this->client_send($line_out . $this->CRLF);
       }
-
     }
+  
 
     // message data has been sent
     $this->client_send($this->CRLF . '.' . $this->CRLF);

@@ -45,7 +45,7 @@ if(!isset($_SESSION['user'])) {
                 <h2>Modificar productos</h2>
 
                 <label for="id">ID</label>
-                <input type="text" name="id" value="<?=$product['id'];?>">
+                <input type="text" name="id" value="<?=$product['id_prod'];?>">
 
                 <label for="marca">Marca</label>
                 <input type="text" name="marca" value="<?=$product['marca'];?>">

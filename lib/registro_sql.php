@@ -68,12 +68,22 @@ if($_POST) {
             $descripcion_verify = mysqli_real_escape_string($conexion, $descripcion);       //Se aplica función para evitar inyecciones SQL
         
             //Se genera la consulta para la BD
-            $registro_equip = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify', '$proce_verify', '$ram_verify', '$almace_verify', CURDATE(), '$descripcion_verify', '$user', 1);";
-            $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_admin', '$id_verify', '$descripcion_verify', NOW());";
-
+            $registro_equip = "INSERT INTO productos VALUES(NULL, '$id_verify', '$marca_verify', '$modelo_verify', '$proce_verify', '$ram_verify', '$almace_verify', CURDATE(), '$descripcion_verify', '$user', 1);";
+            
             //Se inserta la consulta en la BD
             $insert = mysqli_query($conexion, $registro_equip);
-            $insert_comment = mysqli_query($conexion, $comentario_inicial);
+
+            $select_id_equip = "SELECT id FROM productos WHERE id = $id_verify";
+            $select_id_query = mysqli_query($conexion, $select_id_equip);
+
+            if(mysqli_num_rows($select_id_query) > 0) {
+
+                $result = mysqli_fetch_assoc($select_id_query);
+                $id_equip = $result['id'];
+                
+                $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_admin', '$id_equip', '$descripcion_verify', NOW());";
+                $insert_comment = mysqli_query($conexion, $comentario_inicial);
+            }
     
         } else {
     
@@ -91,7 +101,7 @@ if($_POST) {
             $descripcion_verify = mysqli_real_escape_string($conexion, $descripcion);       //Se aplica función para evitar inyecciones SQL
         
             //Se genera la consulta para la BD
-            $registro_perife = "INSERT INTO productos VALUES('$id_verify', '$marca_verify', '$modelo_verify',NULL, NULL, NULL, CURDATE(), '$descripcion_verify', '$user', 1);";
+            $registro_perife = "INSERT INTO productos VALUES(NULL, '$id_verify', '$marca_verify', '$modelo_verify',NULL, NULL, NULL, CURDATE(), '$descripcion_verify', '$user', 1);";
             
             //Se inserta la consulta en la BD
             $insert = mysqli_query($conexion, $registro_perife);
