@@ -3,13 +3,10 @@ date_default_timezone_set('America/Montevideo');
 
 require_once 'setMail.php';
 
-function enviarMail($archivo, $id_func, $nombre) {
-
-//include ('../include/lib.php');
-//include ('../repo/'.$proyecto.'.php');
+function enviarMail($id_func, $nombre) {
 
 //OBTENGO DATOS DE MAIL A ENVIAR INGREO NOMBRE DE ARCHIVO ADJUNTO Y TIPO DE QRY A ENFVIAR 
-$infomail = get_mailinfo($archivo, $id_func, $nombre);
+$infomail = get_mailinfo($id_func, $nombre);
 
 $message 		= $infomail["cuerpomail"];
 $destinatarios 	= $infomail["destinatariomail"];

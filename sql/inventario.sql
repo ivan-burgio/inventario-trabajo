@@ -58,8 +58,7 @@ FOREIGN KEY (id_producto) REFERENCES productos(id)
 )ENGINE=InnoDB;
 
 CREATE TABLE altas_productos (
-
-id,                 INT NOT NULL AUTO_INCREMENT,
+id                  INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 id_funcionario      INT,
 id_producto         INT,
 marca_produ         VARCHAR(100),

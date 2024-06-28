@@ -208,7 +208,7 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
     $pdf->SignatureFunc();
     $pdf->Output($archivo, 'F');
     
-    enviarMail($archivo, $id_func, $nombre, $fecha_y_hora);
+    enviarMail($id_func, $nombre, $fecha_y_hora);
 
 }
 

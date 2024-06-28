@@ -26,24 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (count($errores_log) == 0) {
 
-        $select_log = "SELECT * FROM admin WHERE email = '$email';";
-        $select_query = mysqli_query($conexion, $select_log);
-    
-        if (mysqli_num_rows($select_query) == 1) {
 
-            $user = mysqli_fetch_assoc($select_query);
-            $verify = password_verify($password, $user['contraseña']);
+        insertQuery($verify, $user);
 
-            if($verify) {
-
-                $_SESSION['user'] = $user;
-            
-            } else {
-
-                $_SESSION['error_login'] = "Login incorrecto";
-            }
-
-        }
 
     } else {
 
@@ -55,5 +40,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 };
 
 mysqli_close($conexion);
+
+
+//----------------------------------------FUNCIONES----------------------------------------
+
+function insertQuery($verify, $user) {
+
+    $select_log = "SELECT * FROM admin WHERE email = '$email';";
+    $select_query = mysqli_query($conexion, $select_log);
+
+    if (mysqli_num_rows($select_query) == 1) {
+
+        $user = mysqli_fetch_assoc($select_query);
+        $verify = password_verify($password, $user['contraseña']);
+
+        verifyUser($verify);
+    }
+
+}
+
+function verifyUser($verify) {
+
+    if($verify) {
+
+        $_SESSION['user'] = $user;
+    
+    } else {
+
+        $_SESSION['error_login'] = "Login incorrecto";
+    }
+
+}
 
 ?>

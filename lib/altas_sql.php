@@ -55,46 +55,13 @@ if(isset($_POST['ubic'])) {
 
         if($_POST['ubic'] == 'home') {
 
-            $insert_alta_tt = "INSERT INTO altas_productos 
-            VALUES(NULL, '$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora','$domicilio', NULL, '$descripcion', '$user', 1);";
-
-            $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
-            $modify_query = mysqli_query($conexion, $modify_status);
-
-            $insert_query = mysqli_query($conexion, $insert_alta_tt); 
-
-            $fecha = date('d-m-Y');
-
-            archivoTT($funcionario, $nombre, $fecha);
-
-            if(!$insert_query) {
-
-            $error = mysqli_error($insert_query);
-            echo $error;
-
-            exit();
-
-            }
+            insertQueryHome($funcionario, $equipo, $modelo, $nombre, $hora, $domicilio, $descripcion, $user);
 
         } else if($_POST['ubic'] == 'plataforma') {
 
             $puesto = isset($_POST['box']) ? $_POST['box'] : false;
+            insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $hora, $sector, $puesto, $descripcion, $user);
 
-            $insert_alta_tt = "INSERT INTO altas_productos 
-            VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora', '$sector', '$puesto', '$descripcion', '$user', 2);";
-
-            $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
-            $modify_query = mysqli_query($conexion, $modify_status);
-
-            $insert_query = mysqli_query($conexion, $insert_alta_tt); 
-
-            if(!$insert_query) {
-
-            $error = mysqli_error($insert_query);
-            echo $error;
-            exit();
-            
-            };
         };
 
         $estado['exito'] = "Alta generada con exito";
@@ -103,6 +70,50 @@ if(isset($_POST['ubic'])) {
 
     header('Location: ../pages/altas.php');
 };
+
+
+//----------------------------------------FUNCIONES----------------------------------------
+
+function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $hora, $domicilio, $descripcion, $user) {
+
+    $insert_alta_tt = "INSERT INTO altas_productos 
+    VALUES(NULL, '$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora','$domicilio', NULL, '$descripcion', '$user', 1);";
+
+    $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
+    $modify_query = mysqli_query($conexion, $modify_status);
+
+    $insert_query = mysqli_query($conexion, $insert_alta_tt); 
+
+    $fecha = date('d-m-Y');
+
+    archivoTT($funcionario, $nombre, $fecha);
+
+    if(!$insert_query) {
+
+    $error = mysqli_error($insert_query);
+    echo $error;
+    exit();
+    };
+}
+
+function insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $hora, $sector, $puesto, $descripcion, $user) {
+
+    $insert_alta_tt = "INSERT INTO altas_productos 
+    VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora', '$sector', '$puesto', '$descripcion', '$user', 2);";
+
+    $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
+    $modify_query = mysqli_query($conexion, $modify_status);
+
+    $insert_query = mysqli_query($conexion, $insert_alta_tt); 
+
+    if(!$insert_query) {
+
+    $error = mysqli_error($insert_query);
+    echo $error;
+    exit();
+    
+    };
+}
 
 mysqli_close($conexion);
 
