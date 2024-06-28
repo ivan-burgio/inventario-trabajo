@@ -18,7 +18,8 @@ if($_POST) {
     $user = $_SESSION['user']['nombre'].' '.$_SESSION['user']['apellido'];
     $user_admin = $_SESSION['user']['id_admin'];
 
-    insertQueryBaja($id_product, $descripcion, $user, $user_admin);
+
+    insertQueryBaja($id_product, $descripcion, $user, $user_admin, $conexion);
 
     header('Location: ../pages/bajas.php');
 
@@ -27,12 +28,13 @@ if($_POST) {
 
 //----------------------------------------FUNCIONES----------------------------------------
 
-function insertQueryBaja($id_product, $descripcion, $user_admin, $user) {
+
+function insertQueryBaja($id_product, $descripcion, $user_admin, $user, $conexion) {
 
     $update_alta = "UPDATE altas_productos 
                     SET status = 0, usuario = '$user', descripcion = '$descripcion', fecha = CURDATE() 
                     WHERE id_producto = '$id_product';";
-    $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_admin', '$id_product', '$descripcion', NOW());";
+    $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user', '$id_product', '$descripcion', NOW());";
 
     $insert_comentario = mysqli_query($conexion, $comentario_inicial);
     $update_alta_query = mysqli_query($conexion, $update_alta);

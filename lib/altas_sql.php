@@ -55,12 +55,12 @@ if(isset($_POST['ubic'])) {
 
         if($_POST['ubic'] == 'home') {
 
-            insertQueryHome($funcionario, $equipo, $modelo, $nombre, $hora, $domicilio, $descripcion, $user);
+            insertQueryHome($funcionario, $equipo, $modelo, $nombre, $hora, $domicilio, $descripcion, $user, $conexion);
 
         } else if($_POST['ubic'] == 'plataforma') {
 
             $puesto = isset($_POST['box']) ? $_POST['box'] : false;
-            insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $hora, $sector, $puesto, $descripcion, $user);
+            insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $hora, $sector, $puesto, $descripcion, $user, $conexion);
 
         };
 
@@ -74,7 +74,7 @@ if(isset($_POST['ubic'])) {
 
 //----------------------------------------FUNCIONES----------------------------------------
 
-function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $hora, $domicilio, $descripcion, $user) {
+function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $hora, $domicilio, $descripcion, $user, $conexion) {
 
     $insert_alta_tt = "INSERT INTO altas_productos 
     VALUES(NULL, '$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora','$domicilio', NULL, '$descripcion', '$user', 1);";

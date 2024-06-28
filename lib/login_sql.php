@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (count($errores_log) == 0) {
 
 
-        insertQuery($verify, $user);
+        insertQuery($user, $email, $password, $conexion);
 
 
     } else {
@@ -44,7 +44,7 @@ mysqli_close($conexion);
 
 //----------------------------------------FUNCIONES----------------------------------------
 
-function insertQuery($verify, $user) {
+function insertQuery($user, $email, $password, $conexion) {
 
     $select_log = "SELECT * FROM admin WHERE email = '$email';";
     $select_query = mysqli_query($conexion, $select_log);
@@ -54,12 +54,12 @@ function insertQuery($verify, $user) {
         $user = mysqli_fetch_assoc($select_query);
         $verify = password_verify($password, $user['contraseña']);
 
-        verifyUser($verify);
+        verifyUser($verify, $user);
     }
 
 }
 
-function verifyUser($verify) {
+function verifyUser($verify, $user) {
 
     if($verify) {
 

@@ -3,7 +3,7 @@
 session_start();
 
 $host = 'Localhost';
-$user = 'ivanY';
+$user = 'root';
 $password = '';
 
 
