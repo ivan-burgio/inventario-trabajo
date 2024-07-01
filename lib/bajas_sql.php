@@ -2,10 +2,11 @@
 
 require_once '../includes/conexion.php';
 
-$select_altas = "SELECT MAX(a.id_producto) as id_producto, a.id_funcionario, a.id_producto, a.nombre_func, a.fecha, a.lugar_trabajo, p.id_prod
+$select_altas = "SELECT a.id_funcionario, a.id_producto, a.nombre_func, a.fecha, a.lugar_trabajo, p.id_prod
                  FROM altas_productos a
                  INNER JOIN productos p ON p.id = a.id_producto
                  WHERE a.status = 1
+                 AND a.fecha = (SELECT MAX(fecha) FROM altas_productos WHERE id_producto = a.id_producto)
                  GROUP BY a.id_funcionario, a.id_producto, a.nombre_func, a.fecha, a.lugar_trabajo, p.id_prod;";
 
 $select_altas_query = mysqli_query($conexion, $select_altas);

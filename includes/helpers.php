@@ -180,7 +180,7 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
             );
 
             
-    $headerActives = array("Lista de activos", "Entregado/DevolucionSi/No", "Observaciones");
+    $headerActives = array("Lista de activos", "Entregado/Devolucion \n Si/No", "Observaciones");
     $actives = array(
                 array('Pc (Devolucion)', '', ''),
                 array('Monitor (Devolucion)', '', ''),

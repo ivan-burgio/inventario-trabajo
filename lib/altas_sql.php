@@ -39,8 +39,6 @@ if(isset($_POST['ubic'])) {
 
     if(count($estado) == 0) {
 
-        $hora = date('H:i:s');
-
         $sql_marca_prod = "SELECT modelo FROM productos WHERE id = '$equipo';";
         $select_marca_prod = mysqli_query($conexion, $sql_marca_prod);
         $marca_prod = mysqli_fetch_assoc($select_marca_prod);
@@ -52,15 +50,16 @@ if(isset($_POST['ubic'])) {
         $nombre = $nombre_func['nombre'].' '.$nombre_func['apellido'];
 
         $user = $_SESSION['user']['nombre'].' '.$_SESSION['user']['apellido'];
+        $user_id = $_SESSION['user']['id_admin'];
 
         if($_POST['ubic'] == 'home') {
 
-            insertQueryHome($funcionario, $equipo, $modelo, $nombre, $hora, $domicilio, $descripcion, $user, $conexion);
+            insertQueryHome($funcionario, $equipo, $modelo, $nombre, $domicilio, $descripcion, $user, $user_id, $conexion);
 
         } else if($_POST['ubic'] == 'plataforma') {
 
             $puesto = isset($_POST['box']) ? $_POST['box'] : false;
-            insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $hora, $sector, $puesto, $descripcion, $user, $conexion);
+            insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $conexion);
 
         };
 
@@ -74,15 +73,19 @@ if(isset($_POST['ubic'])) {
 
 //----------------------------------------FUNCIONES----------------------------------------
 
-function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $hora, $domicilio, $descripcion, $user, $conexion) {
+function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $domicilio, $descripcion, $user, $user_id, $conexion) {
+
+    $fecha_actual = date('Y-m-d H:i:s');
 
     $insert_alta_tt = "INSERT INTO altas_productos 
-    VALUES(NULL, '$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora','$domicilio', NULL, '$descripcion', '$user', 1);";
+    VALUES(NULL, '$funcionario', '$equipo', '$modelo', '$nombre', $fecha_actual,'$domicilio', NULL, '$descripcion', '$user', 1);";
+    $insert_query = mysqli_query($conexion, $insert_alta_tt); 
+
+    $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', $fecha_actual);";
+    $insert_comentario = mysqli_query($conexion, $comentario_inicial);
 
     $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
     $modify_query = mysqli_query($conexion, $modify_status);
-
-    $insert_query = mysqli_query($conexion, $insert_alta_tt); 
 
     $fecha = date('d-m-Y');
 
@@ -96,15 +99,18 @@ function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $hora, $domici
     };
 }
 
-function insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $hora, $sector, $puesto, $descripcion, $user) {
+function insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $conexion) {
 
-    $insert_alta_tt = "INSERT INTO altas_productos 
-    VALUES('$funcionario', '$equipo', '$modelo', '$nombre', CURDATE(), '$hora', '$sector', '$puesto', '$descripcion', '$user', 2);";
+    $insert_alta_plat = "INSERT INTO altas_productos 
+    VALUES('$funcionario', '$equipo', '$modelo', '$nombre', NOW(), '$sector', '$puesto', '$descripcion', '$user', 1);";
+    $insert_query = mysqli_query($conexion, $insert_alta_plat); 
+
+    $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', NOW());";
+    $insert_comentario = mysqli_query($conexion, $comentario_inicial);;
+
 
     $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
     $modify_query = mysqli_query($conexion, $modify_status);
-
-    $insert_query = mysqli_query($conexion, $insert_alta_tt); 
 
     if(!$insert_query) {
 

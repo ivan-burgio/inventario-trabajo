@@ -59,7 +59,7 @@ if($_POST) {
 
         if(count($errores) == 0) { //Si el array de errores está vacio, entonces se realiza la inserción a la BD
 
-            ingresarProducTorre($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion);
+            ingresarProducTorre($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user);
     
         } else {
     
@@ -71,7 +71,7 @@ if($_POST) {
 
         if(count($errores) == 0) { //Si el array de errores está vacio, entonces se realiza la inserción a la BD
 
-            ingresarProducPerife($id, $marca, $modelo, $descripcion);
+            ingresarProducPerife($id, $marca, $modelo, $descripcion, $conexion);
 
         } else {
             
@@ -96,7 +96,7 @@ if($_POST) {
 //----------------------------------------FUNCIONES----------------------------------------
 
 
-function ingresarProducTorre($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion) {
+function ingresarProducTorre($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user) {
 
     $id_verify = mysqli_real_escape_string($conexion, $id);                         //Se aplica función para evitar inyecciones SQL
     $marca_verify = mysqli_real_escape_string($conexion, $marca);                   //Se aplica función para evitar inyecciones SQL
@@ -108,24 +108,26 @@ function ingresarProducTorre($id, $marca, $modelo, $procesador, $ram, $almacenam
 
     //Se genera la consulta para la BD
     $registro_equip = "INSERT INTO productos VALUES(NULL, '$id_verify', '$marca_verify', '$modelo_verify', '$proce_verify', '$ram_verify', '$almace_verify', CURDATE(), '$descripcion_verify', '$user', 1);";
-    
     //Se inserta la consulta en la BD
     $insert = mysqli_query($conexion, $registro_equip);
 
-    $select_id_equip = "SELECT id FROM productos WHERE id = $id_verify";
-    $select_id_query = mysqli_query($conexion, $select_id_equip);
+    if($insert) {
 
-    if(mysqli_num_rows($select_id_query) > 0) {
+        $select_id_equip = "SELECT id FROM productos WHERE id = $id_verify";
+        $select_id_query = mysqli_query($conexion, $select_id_equip);
 
-        $result = mysqli_fetch_assoc($select_id_query);
-        $id_equip = $result['id'];
-        
-        $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_admin', '$id_equip', '$descripcion_verify', NOW());";
-        $insert_comment = mysqli_query($conexion, $comentario_inicial);
+        if(mysqli_num_rows($select_id_query) > 0) {
+
+            $result = mysqli_fetch_assoc($select_id_query);
+            $id_equip = $result['id'];
+            
+            $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_admin', '$id_equip', '$descripcion_verify', NOW());";
+            $insert_comment = mysqli_query($conexion, $comentario_inicial);
+        }
     }
 }
 
-function ingresarProducPerife($id, $marca, $modelo, $descripcion) {
+function ingresarProducPerife($id, $marca, $modelo, $descripcion, $conexion) {
 
     $id_verify = mysqli_real_escape_string($conexion, $id);                         //Se aplica función para evitar inyecciones SQL
     $marca_verify = mysqli_real_escape_string($conexion, $marca);                   //Se aplica función para evitar inyecciones SQL
