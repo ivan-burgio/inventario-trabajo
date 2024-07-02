@@ -42,15 +42,15 @@ if(!isset($_SESSION['user'])) {
             
             <?=mostrarErrores('errores', 'id'); ?>
             <label for="id">ID</label>
-            <input type="text" id="id" name="id" />
+            <input type="text" id="id" name="id" placeholder="Ingrese la etiqueta del equipo"/>
 
             <?=mostrarErrores('errores', 'marca'); ?>
             <label for="marca">Marca</label>
-            <input type="text" id="marca" name="marca" />
+            <input type="text" id="marca" name="marca"  placeholder="Ingrese la marca del equipo"/>
 
             <?=mostrarErrores('errores', 'modelo'); ?>
             <label for="modelo">Modelo</label>
-            <input type="text" id="modelo" name="modelo" />
+            <input type="text" id="modelo" name="modelo" placeholder="Ingrese el modelo del equipo"/>
 
             <?=mostrarErrores('errores', 'select'); ?>
             <label for="select">Equipo</label>
@@ -64,7 +64,7 @@ if(!isset($_SESSION['user'])) {
 
             <?=mostrarErrores('errores', 'descripcion'); ?>
             <label for="description">Descripcion y comentario inicial</label>
-            <textarea name="description"></textarea>
+            <textarea name="description" placeholder="Descripción general del equipo..."></textarea>
 
             <input id="submit" type="submit" value="Registrar" />
         </form>

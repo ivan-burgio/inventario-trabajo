@@ -166,7 +166,8 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
     }
 
     $archivo = "../archivos_teletrabajo/archivo_{$fecha_y_hora}_N°{$id_func}_{$nombre}.pdf";
-    
+    $nombre_archivo = "archivo_{$fecha_y_hora}_N°{$id_func}_{$nombre}.pdf";
+
     // Crear PDF
     $pdf = new PDF();
     $pdf->AddPage();
@@ -208,7 +209,7 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
     $pdf->SignatureFunc();
     $pdf->Output($archivo, 'F');
     
-    enviarMail($id_func, $nombre, $fecha_y_hora);
+    enviarMail($id_func, $nombre, $fecha_y_hora, $nombre_archivo);
 
 }
 

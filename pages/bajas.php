@@ -57,7 +57,7 @@ require_once '../lib/bajas_sql.php';
             </select>
 
             <label id="label_area" for="descripcion">Motivo de baja</label>
-            <textarea id="text_area" name="descripcion"></textarea>
+            <textarea id="text_area" name="descripcion" placeholder="Motivo de la baja del producto..."></textarea>
 
             <input id="submit" type="submit" value="Registrar" />
         </form>

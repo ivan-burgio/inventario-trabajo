@@ -78,10 +78,10 @@ function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $domicilio, $d
     $fecha_actual = date('Y-m-d H:i:s');
 
     $insert_alta_tt = "INSERT INTO altas_productos 
-    VALUES(NULL, '$funcionario', '$equipo', '$modelo', '$nombre', $fecha_actual,'$domicilio', NULL, '$descripcion', '$user', 1);";
+    VALUES(NULL, '$funcionario', '$equipo', '$modelo', '$nombre', '$fecha_actual','$domicilio', NULL, '$descripcion', '$user', 1);";
     $insert_query = mysqli_query($conexion, $insert_alta_tt); 
 
-    $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', $fecha_actual);";
+    $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', '$fecha_actual');";
     $insert_comentario = mysqli_query($conexion, $comentario_inicial);
 
     $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
@@ -101,8 +101,10 @@ function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $domicilio, $d
 
 function insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $conexion) {
 
+    $fecha_actual = NOW();
+
     $insert_alta_plat = "INSERT INTO altas_productos 
-    VALUES('$funcionario', '$equipo', '$modelo', '$nombre', NOW(), '$sector', '$puesto', '$descripcion', '$user', 1);";
+    VALUES('$funcionario', '$equipo', '$modelo', '$nombre', '$fecha_actual', '$sector', '$puesto', '$descripcion', '$user', 1);";
     $insert_query = mysqli_query($conexion, $insert_alta_plat); 
 
     $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', NOW());";

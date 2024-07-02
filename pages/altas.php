@@ -95,7 +95,7 @@ if(!isset($_SESSION['user'])) {
             </select>
 
             <label id="label_area" for="description">Comentarios</label>
-            <textarea id="text_area" name="description"></textarea>
+            <textarea id="text_area" name="description" placeholder="Comentario sobre el alta del producto..."></textarea>
 
             <input id="submit" type="submit" value="Registrar" />
         </form>

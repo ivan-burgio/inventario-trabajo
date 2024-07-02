@@ -3,10 +3,10 @@ date_default_timezone_set('America/Montevideo');
 
 require_once 'setMail.php';
 
-function enviarMail($id_func, $nombre, $fecha) {
+function enviarMail($id_func, $nombre, $fecha, $archivo) {
 
 //OBTENGO DATOS DE MAIL A ENVIAR INGREO NOMBRE DE ARCHIVO ADJUNTO Y TIPO DE QRY A ENFVIAR 
-$infomail = get_mailinfo($id_func, $nombre, $fecha);
+$infomail = get_mailinfo($id_func, $nombre, $fecha, $archivo);
 
 $message 		= $infomail["cuerpomail"];
 $destinatarios 	= $infomail["destinatariomail"];
@@ -33,7 +33,6 @@ function clean_text($string)
 	
 	$path = $archivoadjunto;
 	
-//var_dump($path);
 
 	require 'class/class.phpmailer.php';
 	$mail = new PHPMailer;
