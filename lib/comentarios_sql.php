@@ -23,11 +23,16 @@ if(isset($_GET)) {
         $insert_coment = "INSERT INTO comentarios VALUES(NULL, '$id_funcionario', '$id_producto', '$comentario', NOW());";
         $insert_coment_query = mysqli_query($conexion, $insert_coment);
 
+        mysqli_close($conexion);
+
         header('Location: ../pages/inventario.php');
     }
+
+    mysqli_close($conexion);
 
 };
 
 mysqli_close($conexion);
+
 
 ?>

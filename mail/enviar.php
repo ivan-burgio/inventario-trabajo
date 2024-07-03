@@ -33,6 +33,7 @@ function clean_text($string)
 	
 	$path = $archivoadjunto;
 	
+	//var_dump($path);
 
 	require 'class/class.phpmailer.php';
 	$mail = new PHPMailer;
@@ -62,29 +63,27 @@ function clean_text($string)
 	$mail->addCC($destinatarios[8], $destinatarios[9]);
 	*/
 
-	$mail->addBCC('repoavanza2022@gmail.com', 'Avanza Skytel');
+	//$mail->addBCC('repoavanza2022@gmail.com', 'Avanza Skytel');
 	
 	$mail->WordWrap = 50;							
 	$mail->IsHTML(true);							//Sets message type to HTML
 	$mail->AddAttachment($path);					//Adds an attachment from a path on the filesystem
 	$mail->Subject = $asuntomail;				//Sets the Subject of the message
 	$mail->Body = $message;							//An HTML or plain text message body
-	$mail->send();
 	
 	//send the message, check for errors
 
-	/*
 	if (!$mail->send()) {
 	    echo "Mailer Error: " . $mail->ErrorInfo;
-	    insert_log("System:enviomailreporte",$asuntomail,"Envio Mail","Fallo - ");
+	    //insert_log("System:enviomailreporte",$asuntomail,"Envio Mail","Fallo - ");
 	    shell_exec("TASKKILL /IM chrome.exe /F");
 	} else {
-	    //echo "Envio ".$asuntomail." Realizado Correctamente ".$fecha." ";
-	    insert_log("System:enviomailreporte",$asuntomail,"Envio Mail","Ok - ".$archivoadjunto);
-	    shell_exec("TASKKILL /IM chrome.exe /F");
+	    echo "Envio ".$asuntomail." Realizado Correctamente ".$fecha." ";
+	    //insert_log("System:enviomailreporte",$asuntomail,"Envio Mail","Ok - ".$archivoadjunto);
+	    //shell_exec("TASKKILL /IM chrome.exe /F");
 	}
-	*/
-
 }
+
+mysqli_close($conexion);
 
 ?>

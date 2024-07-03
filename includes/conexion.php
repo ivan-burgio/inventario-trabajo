@@ -2,10 +2,11 @@
 
 session_start();
 
+date_default_timezone_set('America/Montevideo');
+
 $host = 'Localhost';
 $user = 'root';
 $password = '';
-
 
 $conexion = mysqli_connect($host, $user, $password);
 

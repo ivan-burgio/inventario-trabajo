@@ -10,12 +10,22 @@ function mostrarErrores($errores, $campo) {
 
     if(isset($_SESSION[$errores][$campo])) {
 
-        echo "<div>".$_SESSION[$errores][$campo]."</div>";
+        echo "<div class='alert alert_error'>".$_SESSION[$errores][$campo]."</div>";
     } else {
 
         echo '';
     }
+}
 
+function mostrarExito($estado, $campo) {
+
+    if(isset($_SESSION[$estado][$campo])) {
+
+        echo "<div class='alert alert_exito'>".$_SESSION[$estado][$campo]."</div>";
+    } else {
+
+        echo '';
+    }
 }
 
 function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cuando se de de alta un producto hacia funcionario
@@ -166,7 +176,6 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
     }
 
     $archivo = "../archivos_teletrabajo/archivo_{$fecha_y_hora}_N°{$id_func}_{$nombre}.pdf";
-    $nombre_archivo = "archivo_{$fecha_y_hora}_N°{$id_func}_{$nombre}.pdf";
 
     // Crear PDF
     $pdf = new PDF();
@@ -208,8 +217,15 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
     $pdf->BasesAndConditions($texto_with_code);
     $pdf->SignatureFunc();
     $pdf->Output($archivo, 'F');
-    
-    enviarMail($id_func, $nombre, $fecha_y_hora, $nombre_archivo);
+
+    // Verificar si el archivo se guardó correctamente
+    if (file_exists($archivo) && filesize($archivo) > 0) {
+    // Llamar a la función enviarMail solo si el archivo existe y no está vacío
+        enviarMail($id_func, $nombre, $fecha_y_hora, $archivo);
+    } else {
+        echo "Error al generar el archivo PDF.";
+        // Aquí puedes manejar el error de alguna manera apropiada
+    }
 
 }
 

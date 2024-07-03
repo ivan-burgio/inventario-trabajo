@@ -65,7 +65,10 @@ if(isset($_POST['ubic'])) {
 
         $estado['exito'] = "Alta generada con exito";
         $_SESSION['estados'] = $estados;
-    };
+    } else {
+
+        $_SESSION['errores'] = $errores;
+    }
 
     header('Location: ../pages/altas.php');
 };
@@ -101,13 +104,13 @@ function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $domicilio, $d
 
 function insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $conexion) {
 
-    $fecha_actual = NOW();
+    $fecha_actual = date('Y-m-d H:i:s');
 
     $insert_alta_plat = "INSERT INTO altas_productos 
     VALUES('$funcionario', '$equipo', '$modelo', '$nombre', '$fecha_actual', '$sector', '$puesto', '$descripcion', '$user', 1);";
     $insert_query = mysqli_query($conexion, $insert_alta_plat); 
 
-    $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', NOW());";
+    $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', '$fecha_actual');";
     $insert_comentario = mysqli_query($conexion, $comentario_inicial);;
 
 
@@ -115,7 +118,6 @@ function insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $pues
     $modify_query = mysqli_query($conexion, $modify_status);
 
     if(!$insert_query) {
-
     $error = mysqli_error($insert_query);
     echo $error;
     exit();
@@ -123,6 +125,5 @@ function insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $pues
     };
 }
 
-mysqli_close($conexion);
 
 ?>

@@ -18,6 +18,18 @@ if($_POST) {
 
     $errores = array();     //Se crea array de errores
 
+    validacionCampos($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $errores, $conexion);
+    
+    //Redirigue la ubicación de la página hacia el registro
+    header('Location: ../pages/registro.php');
+    exit();
+};
+
+//----------------------------------------FUNCIONES----------------------------------------
+
+
+function validacionCampos($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $errores, $conexion) {
+
     //Validación de los campos
     if(empty($id)) {
 
@@ -26,75 +38,85 @@ if($_POST) {
 
     if(empty($marca) || preg_match("[/0-9/]", $marca)) {
 
-        $errores['marca'] = "Ingrese una marca valida";
+        $errores['marca'] = "Ingrese la marca del equipo";
     };
 
     if(empty($modelo)) {
 
-        $errores['modelo'] = "Ingrese un modelo";
+        $errores['modelo'] = "Ingrese el modelo del equipo";
     };
 
     if(empty($descripcion)) {
 
-        $errores['descripcion'] = "Ingrese una descripcion mayor a 20 caracteres";
+        $errores['descripcion'] = "Ingrese una descripción generica del equipo";
     };
+
+    if(empty($procesador)) {
+
+        $errores['procesador'] = "Ingrese el procesador del equipo";
+    };
+
+    if(empty($ram)) {
+
+        $errores['ram'] = "Ingrese la RAM del equipo";
+    };
+
+    if(empty($almacenamiento)) {
+
+        $errores['almacenamiento'] = "Ingrese el almacenamiento del equipo";
+    };
+
+    validarTipoProducto($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $errores, $conexion);
+
+
+}
+
+function validarTipoProducto($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $errores, $conexion) {
 
     //Se valida el tipo de valor del select
     if($_POST['select'] && $_POST['select'] == 'torre') { //En caso de que sea 'torre' se validan los otros campos
 
-        if(empty($procesador)) {
-
-            $errores['procesador'] = "Ingrese el CPU del equipo";
-        };
-    
-        if(empty($ram)) {
-    
-            $errores['ram'] = "Ingrese la RAM del equipo";
-        };
-    
-        if(empty($almacenamiento)) {
-    
-            $errores['almacenamiento'] = "Ingrese el almacenamiento del equipo";
-        };
-
-        if(count($errores) == 0) { //Si el array de errores está vacio, entonces se realiza la inserción a la BD
-
-            ingresarProducTorre($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user);
-    
-        } else {
-    
-            $_SESSION['errores'] = $errores;
-        };
+        countErrorTorre($errores, $id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user);
 
     //Se valida el tipo de valor del select
     } elseif($_POST['select'] && $_POST['select'] == 'perife') { //En caso de que sea 'perife' se realiza la validación del array de errores
 
-        if(count($errores) == 0) { //Si el array de errores está vacio, entonces se realiza la inserción a la BD
+        countErrorPerife($errores, $id, $marca, $modelo, $descripcion, $conexion);
 
-            ingresarProducPerife($id, $marca, $modelo, $descripcion, $conexion);
-
-        } else {
-            
-            //En caso de que hayan errores, se guarda en una session el array asociativo.
-            $_SESSION['errores'] = $errores;
-        };
-    
     } else {
 
         //Si no se selecciona alguno de los dos valores anteriormente mencionados, se guarda en el array de $errores
         $errores['select'] = "Seleccione una opcion";
         $_SESSION['errores'] = $errores;
     }
+    
+}
 
+function countErrorTorre($errores, $id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user) {
 
+    if(count($errores) == 0) { //Si el array de errores está vacio, entonces se realiza la inserción a la BD
 
-    //Redirigue la ubicación de la página hacia el registro
-    header('Location: ../pages/registro.php');
-    exit();
-};
+        ingresarProducTorre($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user);
 
-//----------------------------------------FUNCIONES----------------------------------------
+    } else {
 
+        $_SESSION['errores'] = $errores;
+    };
+
+}
+
+function countErrorPerife($errores, $id, $marca, $modelo, $descripcion, $conexion) {
+
+    if(count($errores) == 0) { //Si el array de errores está vacio, entonces se realiza la inserción a la BD
+
+        ingresarProducPerife($id, $marca, $modelo, $descripcion, $conexion);
+
+    } else {
+        
+        //En caso de que hayan errores, se guarda en una session el array asociativo.
+        $_SESSION['errores'] = $errores;
+    };
+}
 
 function ingresarProducTorre($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user) {
 
@@ -127,7 +149,5 @@ function ingresarProducPerife($id, $marca, $modelo, $descripcion, $conexion) {
     $insert = mysqli_query($conexion, $registro_perife);
 
 }
-
-mysqli_close($conexion);
 
 ?>
