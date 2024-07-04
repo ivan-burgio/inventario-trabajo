@@ -4,6 +4,8 @@ require_once '../includes/conexion.php';
 
 if(isset($_GET)) {
 
+    unset($_SESSION['error']);
+
     $id = isset($_GET['id']) ? $_GET['id'] : false;
 
     $comentarios = "SELECT c.comentarios, c.fecha, a.nombre, a.apellido FROM comentarios c
@@ -20,19 +22,28 @@ if(isset($_GET)) {
         
         $comentario = isset($_POST['coment']) ? $_POST['coment'] : false;
         
-        $insert_coment = "INSERT INTO comentarios VALUES(NULL, '$id_funcionario', '$id_producto', '$comentario', NOW());";
-        $insert_coment_query = mysqli_query($conexion, $insert_coment);
+        $estado = array();
 
-        mysqli_close($conexion);
+        if(empty($comentario)) {
 
-        header('Location: ../pages/inventario.php');
-    }
+            $estado['comentario'] = "El comentario no puede estár vacio";
+        };
 
-    mysqli_close($conexion);
+        if(count($estado) == 0) {
 
+            $insert_coment = "INSERT INTO comentarios VALUES(NULL, '$id_funcionario', '$id_producto', '$comentario', NOW());";
+            $insert_coment_query = mysqli_query($conexion, $insert_coment);
+            header('Location: ../pages/inventario.php');
+            exit();
+        
+        } else {
+
+            $_SESSION['error'] = $estado;
+        };
+        
+    };
 };
 
 mysqli_close($conexion);
-
 
 ?>

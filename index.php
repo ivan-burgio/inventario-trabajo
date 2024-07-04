@@ -20,8 +20,6 @@ if(!isset($_SESSION)) {
 </head>
 <body>
 
-    
-
     <?php if(!isset($_SESSION['user'])) :?>
 
         <div class="container container-login">
@@ -30,9 +28,12 @@ if(!isset($_SESSION)) {
 
             <form id="form-login" action="lib/login_sql.php" method="POST">
 
+                <?=mostrarErrores('errores_log', 'email');?>
                 <label for="user">Usuario</label>
                 <input type="email" name="user" id="user"/>
 
+                <?=mostrarErrores('errores_log', 'password');?>
+                <?=mostrarErrores('errores_log', 'not_verify');?>
                 <label for="password">Contraseña</label>
                 <input type="password" name="password" id="password" />
 

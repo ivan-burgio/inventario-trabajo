@@ -11,6 +11,7 @@ function mostrarErrores($errores, $campo) {
     if(isset($_SESSION[$errores][$campo])) {
 
         echo "<div class='alert alert_error'>".$_SESSION[$errores][$campo]."</div>";
+
     } else {
 
         echo '';
@@ -22,6 +23,7 @@ function mostrarExito($estado, $campo) {
     if(isset($_SESSION[$estado][$campo])) {
 
         echo "<div class='alert alert_exito'>".$_SESSION[$estado][$campo]."</div>";
+        
     } else {
 
         echo '';

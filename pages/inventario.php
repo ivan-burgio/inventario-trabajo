@@ -32,6 +32,10 @@ if(!isset($_SESSION['user'])) {
         </ul>
     </header>
 
+    <div class="search">
+        <input type="text" placeholder="Ingrese el producto...">
+    </div>
+
     <div class="container">
 
         <?php if(mysqli_num_rows($select) == 0) : ?>

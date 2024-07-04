@@ -1,6 +1,7 @@
 <?php
 
 require_once '../lib/bajas_sql.php';
+require_once '../includes/helpers.php';
 
 ?>
 
@@ -34,6 +35,7 @@ require_once '../lib/bajas_sql.php';
 
             <h2>Baja de productos para funcionarios</h2>
 
+            <?=mostrarExito('exitoBaja', 'exito')?>
             <label for="label_func_altas">Funcionario</label>
             <input type="text" id="input_func_altas" name="input_func" placeholder="Ingrese al funcionario o id de equipo (Ej. N° Funcionario, ID de equipo, fecha, nombre)"/>
 
@@ -56,6 +58,7 @@ require_once '../lib/bajas_sql.php';
                 <?php endif; ?>
             </select>
 
+            <?=mostrarErrores('errorBaja', 'motivo')?>
             <label id="label_area" for="descripcion">Motivo de baja</label>
             <textarea id="text_area" name="descripcion" placeholder="Motivo de la baja del producto..."></textarea>
 

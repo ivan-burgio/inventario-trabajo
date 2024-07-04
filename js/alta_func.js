@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     input.addEventListener('input', getEmployee); //Se llama la función cada vez que se escriba sobre el input
     select_ubic.addEventListener('change', addForm); //Se llama la función cada vez que hayan cambios en el select
     
-
     //----------------------------FUNCIONES-----------------------------
     
     function getProduct() {

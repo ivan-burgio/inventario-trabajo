@@ -4,7 +4,7 @@ require_once '../includes/conexion.php';
 //Validar e ingresar los datos de los productos que se ingresan a la tabla productos.
 if($_POST) {
 
-    unset($_SESSION['errores']);
+    unset($_SESSION['estado']);
 
     $id = isset($_POST['id']) ? $_POST['id'] : false;                               //Se valida la existencia de datos enviados por POST
     $marca = isset($_POST['marca']) ? $_POST['marca'] : false;                      //Se valida la existencia de datos enviados por POST
@@ -16,9 +16,9 @@ if($_POST) {
     $user = $_SESSION['user']['nombre'].' '.$_SESSION['user']['apellido'];
     $user_admin = $_SESSION['user']['id_admin'];
 
-    $errores = array();     //Se crea array de errores
+    $estado = array();     //Se crea array de estado
 
-    validacionCampos($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $errores, $conexion);
+    validacionCampos($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $estado, $conexion);
     
     //Redirigue la ubicación de la página hacia el registro
     header('Location: ../pages/registro.php');
@@ -28,93 +28,80 @@ if($_POST) {
 //----------------------------------------FUNCIONES----------------------------------------
 
 
-function validacionCampos($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $errores, $conexion) {
+function validacionCampos($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $estado, $conexion) {
 
     //Validación de los campos
     if(empty($id)) {
 
-        $errores['id'] = "Ingrese un ID";
+        $estado['id'] = "Ingrese un ID";
     };
 
     if(empty($marca) || preg_match("[/0-9/]", $marca)) {
 
-        $errores['marca'] = "Ingrese la marca del equipo";
+        $estado['marca'] = "Ingrese la marca del equipo";
     };
 
     if(empty($modelo)) {
 
-        $errores['modelo'] = "Ingrese el modelo del equipo";
+        $estado['modelo'] = "Ingrese el modelo del equipo";
     };
 
     if(empty($descripcion)) {
 
-        $errores['descripcion'] = "Ingrese una descripción generica del equipo";
+        $estado['descripcion'] = "Ingrese una descripción generica del equipo";
     };
 
-    if(empty($procesador)) {
-
-        $errores['procesador'] = "Ingrese el procesador del equipo";
-    };
-
-    if(empty($ram)) {
-
-        $errores['ram'] = "Ingrese la RAM del equipo";
-    };
-
-    if(empty($almacenamiento)) {
-
-        $errores['almacenamiento'] = "Ingrese el almacenamiento del equipo";
-    };
-
-    validarTipoProducto($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $errores, $conexion);
-
-
+    validarTipoProducto($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $estado, $conexion);
 }
 
-function validarTipoProducto($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $errores, $conexion) {
+function validarTipoProducto($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $estado, $conexion) {
 
     //Se valida el tipo de valor del select
     if($_POST['select'] && $_POST['select'] == 'torre') { //En caso de que sea 'torre' se validan los otros campos
 
-        countErrorTorre($errores, $id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user);
+        countErrorTorre($estado, $id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user);
 
     //Se valida el tipo de valor del select
-    } elseif($_POST['select'] && $_POST['select'] == 'perife') { //En caso de que sea 'perife' se realiza la validación del array de errores
+    } elseif($_POST['select'] && $_POST['select'] == 'perife') { //En caso de que sea 'perife' se realiza la validación del array de estado
 
-        countErrorPerife($errores, $id, $marca, $modelo, $descripcion, $conexion);
+        countErrorPerife($estado, $id, $marca, $modelo, $descripcion, $conexion);
 
     } else {
 
-        //Si no se selecciona alguno de los dos valores anteriormente mencionados, se guarda en el array de $errores
-        $errores['select'] = "Seleccione una opcion";
-        $_SESSION['errores'] = $errores;
+        //Si no se selecciona alguno de los dos valores anteriormente mencionados, se guarda en el array de $estado
+        $estado['select'] = "Seleccione una opcion";
+        $_SESSION['estado'] = $estado;
     }
     
 }
 
-function countErrorTorre($errores, $id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user) {
+function countErrorTorre($estado, $id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user) {
 
-    if(count($errores) == 0) { //Si el array de errores está vacio, entonces se realiza la inserción a la BD
+    if(count($estado) == 0) { //Si el array de estado está vacio, entonces se realiza la inserción a la BD
 
         ingresarProducTorre($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user);
+        $estado['exito_torre'] = "Se registró el periferico con éxito";
+        $_SESSION['estado'] = $estado;
 
     } else {
 
-        $_SESSION['errores'] = $errores;
+        $_SESSION['estado'] = $estado;
     };
 
 }
 
-function countErrorPerife($errores, $id, $marca, $modelo, $descripcion, $conexion) {
+function countErrorPerife($estado, $id, $marca, $modelo, $descripcion, $conexion) {
 
-    if(count($errores) == 0) { //Si el array de errores está vacio, entonces se realiza la inserción a la BD
+    if(count($estado) == 0) { //Si el array de estado está vacio, entonces se realiza la inserción a la BD
 
         ingresarProducPerife($id, $marca, $modelo, $descripcion, $conexion);
+        $estado['exito_perife'] = "Se registró el periferico con éxito";
+        $_SESSION['estado'] = $estado;
 
     } else {
         
-        //En caso de que hayan errores, se guarda en una session el array asociativo.
-        $_SESSION['errores'] = $errores;
+        //En caso de que hayan estado, se guarda en una session el array asociativo.
+        $_SESSION['estado'] = $estado;
     };
 }
 

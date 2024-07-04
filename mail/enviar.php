@@ -84,6 +84,4 @@ function clean_text($string)
 	}
 }
 
-mysqli_close($conexion);
-
 ?>

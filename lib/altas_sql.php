@@ -17,6 +17,9 @@ $list_prod_query = mysqli_query($conexion, $list_prod);
 
 if(isset($_POST['ubic'])) {
 
+    unset($_SESSION['estado']);
+    unset($_SESSION['errores']);
+
     $equipo = isset($_POST['select_prod']) ? $_POST['select_prod'] : false;
     $funcionario = isset($_POST['select_func']) ? $_POST['select_func'] : false;
     $domicilio = isset($_POST['direc']) ? $_POST['direc'] : false;
@@ -25,57 +28,75 @@ if(isset($_POST['ubic'])) {
 
     $estado = array();
 
-    if(empty($domicilio)) {
-
-        $estado['domicilio'] = "Ingrese el domicilio del funcionario";
-    };
-
-    if(empty($descripcion) || strlen($descripcion) < 20) {
-
-        $estado['descripcion'] = "Ingrese una descripción mayor a 20 caracteres";
-    };
-
- 
-
-    if(count($estado) == 0) {
-
-        $sql_marca_prod = "SELECT modelo FROM productos WHERE id = '$equipo';";
-        $select_marca_prod = mysqli_query($conexion, $sql_marca_prod);
-        $marca_prod = mysqli_fetch_assoc($select_marca_prod);
-        $modelo = $marca_prod['modelo'];
-
-        $sql_nombre_func = "SELECT nombre, apellido FROM funcionarios WHERE id_funcionario = '$funcionario';";
-        $select_nombre_func = mysqli_query($conexion, $sql_nombre_func);
-        $nombre_func = mysqli_fetch_assoc($select_nombre_func);
-        $nombre = $nombre_func['nombre'].' '.$nombre_func['apellido'];
-
-        $user = $_SESSION['user']['nombre'].' '.$_SESSION['user']['apellido'];
-        $user_id = $_SESSION['user']['id_admin'];
-
-        if($_POST['ubic'] == 'home') {
-
-            insertQueryHome($funcionario, $equipo, $modelo, $nombre, $domicilio, $descripcion, $user, $user_id, $conexion);
-
-        } else if($_POST['ubic'] == 'plataforma') {
-
-            $puesto = isset($_POST['box']) ? $_POST['box'] : false;
-            insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $conexion);
-
-        };
-
-        $estado['exito'] = "Alta generada con exito";
-        $_SESSION['estados'] = $estados;
-    } else {
-
-        $_SESSION['errores'] = $errores;
-    }
+    validarCampos($equipo, $funcionario, $domicilio, $sector, $descripcion, $estado, $conexion);
 
     header('Location: ../pages/altas.php');
+    exit();
 };
 
 
 //----------------------------------------FUNCIONES----------------------------------------
 
+//Funcion para validar los datos ingresados en los campos del form
+function validarCampos($equipo, $funcionario, $domicilio, $sector, $descripcion, $estado, $conexion) {
+
+    if(empty($descripcion)) {
+
+        $estado['comentario'] = "Ingrese un comentario para el alta";
+    };
+
+    countError($equipo, $estado, $funcionario, $domicilio, $sector, $descripcion, $conexion);
+
+}
+
+//Funcion para contar los posibles errores en los campos del form
+function countError($equipo, $estado, $funcionario, $domicilio, $sector, $descripcion, $conexion) {
+
+    if(count($estado) == 0) {
+
+        createQuery($equipo, $estado, $funcionario, $domicilio, $sector, $descripcion, $conexion);
+
+    } else {
+
+        $_SESSION['errores'] = $estado;
+    }
+}
+
+//Funcion para crear las querys de los select y aplicar la condicional dependiendo si es teletrabajo o plataforma
+function createQuery($equipo, $estado, $funcionario, $domicilio, $sector, $descripcion, $conexion) {
+
+
+    $sql_marca_prod = "SELECT modelo FROM productos WHERE id = '$equipo';";
+    $select_marca_prod = mysqli_query($conexion, $sql_marca_prod);
+    $marca_prod = mysqli_fetch_assoc($select_marca_prod);
+    $modelo = $marca_prod['modelo'];
+
+    $sql_nombre_func = "SELECT nombre, apellido FROM funcionarios WHERE id_funcionario = '$funcionario';";
+    $select_nombre_func = mysqli_query($conexion, $sql_nombre_func);
+    $nombre_func = mysqli_fetch_assoc($select_nombre_func);
+    $nombre = $nombre_func['nombre'].' '.$nombre_func['apellido'];
+
+    $user = $_SESSION['user']['nombre'].' '.$_SESSION['user']['apellido'];
+    $user_id = $_SESSION['user']['id_admin'];
+
+
+    if($_POST['ubic'] == 'home') {
+
+        insertQueryHome($funcionario, $equipo, $modelo, $nombre, $domicilio, $descripcion, $user, $user_id, $conexion);
+
+    } elseif($_POST['ubic'] == 'plataforma') {
+
+        $puesto = isset($_POST['box']) ? $_POST['box'] : false;
+        insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $conexion);
+
+    };
+
+    $estado['exito'] = "Alta generada con exito";
+    $_SESSION['estado'] = $estado;    
+
+}
+
+//Funcion para gestionar el alta para teletrabajo
 function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $domicilio, $descripcion, $user, $user_id, $conexion) {
 
     $fecha_actual = date('Y-m-d H:i:s');
@@ -102,12 +123,13 @@ function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $domicilio, $d
     };
 }
 
+//Funcion para gestioanr el alta para plataforma
 function insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $conexion) {
 
     $fecha_actual = date('Y-m-d H:i:s');
 
     $insert_alta_plat = "INSERT INTO altas_productos 
-    VALUES('$funcionario', '$equipo', '$modelo', '$nombre', '$fecha_actual', '$sector', '$puesto', '$descripcion', '$user', 1);";
+    VALUES(NULL, '$funcionario', '$equipo', '$modelo', '$nombre', '$fecha_actual', '$sector', '$puesto', '$descripcion', '$user', 1);";
     $insert_query = mysqli_query($conexion, $insert_alta_plat); 
 
     $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', '$fecha_actual');";
@@ -124,6 +146,5 @@ function insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $pues
     
     };
 }
-
 
 ?>

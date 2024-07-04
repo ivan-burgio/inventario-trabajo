@@ -38,21 +38,23 @@ if(!isset($_SESSION['user'])) {
         
         <form id="form" action="../lib/registro_sql.php" method="POST">
 
-            <h2>Alta de productos</h2>
+            <h2>Registros de productos</h2>
             
-            <?=mostrarErrores('errores', 'id'); ?>
+            <?=mostrarExito('estado', 'exito_perife')?>
+            <?=mostrarExito('estado', 'exito_torre')?>
+            <?=mostrarErrores('estado', 'id'); ?>
             <label for="id">ID</label>
             <input type="text" id="id" name="id" placeholder="Ingrese la etiqueta del equipo"/>
 
-            <?=mostrarErrores('errores', 'marca'); ?>
+            <?=mostrarErrores('estado', 'marca'); ?>
             <label for="marca">Marca</label>
             <input type="text" id="marca" name="marca"  placeholder="Ingrese la marca del equipo"/>
 
-            <?=mostrarErrores('errores', 'modelo'); ?>
+            <?=mostrarErrores('estado', 'modelo'); ?>
             <label for="modelo">Modelo</label>
             <input type="text" id="modelo" name="modelo" placeholder="Ingrese el modelo del equipo"/>
 
-            <?=mostrarErrores('errores', 'select'); ?>
+            <?=mostrarErrores('estado', 'select'); ?>
             <label for="select">Equipo</label>
             <select id="select" name="select">
 
@@ -62,7 +64,7 @@ if(!isset($_SESSION['user'])) {
 
             </select>
 
-            <?=mostrarErrores('errores', 'descripcion'); ?>
+            <?=mostrarErrores('estado', 'descripcion'); ?>
             <label for="description">Descripcion y comentario inicial</label>
             <textarea name="description" placeholder="Descripción general del equipo..."></textarea>
 

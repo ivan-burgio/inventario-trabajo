@@ -103,6 +103,20 @@ body {
     background-color: green;
 }
 
+.search {
+
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: end;
+}
+
+.search input {
+
+    margin: 10px;
+    width: 20%;
+}
+
 .comments {
 
     padding: 5px;

@@ -15,19 +15,36 @@ $select_altas_query = mysqli_query($conexion, $select_altas);
 
 if($_POST) {
 
+    unset($_SESSION['errorBaja']);
+    unset($_SESSION['exitoBaja']);
+
     $id_product = isset($_POST['select_func']) ? $_POST['select_func'] : false;
     $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : false;
     $user = $_SESSION['user']['nombre'].' '.$_SESSION['user']['apellido'];
     $user_admin = $_SESSION['user']['id_admin'];
 
+    $estado = array();
 
-    insertQueryBaja($id_product, $descripcion, $user, $user_admin, $conexion);
+    if(empty($descripcion)) {
 
-    $update_inv = "UPDATE productos SET status = 1 WHERE id = '$id_product';";
-    $update_inv_query = mysqli_query($conexion, $update_inv);
+        $estado['motivo'] = "Ingrese el motivo de la baja";
+    };
+
+    if(count($estado) == 0) {
+
+        insertQueryBaja($id_product, $descripcion, $user, $user_admin, $conexion);
+
+        $update_inv = "UPDATE productos SET status = 1 WHERE id = '$id_product';";
+        $update_inv_query = mysqli_query($conexion, $update_inv);
+        $estado['exito'] = "Baja realizada con éxito";
+        $_SESSION['exitoBaja'] = $estado;
+
+    } else {
+
+        $_SESSION['errorBaja'] = $estado;
+    }
 
     mysqli_close($conexion);
-
     header('Location: ../pages/bajas.php');
 
 };
@@ -58,6 +75,7 @@ function insertQueryBaja($id_product, $descripcion, $user_admin, $user, $conexio
 
     $insert_comentario = mysqli_query($conexion, $comentario_inicial);
     $update_alta_query = mysqli_query($conexion, $update_alta);
+
 };
 
 ?>

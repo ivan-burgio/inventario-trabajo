@@ -1,6 +1,7 @@
 <?php
 
 require_once '../lib/comentarios_sql.php';
+require_once '../includes/helpers.php';
 
 if(!isset($_SESSION['user'])) {
 
@@ -40,6 +41,7 @@ if(!isset($_SESSION['user'])) {
 
         <form id="form_comments" action="../lib/comentarios_sql.php?id=<?=$_SESSION['user']['id_admin']?>&id_prod=<?=$id?>" method="POST">
 
+            <?=mostrarErrores('error', 'comentario')?>
             <textarea name="coment" placeholder="Ingrese un comentario aqui..."></textarea>
 
             <input type="submit" value="Guardar" />
