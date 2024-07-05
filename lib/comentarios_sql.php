@@ -33,14 +33,17 @@ if(isset($_GET)) {
 
             $insert_coment = "INSERT INTO comentarios VALUES(NULL, '$id_funcionario', '$id_producto', '$comentario', NOW());";
             $insert_coment_query = mysqli_query($conexion, $insert_coment);
-            header('Location: ../pages/inventario.php');
+
+            $estado['exito_comment'] = "Comentario ingresado con éxito";
+            $_SESSION['estado'] = $estado;
+            header("Location: ../pages/comentarios.php?id=$id_producto");
             exit();
         
         } else {
 
-            $_SESSION['error'] = $estado;
+            $_SESSION['estado'] = $estado;
+            header("Location: ../pages/comentarios.php?id=$id_producto");
         };
-        
     };
 };
 

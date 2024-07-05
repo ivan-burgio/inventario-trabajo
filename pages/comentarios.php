@@ -25,7 +25,7 @@ if(!isset($_SESSION['user'])) {
         <div class="user">
             <h1 class="name">Bienvenido, <?=$_SESSION['user']['nombre'];?> <?=$_SESSION['user']['apellido'];?></h1>
             <a href="../includes/cerrar_login.php"><img src="../assets/close.svg" alt="Cerrar sesión" /></a>
-        </div>l
+        </div>
         <ul class="list">
             <li><a href="inventario.php">Inventario</a></li>
             <li><a href="registro.php">Registro</a></li>
@@ -41,7 +41,8 @@ if(!isset($_SESSION['user'])) {
 
         <form id="form_comments" action="../lib/comentarios_sql.php?id=<?=$_SESSION['user']['id_admin']?>&id_prod=<?=$id?>" method="POST">
 
-            <?=mostrarErrores('error', 'comentario')?>
+            <?=mostrarErrores('estado', 'comentario');?>
+            <?=mostrarExito('estado', 'exito_comment');?>
             <textarea name="coment" placeholder="Ingrese un comentario aqui..."></textarea>
 
             <input type="submit" value="Guardar" />

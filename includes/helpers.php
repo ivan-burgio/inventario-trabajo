@@ -2,7 +2,6 @@
 
 require_once 'conexion.php';
 require('../FPDF/fpdf.php');
-require_once '../mail/enviar.php';
 date_default_timezone_set('America/Montevideo');
 
 //Función creada para mostrar los errores en los campos de registro
@@ -223,7 +222,7 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
     // Verificar si el archivo se guardó correctamente
     if (file_exists($archivo) && filesize($archivo) > 0) {
     // Llamar a la función enviarMail solo si el archivo existe y no está vacío
-        enviarMail($id_func, $nombre, $fecha_y_hora, $archivo);
+        //enviarMail($id_func, $nombre, $fecha_y_hora, $archivo);
     } else {
         echo "Error al generar el archivo PDF.";
         // Aquí puedes manejar el error de alguna manera apropiada
