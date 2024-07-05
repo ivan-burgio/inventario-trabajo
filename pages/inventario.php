@@ -33,7 +33,7 @@ if(!isset($_SESSION['user'])) {
     </header>
 
     <div class="search">
-        <input type="text" placeholder="Ingrese el producto...">
+        <input type="text" id="search" name="search" placeholder="Ingrese el producto...">
     </div>
 
     <div class="container">
@@ -46,7 +46,7 @@ if(!isset($_SESSION['user'])) {
 
             <?php while($producto = mysqli_fetch_assoc($select)) : ?>
 
-                <table>
+                <table id="table">
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -74,5 +74,6 @@ if(!isset($_SESSION['user'])) {
 
     </div>
     <?php require_once '../includes/footer.php'; ?>
+    <script src="../js/inventario.js"></script>
 </body>
 </html>
