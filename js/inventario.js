@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const row = rows[i];
                 const nameColumnOne = row.getElementsByTagName('td')[0]; // Cambiar el índice según la estructura real de tu tabla
                 const nameColumnTwo = row.getElementsByTagName('td')[1]; // Cambiar el índice según la estructura real de tu tabla
-                const nameColumnThree = row.getElementsByTagName('td')[1]; // Cambiar el índice según la estructura real de tu tabla
+                const nameColumnThree = row.getElementsByTagName('td')[2]; // Cambiar el índice según la estructura real de tu tabla
     
                 if (nameColumnOne && nameColumnTwo && nameColumnThree) {
                     const productNameOne = nameColumnOne.textContent.toLowerCase();
