@@ -193,6 +193,19 @@ body {
     align-items: center;
 }
 
+.check {
+
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    align-items: center;
+}
+
+.check input {
+    width: 30%;
+    margin: 0px;
+}
+
 #form_comments {
 
     display: flex;

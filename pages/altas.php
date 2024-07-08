@@ -72,6 +72,26 @@ if(!isset($_SESSION['user'])) {
                 <?php endif; ?>
             </select>
 
+            <div class="check">
+                <label for="check">¿Desea agregar más productos?</label>
+                <input type="checkbox" id="check" name="check" />
+            </div>
+
+            <div class="list_product">
+                
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Id</td>
+                            <td>Modelo</td>
+                            <td>Marca</td>
+                            <td><input type="checkbox" name="id"/>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+
             <label for="input_func">Funcionario</label>
             <input type="text" id="input_func" name="input_func" placeholder="Ingrese al funcionario (Ej. N° Funcionario, nombre, sector)"/>
 

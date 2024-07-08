@@ -9,12 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const select_func = document.querySelector('#select_func');
     const select_ubic = document.querySelector('#ubic');
     const label_area = document.querySelector('#label_area');
+    const check = document.querySelector('#check');
+    const list_prod = document.querySelector('.list_product');
+
 
     //-------------------------EVENTOS----------------------------------
 
     input_prod.addEventListener('input', getProduct); //Se llama la función cada vez que hayan cambios en el select
     input.addEventListener('input', getEmployee); //Se llama la función cada vez que se escriba sobre el input
     select_ubic.addEventListener('change', addForm); //Se llama la función cada vez que hayan cambios en el select
+    check.addEventListener('click', addProduct);
     
     //----------------------------FUNCIONES-----------------------------
     
@@ -140,5 +144,16 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
+    function addProduct() {
+
+        if(check.checked == true) {
+
+            list_prod.style.display = 'block';
+
+        } else {
+
+            list_prod.style.display = 'none';
+        }
+    }
 
 });

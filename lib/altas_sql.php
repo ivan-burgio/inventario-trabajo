@@ -90,10 +90,6 @@ function createQuery($equipo, $estado, $funcionario, $domicilio, $sector, $descr
         insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $conexion);
 
     };
-
-    $estado['exito'] = "Alta generada con exito";
-    $_SESSION['estado'] = $estado;    
-
 }
 
 //Funcion para gestionar el alta para teletrabajo
@@ -113,14 +109,20 @@ function insertQueryHome($funcionario, $equipo, $modelo, $nombre, $domicilio, $d
 
     $fecha = date('d-m-Y');
 
-    archivoTT($funcionario, $nombre, $fecha);
-
     if(!$insert_query) {
 
-    $error = mysqli_error($insert_query);
-    echo $error;
-    exit();
-    };
+        $error = mysqli_error($insert_query);
+        echo $error;
+        exit();
+
+    } else {
+
+        archivoTT($funcionario, $nombre, $fecha);
+        $estado['exito'] = "Alta para teletrabajo generada con exito";
+        $_SESSION['estado'] = $estado;    
+    
+        exit();
+    }
 }
 
 //Funcion para gestioanr el alta para plataforma
@@ -144,7 +146,11 @@ function insertQueryPlat($funcionario, $equipo, $modelo, $nombre, $sector, $pues
     echo $error;
     exit();
     
-    };
+    } else {
+
+        $estado['exito'] = "Alta para plataforma generada con exito";
+        $_SESSION['estado'] = $estado;    
+    }
 }
 
 ?>
