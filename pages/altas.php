@@ -53,43 +53,32 @@ if(!isset($_SESSION['user'])) {
             <label for="input_prod" id="label_prod">Equipo</label>
             <input type="text" id="input_prod" name="input_prod"  placeholder="Ingrese el equipo (Ej. Etiqueta, marca, modelo)"/>
 
-            <select id="select_prod" name="select_prod">
-                
-                <option value="select_def_prod">--Equipo--</option>
+            <div id="select_prod" name="select_prod">
 
                 <?php if(mysqli_num_rows($list_prod_query) > 0) : ?>
 
                     <?php while($result_prod = mysqli_fetch_assoc($list_prod_query)) : ?>
+                        <table id="table_prod">
+                            <thead>
+                                <tr>
+                                    <th>ID:</th>
+                                    <th>Modelo:</th>
+                                    <th>Marca:</th>
+                                </tr>
+                            </thead>
 
-                        <option value="<?=$result_prod['id'];?>">ID: <?=$result_prod['id_prod'].', '.$result_prod['marca'].', '.$result_prod['modelo'];?></option>
-
+                                <tbody>
+                                    <tr>
+                                        <td><?=$result_prod['id_prod'];?></td>
+                                        <td><?=$result_prod['modelo'];?></td>
+                                        <td><?=$result_prod['marca'];?></td>
+                                        <td><input class="check" type="checkbox" name="check[]" value="<?=$result_prod['id'];?>" /></td>
+                                    </tr>
+                                </tbody>
+                        </table>
                     <?php endwhile; ?>
 
-                <?php else : ?>
-                        
-                        <option value="null">No hay funcionarios con los datos ingresados</option>
-                
                 <?php endif; ?>
-            </select>
-
-            <div class="check">
-                <label for="check">¿Desea agregar más productos?</label>
-                <input type="checkbox" id="check" name="check" />
-            </div>
-
-            <div class="list_product">
-                
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Id</td>
-                            <td>Modelo</td>
-                            <td>Marca</td>
-                            <td><input type="checkbox" name="id"/>
-                        </tr>
-                    </tbody>
-                </table>
-                
             </div>
 
             <label for="input_func">Funcionario</label>

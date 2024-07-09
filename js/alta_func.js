@@ -5,41 +5,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const form_altas = document.querySelector('#form');
     const input = document.querySelector('#input_func');
     const input_prod = document.querySelector('#input_prod');
-    const select_prod = document.querySelector('#select_prod');
+    const tables_prod = document.querySelectorAll('#table_prod');
     const select_func = document.querySelector('#select_func');
     const select_ubic = document.querySelector('#ubic');
     const label_area = document.querySelector('#label_area');
-    const check = document.querySelector('#check');
-    const list_prod = document.querySelector('.list_product');
+    const notProduct = document.querySelector('.notProduct');
 
 
     //-------------------------EVENTOS----------------------------------
 
-    input_prod.addEventListener('input', getProduct); //Se llama la función cada vez que hayan cambios en el select
     input.addEventListener('input', getEmployee); //Se llama la función cada vez que se escriba sobre el input
     select_ubic.addEventListener('change', addForm); //Se llama la función cada vez que hayan cambios en el select
-    check.addEventListener('click', addProduct);
+    input_prod.addEventListener('input', e => {
+        const searchValue = input_prod.value.trim().toLowerCase();
+        tables_prod.forEach(table_prod => {
+            searchProducts(table_prod, searchValue); // Llamar a searchProducts para cada tabla
+        });
+    });
     
     //----------------------------FUNCIONES-----------------------------
-    
-    function getProduct() {
-
-        const searchValue_prod = input_prod.value.toLowerCase(); //Se toma el valor que se ingresa en el input y se quitan las mayúsculas
-
-        Array.from(select_prod.options).forEach(option => { //Convierte los valores de los options en array y los recorre
-
-            const text = option.textContent.toLowerCase(); //Se guarda en una variable el valor del option y se quitan las mayúsculas
-
-            if(text.includes(searchValue_prod)) { //Si el valor del option incluye el valor del input al option correspodiente se le aplica selected
-
-                option.selected = true;
-            
-            } else {
-
-                option.hidden = true; //Sino, se oculta el valor
-            }
-        });
-    }
 
     function getEmployee() { //Se muestran los empleados a través de un select cuando se busca por el input con id 'input_func'
 
@@ -144,15 +128,30 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    function addProduct() {
-
-        if(check.checked == true) {
-
-            list_prod.style.display = 'block';
-
-        } else {
-
-            list_prod.style.display = 'none';
+    function searchProducts(table_prod, searchValue) {
+        const bodies = table_prod.getElementsByTagName('tbody');
+        
+        for (let j = 0; j < bodies.length; j++) {
+            const rows = bodies[j].getElementsByTagName('tr');
+            
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const nameColumnOne = row.getElementsByTagName('td')[0]; // Cambiar el índice según la estructura real de tu tabla
+                const nameColumnTwo = row.getElementsByTagName('td')[1]; // Cambiar el índice según la estructura real de tu tabla
+                const nameColumnThree = row.getElementsByTagName('td')[2]; // Cambiar el índice según la estructura real de tu tabla
+    
+                if (nameColumnOne && nameColumnTwo && nameColumnThree) {
+                    const productNameOne = nameColumnOne.textContent.toLowerCase();
+                    const productNameTwo = nameColumnTwo.textContent.toLowerCase();
+                    const productNameThree = nameColumnThree.textContent.toLowerCase();
+    
+                    if (productNameOne.includes(searchValue ) || productNameTwo.includes(searchValue) || productNameThree.includes(searchValue)) {
+                        table_prod.style.display = '';
+                    } else {
+                        table_prod.style.display = 'none';
+                    }
+                }
+            }
         }
     }
 
