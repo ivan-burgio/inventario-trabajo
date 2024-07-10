@@ -23,10 +23,15 @@ if(!isset($_SESSION['user'])) {
             <a href="../includes/cerrar_login.php"><img src="../assets/close.svg" alt="Cerrar sesión" /></a>
         </div>
         <ul class="list">
-        <li><a href="inventario.php">Inventario</a></li>
-        <li><a href="registro.php">Registro</a></li>
-        <li><a href="altas.php">Altas de equipos</a></li>
-        <li><a href="bajas.php">Bajas de equipos</a></li>
+            <?php if($_SESSION['user']['access'] == 2) :?>
+                <li><a href="inventario.php">Inventario</a></li>
+                <li><a href="registro.php">Registro</a></li>
+                <li><a href="altas.php">Altas de equipos</a></li>
+                <li><a href="bajas.php">Bajas de equipos</a></li>
+            <?php else :?>
+                <li><a href="altas.php">Altas de equipos</a></li>
+                <li><a href="bajas.php">Bajas de equipos</a></li>
+            <?php endif;?>
         </ul>
     </header>
 
@@ -49,6 +54,7 @@ if(!isset($_SESSION['user'])) {
                                 <th>Modelo</th>
                                 <th>Alta</th>
                                 <th>Descripcion</th>
+                                <th>Último comentario</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,6 +64,7 @@ if(!isset($_SESSION['user'])) {
                                 <td><?=$torre['modelo']?></td>
                                 <td><?=$torre['alta']?></td>
                                 <td><?=$torre['descripcion']?></td>
+                                <td>"<?=$torre['ultimo_comentario']?>"</td>
                                 <td>
                                     <a href="../lib/eliminar_sql.php?id=<?=$torre['id'];?>"><img src="../assets/trash.svg" alt="Eliminar" /></a>
                                     <a href="comentarios.php?id=<?=$torre['id']?>"><img src="../assets/comments.svg" alt="Modificar" /></a>

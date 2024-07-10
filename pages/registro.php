@@ -26,10 +26,15 @@ if(!isset($_SESSION['user'])) {
             <a href="../includes/cerrar_login.php"><img src="../assets/close.svg" alt="Cerrar sesión" /></a>
         </div>
         <ul class="list">
-            <li><a href="inventario.php">Inventario</a></li>
-            <li><a href="registro.php">Registro</a></li>
-            <li><a href="altas.php">Altas de equipos</a></li>
-            <li><a href="bajas.php">Bajas de equipos</a></li>
+            <?php if($_SESSION['user']['access'] == 2) :?>
+                <li><a href="inventario.php">Inventario</a></li>
+                <li><a href="registro.php">Registro</a></li>
+                <li><a href="altas.php">Altas de equipos</a></li>
+                <li><a href="bajas.php">Bajas de equipos</a></li>
+            <?php else :?>
+                <li><a href="altas.php">Altas de equipos</a></li>
+                <li><a href="bajas.php">Bajas de equipos</a></li>
+            <?php endif;?>
         </ul>
     </header>
 

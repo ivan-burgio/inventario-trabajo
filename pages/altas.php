@@ -27,10 +27,15 @@ if(!isset($_SESSION['user'])) {
             <a href="../includes/cerrar_login.php"><img src="../assets/close.svg" alt="Cerrar sesión" /></a>
         </div>
         <ul class="list">
-            <li><a href="inventario.php">Inventario</a></li>
-            <li><a href="registro.php">Registro</a></li>
-            <li><a href="altas.php">Altas de equipos</a></li>
-            <li><a href="bajas.php">Bajas de equipos</a></li>
+            <?php if($_SESSION['user']['access'] == 2) :?>
+                <li><a href="inventario.php">Inventario</a></li>
+                <li><a href="registro.php">Registro</a></li>
+                <li><a href="altas.php">Altas de equipos</a></li>
+                <li><a href="bajas.php">Bajas de equipos</a></li>
+            <?php else :?>
+                <li><a href="altas.php">Altas de equipos</a></li>
+                <li><a href="bajas.php">Bajas de equipos</a></li>
+            <?php endif;?>
         </ul>
     </header>
 
@@ -50,7 +55,8 @@ if(!isset($_SESSION['user'])) {
 
             </select>
 
-            <label for="input_prod" id="label_prod">Equipo</label>
+            <label for="input_prod" id="label_prod">Equipos</label>
+            <?=mostrarErrores('producto', 'error');?>
             <input type="text" id="input_prod" name="input_prod"  placeholder="Ingrese el equipo (Ej. Etiqueta, marca, modelo)"/>
 
             <div id="select_prod" name="select_prod">
@@ -85,8 +91,6 @@ if(!isset($_SESSION['user'])) {
             <input type="text" id="input_func" name="input_func" placeholder="Ingrese al funcionario (Ej. N° Funcionario, nombre, sector)"/>
 
             <select id="select_func" name="select_func">
-                
-                <option value="select_def">--Funcionario--</option>
 
                 <?php if(mysqli_num_rows($list_query) > 0) : ?>
 

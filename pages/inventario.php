@@ -25,15 +25,20 @@ if(!isset($_SESSION['user'])) {
             <a href="../includes/cerrar_login.php"><img src="../assets/close.svg" alt="Cerrar sesión" /></a>
         </div>
         <ul class="list">
-            <li><a href="inventario.php">Inventario</a></li>
-            <li><a href="registro.php">Registro</a></li>
-            <li><a href="altas.php">Altas de equipos</a></li>
-            <li><a href="bajas.php">Bajas de equipos</a></li>
+        <?php if($_SESSION['user']['access'] == 2) :?>
+                <li><a href="inventario.php">Inventario</a></li>
+                <li><a href="registro.php">Registro</a></li>
+                <li><a href="altas.php">Altas de equipos</a></li>
+                <li><a href="bajas.php">Bajas de equipos</a></li>
+            <?php else :?>
+                <li><a href="altas.php">Altas de equipos</a></li>
+                <li><a href="bajas.php">Bajas de equipos</a></li>
+            <?php endif;?>
         </ul>
     </header>
 
     <div class="search">
-        <input type="text" id="search" name="search" placeholder="Ingrese el producto...">
+        <input type="text" id="search" name="search" placeholder="Buscador de productos...">
     </div>
 
     <div class="container">
@@ -60,7 +65,13 @@ if(!isset($_SESSION['user'])) {
                             <td><?=$producto['id_prod']?></td>
                             <td><?=$producto['marca']?></td>
                             <td><?=$producto['modelo']?></td>
-                            <td><?=$producto['stock']?></td>
+                            <td>
+                                <?php if($producto['status'] == 2) :?>
+                                    <?=$producto['stock']?> (En uso o alguno en uso)
+                                <?php else :?>
+                                    <?=$producto['stock']?>
+                                <?php endif;?>
+                            </td>
                             <td>
                                 <a href="producto.php?modelo=<?=$producto['modelo']?>"><img src="../assets/eye.svg" alt="Ver"/></a> 
                             </td>

@@ -86,49 +86,58 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
             }
         }
 
-        function ActivesTables($headerActives, $actives, $fecha) { //Función para crear la tabla de los productos
-
-            // Anchura de las celdas incrementada a 60 unidades
-            $cellWidth = 60;
-            $cellHeight = 8;
+        function ActivesTables($headerActives, $actives, $fecha) { 
+            // Establecer las propiedades iniciales de las celdas
+            $cellHeight = 6;
             $cellBorder = 1; // Borde completo
-
-            // Imprimir la cabecera
+        
+            // Calcular la anchura de cada columna basado en el contenido
+            $widths = array();
             foreach($headerActives as $col) {
+                $widths[] = $this->GetStringWidth($col) + 8; // Añadir un poco de padding
+            }
+            foreach($actives as $row) {
+                foreach($row as $key => $value) {
+                    $cellWidth = $this->GetStringWidth($value) + 8;
+                    if ($cellWidth > $widths[$key]) {
+                        $widths[$key] = $cellWidth;
+                    }
+                }
+            }
+        
+            // Imprimir la cabecera
+            foreach($headerActives as $key => $col) {
                 $this->SetFont('Arial','B', 8);
                 $this->SetFillColor(95, 114, 100);
-                $this->Cell($cellWidth, $cellHeight, $col, $cellBorder, 0, 'L',true);
+                $this->Cell($widths[$key], $cellHeight, $col, $cellBorder, 0, 'L', true);
             }
             $this->Ln();
-
+        
             // Imprimir los datos
+            $this->SetFillColor(224, 235, 255);
+            $this->SetTextColor(0);
+            $this->SetFont('Arial', '', 8);
+            $fill = false;
+        
+            // Verificar si los datos caben en una sola página
+            $pageHeight = $this->GetPageHeight() - $this->GetY() - 10; // Altura de la página disponible
+            $rowHeight = $cellHeight * count($actives); // Altura total de todas las filas
+        
+            if ($rowHeight > $pageHeight) {
+                // Si no cabe, reducir el tamaño de fuente y ajustar el alto de la celda
+                $this->SetFont('Arial', '', 6);
+                $cellHeight = 5;
+            }
+        
             foreach($actives as $row) {
-                foreach($row as $col) {
-                    // Verificar si el contenido se sale del margen derecho
-                    if($this->GetStringWidth($col) > $cellWidth) {
-                        // Dividir el texto para que se ajuste dentro de la celda
-                        $this->SetFont('Arial','', 6);
-                        $this->MultiCell($cellWidth, 7, $col, $cellBorder);
-                    } else {
-                        $this->Cell($cellWidth, 7, $col, $cellBorder);
-                    }
+                foreach($row as $key => $col) {
+                    $this->Cell($widths[$key], $cellHeight, $col, $cellBorder, 0, 'L', $fill);
                 }
                 $this->Ln();
-    
-                // Verificar si hay que agregar una nueva página
-                if($this->GetY() + $cellHeight > $this->PageBreakTrigger) {
-                    // Reiniciar la posición a la guardada al inicio de ActivesTables
-                    $this->SetY($startY);
-                    $this->AddPage();
-                    // Imprimir la cabecera nuevamente
-                    foreach($headerActives as $col) {
-                        $this->Cell($cellWidth, 7, $col, $cellBorder);
-                    }
-                    $this->Ln();
-                }
+                $fill = !$fill; // Alternar color de fondo
             }            
         }
-
+        
         function BasesAndConditions($texto) { //Función para crear el texto de las bases y condiciones
 
             $this->SetFont('Arial', '', 8);
@@ -192,21 +201,21 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
             );
 
             
-    $headerActives = array("Lista de activos", "Entregado/Devolucion \n Si/No", "Observaciones");
+    $headerActives = array("Lista de activos", "Entregado", "Devolucion", "Si", "No", "Observaciones");
     $actives = array(
-                array('Pc (Devolucion)', '', ''),
-                array('Monitor (Devolucion)', '', ''),
-                array('Teclado (Devolucion)', '', ''),
-                array('Mouse (Devolucion)', '', ''),
-                array('(*) Silla (Devolucion)', '', ''),
-                array('Vincha (1)', '', ''),
-                array('Monitor', '', ''),
-                array('Pc', '', ''),
-                array('Pincho ADSL', '', ''),
-                array('Teclado', '', ''),
-                array('Mouse', '', ''),
-                array('Cables / Adaptadores', '', ''),
-                array('(*) Silla', '', '')
+                array('Pc (Devolucion)', '', '', '', '', ''),
+                array('Monitor (Devolucion)', '', '', '', '', ''),
+                array('Teclado (Devolucion)', '', '', '', '', ''),
+                array('Mouse (Devolucion)', '', '', '', '', ''),
+                array('(*) Silla (Devolucion)', '', '', '', '', ''),
+                array('Vincha (1)', '', '', '', '', ''),
+                array('Monitor', '', '', '', '', ''),
+                array('Pc', '', '', '', '', ''),
+                array('Pincho ADSL', '', '', '', '', ''),
+                array('Teclado', '', '', '', '', ''),
+                array('Mouse', '', '', '', '', ''),
+                array('Cables / Adaptadores', '', '', '', '', ''),
+                array('(*) Silla', '', '', '', '', '')
     );
 
     $texto_bases = file_get_contents("../FPDF/txt/altas_producto.txt");

@@ -9,19 +9,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const select_func = document.querySelector('#select_func');
     const select_ubic = document.querySelector('#ubic');
     const label_area = document.querySelector('#label_area');
-    const notProduct = document.querySelector('.notProduct');
+    const input_submit = document.querySelector('#submit');
 
 
     //-------------------------EVENTOS----------------------------------
 
     input.addEventListener('input', getEmployee); //Se llama la función cada vez que se escriba sobre el input
     select_ubic.addEventListener('change', addForm); //Se llama la función cada vez que hayan cambios en el select
-    input_prod.addEventListener('input', e => {
+
+    input_prod.addEventListener('input', e => { //Itera sobre cada fila de la tabla siempre que se escriba en el input
         const searchValue = input_prod.value.trim().toLowerCase();
         tables_prod.forEach(table_prod => {
             searchProducts(table_prod, searchValue); // Llamar a searchProducts para cada tabla
         });
     });
+
+    form_altas.addEventListener('submit', inputDisable);
+
     
     //----------------------------FUNCIONES-----------------------------
 
@@ -128,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     };
 
-    function searchProducts(table_prod, searchValue) {
+    function searchProducts(table_prod, searchValue) { //Te permite realizar una busqueda dinamica de los elementos disponibles para dar de alta
         const bodies = table_prod.getElementsByTagName('tbody');
         
         for (let j = 0; j < bodies.length; j++) {
@@ -153,6 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-    }
+    };
+
+    function inputDisable() { 
+
+        input_submit.disabled = true;
+    };
+
+
 
 });

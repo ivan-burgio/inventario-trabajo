@@ -43,9 +43,17 @@ if(!isset($_SESSION)) {
 
         </div>
 
-    <?php else : ?>    
+    <?php else : ?>
+        
+        <?php if($_SESSION['user']['access'] == 2) : ?>
 
-        <?php header('Location: pages/inventario.php');?>
+            <?php header('Location: pages/inventario.php');?>
+
+        <?php else :?>
+
+            <?php header('Location: pages/altas.php');?>
+
+        <?php endif; ?>
 
     <?php endif; ?>
     

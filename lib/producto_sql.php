@@ -18,7 +18,7 @@ if(isset($_GET)) {
                    FROM comentarios c1
                    WHERE fecha = (SELECT MAX(fecha) FROM comentarios c2 WHERE c2.id_producto = c1.id_producto)
                         ) c ON p.id = c.id_producto
-                   WHERE p.modelo = '$modelo_get' AND p.status = 1;";
+                   WHERE p.modelo = '$modelo_get' AND p.status != 0;";
 
     //Se inserta la consulta en la BD
     $select_query = mysqli_query($conexion, $select_pro);
