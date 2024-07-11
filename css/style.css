@@ -21,6 +21,7 @@ body {
     height: 100px;
     border-bottom: 2px solid #F2E863;
     background-color: #007fff;
+    box-shadow: 0px 11px 8px -4px rgba(0,0,0,0.75);
 }
 
 
@@ -39,7 +40,7 @@ body {
 
 .user a img {
 
-    background-color: #F2E863;
+    background-color: white;
     border-radius: 30px;
     transition: width 0.2s;
 }
@@ -53,13 +54,9 @@ body {
 
     width: 50%;
     font-size: 20px;
-    color: #F2E863;
+    color: white;
 }
 
-.visual{
-
-    color:#F2E863;
-}
 
 .list {
 
@@ -76,7 +73,7 @@ body {
 .list li a {
 
     font-size: 20px;
-    color: #F2E863;
+    color: white;
     text-decoration: none;
     transition: font-size 0.2s;
 }
@@ -132,6 +129,64 @@ body {
     box-shadow: 0px 1px 42px -8px rgba(0,0,0,0.63);
     color: black;
     background-color: #84E6F8;
+}
+
+.container-bajas {
+
+    display: grid;
+    grid-template-columns: 35% 65%;
+}
+
+.func {
+
+    border-right: 5px solid #007fff;
+    padding: 5px;
+    max-height: 100%;
+}
+
+.func input {
+
+    width: 60%;
+    margin-top: 4%;
+}
+
+.func button {
+
+    cursor: pointer;
+}
+
+.product_func {
+
+    padding: 5px;
+    display: none;
+
+}
+
+
+.product_func h3 {
+
+    font-size: 25px;
+    margin-bottom: 3.8%;
+    margin-top: 2%;
+}
+
+.table_prod_func {
+
+    display: grid;
+    grid-column: 1fr;
+}
+
+.table_prod_func textarea {
+
+    width: 70%;
+    margin-top: 3%;
+    justify-self: center;
+}
+
+.table_prod_func input[type="submit"] {
+
+    width: 40%;
+    justify-self: center;
 }
 
 
@@ -373,6 +428,12 @@ table:first-child {
     padding: 2px;
 }
 
+#table_baja th, #table_baja td {
+
+    padding: 0px;
+    font-size: 15px;
+}
+
 th,
 td {
 
@@ -391,8 +452,9 @@ td a img {
     font-size: 20px;
     line-height: 50px;
     background-color: #007fff;
+    box-shadow: 0px -10px 8px -4px rgba(0,0,0,0.75);
     text-align: center;
-    color:#F2E863;
+    color:white;
 }
 
 .check {

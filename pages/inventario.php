@@ -30,9 +30,11 @@ if(!isset($_SESSION['user'])) {
                 <li><a href="registro.php">Registro</a></li>
                 <li><a href="altas.php">Altas de equipos</a></li>
                 <li><a href="bajas.php">Bajas de equipos</a></li>
+                <li><a href="pdf.php">PDF</a></li>
             <?php else :?>
                 <li><a href="altas.php">Altas de equipos</a></li>
                 <li><a href="bajas.php">Bajas de equipos</a></li>
+                <li><a href="pdf.php">PDF</a></li>
             <?php endif;?>
         </ul>
     </header>
@@ -57,7 +59,6 @@ if(!isset($_SESSION['user'])) {
                             <th>Id</th>
                             <th>Marca</th>
                             <th>Modelo</th>
-                            <th>Stock</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,14 +67,7 @@ if(!isset($_SESSION['user'])) {
                             <td><?=$producto['marca']?></td>
                             <td><?=$producto['modelo']?></td>
                             <td>
-                                <?php if($producto['status'] == 2) :?>
-                                    <?=$producto['stock']?> (En uso o alguno en uso)
-                                <?php else :?>
-                                    <?=$producto['stock']?>
-                                <?php endif;?>
-                            </td>
-                            <td>
-                                <a href="producto.php?modelo=<?=$producto['modelo']?>"><img src="../assets/eye.svg" alt="Ver"/></a> 
+                                <a href="producto.php?modelo=<?=$producto['id_prod']?>"><img src="../assets/eye.svg" alt="Ver"/></a> 
                             </td>
                         </tr>
                     </tbody>

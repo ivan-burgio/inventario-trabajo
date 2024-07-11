@@ -32,47 +32,84 @@ if(!isset($_SESSION['user'])) {
                 <li><a href="registro.php">Registro</a></li>
                 <li><a href="altas.php">Altas de equipos</a></li>
                 <li><a href="bajas.php">Bajas de equipos</a></li>
+                <li><a href="pdf.php">PDF</a></li>
             <?php else :?>
                 <li><a href="altas.php">Altas de equipos</a></li>
                 <li><a href="bajas.php">Bajas de equipos</a></li>
+                <li><a href="pdf.php">PDF</a></li>
             <?php endif;?>
         </ul>
     </header>
 
-    <div class="container container-regYMod">
+    <div class="container container-bajas">
 
-        <form id="form" action="../lib/bajas_sql.php" method="POST">
+        <div class="func">
+            <input type="text" id="id_func" name="id_func" placeholder="N° de funcionario o nombre..."/>
 
-            <h2>Baja de productos para funcionarios</h2>
+            <h3>Funcionarios con productos</h3>
+            <?php if(mysqli_num_rows($select_altas_query) > 0) : ?>
+                <?php while($result = mysqli_fetch_assoc($select_altas_query)) : ?>
 
-            <?=mostrarExito('exitoBaja', 'exito')?>
-            <label for="label_func_altas">Funcionario</label>
-            <input type="text" id="input_func_altas" name="input_func" placeholder="Ingrese al funcionario o id de equipo (Ej. N° Funcionario, ID de equipo, fecha, nombre)"/>
+                    <button class="btn_func" value="<?=$result['id_funcionario'];?>">
+                        <table id="table_baja">
+                            <thead>
+                                <tr>
+                                    <th>N°Funcionario</th>
+                                    <th>Nombre</th>
+                                    <th>Lugar de trabajo</th>
+                                    <th>Puesto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><?=$result['id_funcionario']?></td>
+                                    <td><?=$result['nombre_func']?></td>
+                                    <td><?=$result['lugar_trabajo']?></td>
+                                    <td><?=$result['puesto']?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </button>
 
-            <select id="select_func_altas" name="select_func">
-                
-                <option value="select_def">--Funcionario--</option>
+                <?php endwhile; ?>
 
-                <?php if(mysqli_num_rows($select_altas_query) > 0) : ?>
+            <?php else : ?>
 
-                    <?php while($result = mysqli_fetch_assoc($select_altas_query)) : ?>
+                <p>No hay funcionario con productos asignados</p>
 
-                        <option value="<?=$result['id_producto'];?>">N°<?=$result['id_funcionario'].' | '.$result['id_prod'].' | '.$result['nombre_func'].' | '.$result['fecha'].' | '.$result['lugar_trabajo'];?></option>
+            <?php endif; ?>
+        </div>
+        
+        <form action="../lib/bajas_sql.php" method="POST" class="product_func">
 
-                    <?php endwhile; ?>
+            <h3>Productos del funcionario seleccionado</h3>        
 
-                <?php else : ?>
-                        
-                        <option value="null">No hay funcionarios con los datos ingresados</option>
-                
-                <?php endif; ?>
-            </select>
+            <div class="table_prod_func">
+                <?php while($result_prod = mysqli_fetch_assoc($select_product_query)) : ?>
+                    <table id="table_prod" name="table_func" value="<?=$result_prod['id_funcionario'];?>">
+                        <thead>
+                            <tr>
+                                <th>ID:</th>
+                                <th>Modelo:</th>
+                                <th>Marca:</th>
+                            </tr>
+                        </thead>
 
-            <?=mostrarErrores('errorBaja', 'motivo')?>
-            <label id="label_area" for="descripcion">Motivo de baja</label>
-            <textarea id="text_area" name="descripcion" placeholder="Motivo de la baja del producto..."></textarea>
+                        <tbody>
+                            <tr>
+                                <td><?=$result_prod['id_funcionario'];?></td>
+                                <td><?=$result_prod['id_prod'];?></td>
+                                <td><?=$result_prod['modelo'];?></td>
+                                <td><?=$result_prod['marca'];?></td>
+                                <td><input class="check" type="checkbox" name="check_baja[]" value="<?=$result_prod['id_producto'];?>" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <?php endwhile; ?>
 
-            <input id="submit" type="submit" value="Registrar" />
+                <textarea name='description'></textarea>
+                <input type="submit" id="input_baja" value="Dar de baja" />
+            </div>
         </form>
     </div>
     <script src="../js/bajas_func.js"></script>

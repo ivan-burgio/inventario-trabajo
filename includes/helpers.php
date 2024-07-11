@@ -186,7 +186,14 @@ function archivoTT($id_func, $nombre, $fecha) { //Función para crear el PDF cua
         }
     }
 
-    $archivo = "../archivos_teletrabajo/archivo_{$fecha_y_hora}_N°{$id_func}_{$nombre}.pdf";
+    $directorio = "../archivos_teletrabajo/{$nombre}";
+    
+    if(!file_exists($directorio)) {
+
+        mkdir($directorio, 0777, true);
+    }
+
+    $archivo = "{$directorio}/archivo_{$fecha_y_hora}_N°{$id_func}_{$nombre}.pdf";
 
     // Crear PDF
     $pdf = new PDF();

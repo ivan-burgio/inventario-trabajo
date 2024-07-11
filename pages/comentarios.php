@@ -32,9 +32,11 @@ if(!isset($_SESSION['user'])) {
                 <li><a href="registro.php">Registro</a></li>
                 <li><a href="altas.php">Altas de equipos</a></li>
                 <li><a href="bajas.php">Bajas de equipos</a></li>
+                <li><a href="pdf.php">PDF</a></li>
             <?php else :?>
                 <li><a href="altas.php">Altas de equipos</a></li>
                 <li><a href="bajas.php">Bajas de equipos</a></li>
+                <li><a href="pdf.php">PDF</a></li>
             <?php endif;?>
         </ul>
     </header>
