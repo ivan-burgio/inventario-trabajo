@@ -17,4 +17,13 @@ $select_pdf = "SELECT DISTINCT a1.id_funcionario, a1.nombre_func, a1.lugar_traba
 
 $select_pdf_query = mysqli_query($conexion, $select_pdf);
 
+
+if(isset($_GET['id'])) {
+
+    $id_func_pdf = isset($_GET['id']) ? $_GET['id'] : false;
+
+    $select_func_pdf = "SELECT * FROM altas_productos WHERE id_funcionario = '$id_func_pdf';";
+    $select_func_pdf_query = mysqli_query($conexion, $select_func_pdf_query);
+}
+
 ?>

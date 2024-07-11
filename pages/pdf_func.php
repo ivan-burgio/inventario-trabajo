@@ -1,16 +1,9 @@
-<?php
+<?php 
 
 require_once '../includes/conexion.php';
 require_once '../lib/pdf_sql.php';
 
-if(!isset($_SESSION['user'])) {
-
-    header('Location: ../index.php');
-}
-
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +11,7 @@ if(!isset($_SESSION['user'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css" type="text/css" /> 
-    <title>PDF - Funcionarios</title>
+    <title>PDF - <?=$result?></title>
 </head>
 <body>
     <header class="header">
@@ -41,15 +34,16 @@ if(!isset($_SESSION['user'])) {
         </ul>
     </header>
 
+
     <div class="container">
 
         <h1>Historico de los PDF</h1>
             
         <div class="container_pdf">
 
-            <?php if(mysqli_num_rows($select_pdf_query) > 0) : ?>
+            <?php if(mysqli_num_rows($select_func_pdf_query) > 0) : ?>
 
-                <?php while($result_pdf = mysqli_fetch_assoc($select_pdf_query)) : ?>
+                <?php while($result_func_pdf = mysqli_fetch_assoc($select_func_pdf_query)) : ?>
 
                     <table>
                         <thead>
@@ -62,10 +56,10 @@ if(!isset($_SESSION['user'])) {
                         </thead>
                         <tbody>
                             <tr>
-                                <td><?=$result_pdf['id_funcionario']?></td>
-                                <td><?=$result_pdf['nombre_func']?></td>
-                                <td><?=$result_pdf['fecha']?></td>
-                                <td><a href="pdf_func.php?id=<?=$result_pdf['id_funcionario']?>">Todos los PDF</a></td>
+                                <td><?=$result_func_pdf['id_funcionario']?></td>
+                                <td><?=$result_func_pdf['nombre_func']?></td>
+                                <td><?=$result_func_pdf['fecha']?></td>
+                                <td>Descargar</td>
                             </tr>
                         </tbody>
                     </table>
@@ -76,6 +70,6 @@ if(!isset($_SESSION['user'])) {
             <?php endif; ?>
         </div>
     </div>
-
+    
 </body>
 </html>
