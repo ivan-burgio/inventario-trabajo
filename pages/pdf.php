@@ -43,7 +43,7 @@ if(!isset($_SESSION['user'])) {
 
     <div class="container">
 
-        <h1>Historico de los PDF</h1>
+        <h2>Historico de los PDF</h2>
             
         <div class="container_pdf">
 
@@ -51,7 +51,7 @@ if(!isset($_SESSION['user'])) {
 
                 <?php while($result_pdf = mysqli_fetch_assoc($select_pdf_query)) : ?>
 
-                    <table>
+                    <table class="table_pdf">
                         <thead>
                             <tr>
                                 <th>N° Funcionario</th>
@@ -76,6 +76,7 @@ if(!isset($_SESSION['user'])) {
             <?php endif; ?>
         </div>
     </div>
+    <?php require_once '../includes/footer.php'; ?>
 
 </body>
 </html>

@@ -22,8 +22,8 @@ if(isset($_GET['id'])) {
 
     $id_func_pdf = isset($_GET['id']) ? $_GET['id'] : false;
 
-    $select_func_pdf = "SELECT * FROM altas_productos WHERE id_funcionario = '$id_func_pdf';";
-    $select_func_pdf_query = mysqli_query($conexion, $select_func_pdf_query);
+    $select_func_pdf = "SELECT * FROM altas_productos WHERE id_funcionario = '$id_func_pdf' ORDER BY fecha DESC;";
+    $select_func_pdf_query = mysqli_query($conexion, $select_func_pdf);
 }
 
 ?>

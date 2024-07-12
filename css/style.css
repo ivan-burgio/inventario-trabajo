@@ -13,6 +13,11 @@ body {
     background-color: white;
 }
 
+h2 {
+    text-align: center;
+    margin-bottom: 2%;
+}
+
 .header {
 
     display: flex;
@@ -220,6 +225,12 @@ body {
     height: auto;
 }
 
+.container_pdf {
+
+    display: grid;
+    justify-items: center;
+}
+
 .container-comments {
 
     display: grid;
@@ -307,6 +318,11 @@ body {
     max-height: 500px;
     overflow-y: scroll;
     border-radius: 5px;
+}
+
+.table_pdf {
+
+    width: 60%;
 }
 
 

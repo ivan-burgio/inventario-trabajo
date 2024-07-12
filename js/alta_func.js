@@ -86,16 +86,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 let label_direccion = document.createElement('label');
                 let input_direccion = document.createElement('input');
+                let label_precinto = document.createElement('label');
+                let input_precinto = document.createElement('input');
     
                 label_direccion.setAttribute('for', 'direc');
                 label_direccion.textContent = 'Domicilio';
+
+                label_precinto.setAttribute('for', 'precinto');
+                label_precinto.textContent = 'Precinto';
     
                 input_direccion.setAttribute('type', 'text');
                 input_direccion.setAttribute('id', 'direc');
                 input_direccion.setAttribute('name', 'direc');
+
+                input_precinto.setAttribute('type', 'text');
+                input_precinto.setAttribute('id', 'direc');
+                input_precinto.setAttribute('name', 'direc');
     
                 form_altas.insertBefore(label_direccion, label_area);
                 form_altas.insertBefore(input_direccion, label_area);
+
+                form_altas.insertBefore(label_precinto, label_area);
+                form_altas.insertBefore(input_precinto, label_area);
                 break;
     
             case 'plataforma':

@@ -36,8 +36,9 @@ require_once '../lib/pdf_sql.php';
 
 
     <div class="container">
+        <a href="pdf.php"><img src="../assets/back.svg" alt="Volver" /></a>
 
-        <h1>Historico de los PDF</h1>
+        <h2>Todos los PDF</h2>
             
         <div class="container_pdf">
 
@@ -45,12 +46,12 @@ require_once '../lib/pdf_sql.php';
 
                 <?php while($result_func_pdf = mysqli_fetch_assoc($select_func_pdf_query)) : ?>
 
-                    <table>
+                    <table class="table_pdf">
                         <thead>
                             <tr>
                                 <th>N° Funcionario</th>
                                 <th>Nombre</th>
-                                <th>Ultimo registro</th>
+                                <th>Fecha de registro</th>
                                 <th>PDF</th>
                             </tr>
                         </thead>
@@ -59,7 +60,7 @@ require_once '../lib/pdf_sql.php';
                                 <td><?=$result_func_pdf['id_funcionario']?></td>
                                 <td><?=$result_func_pdf['nombre_func']?></td>
                                 <td><?=$result_func_pdf['fecha']?></td>
-                                <td>Descargar</td>
+                                <td><a href="#" download>Descargar</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -70,6 +71,7 @@ require_once '../lib/pdf_sql.php';
             <?php endif; ?>
         </div>
     </div>
+    <?php require_once '../includes/footer.php'; ?>
     
 </body>
 </html>
