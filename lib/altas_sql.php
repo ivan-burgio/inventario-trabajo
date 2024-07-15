@@ -11,6 +11,10 @@ $list_query = mysqli_query($conexion, $list);
 $list_prod = "SELECT id, id_prod, marca, modelo FROM productos WHERE status = 1;";
 $list_prod_query = mysqli_query($conexion, $list_prod);
 
+$list_sectores = "SELECT * FROM sectores;";
+$list_sectores_query = mysqli_query($conexion, $list_sectores);
+
+
 //------------VALIDACIÓN DE CAMPOS-------------------
 
 
@@ -29,11 +33,12 @@ if($_POST) {
         $funcionario = isset($_POST['select_func']) ? $_POST['select_func'] : false;
         $domicilio = isset($_POST['direc']) ? $_POST['direc'] : false;
         $sector = isset($_POST['sect']) ? $_POST['sect'] : false;
+        $precinto = isset($_POST['precinto']) ? $_POST['precinto'] : false;
         $descripcion = isset($_POST['description']) ? $_POST['description'] : false;
 
         $estado = array();
 
-        validarCampos($checks, $funcionario, $domicilio, $sector, $descripcion, $estado, $conexion);
+        validarCampos($checks, $funcionario, $domicilio, $sector, $precinto, $descripcion, $estado, $conexion);
 
         header('Location: ../pages/altas.php');
         exit();
@@ -50,7 +55,7 @@ if($_POST) {
 //----------------------------------------FUNCIONES----------------------------------------
 
 // Funcion para validar los datos ingresados en los campos del form
-function validarCampos($checks, $funcionario, $domicilio, $sector, $descripcion, $estado, $conexion) {
+function validarCampos($checks, $funcionario, $domicilio, $sector, $precinto, $descripcion, $estado, $conexion) {
 
     if(empty($descripcion)) {
 
@@ -58,15 +63,20 @@ function validarCampos($checks, $funcionario, $domicilio, $sector, $descripcion,
 
     }
 
-    countError($checks, $estado, $funcionario, $domicilio, $sector, $descripcion, $conexion);
+    if(empty($sector)) {
+
+        $estado['sector'] = "Seleccione un sector";
+    }
+
+    countError($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion, $conexion);
 }
 
 // Funcion para contar los posibles errores en los campos del form
-function countError($checks, $estado, $funcionario, $domicilio, $sector, $descripcion, $conexion) {
+function countError($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion, $conexion) {
 
     if (count($estado) == 0) {
 
-        createQuery($checks, $estado, $funcionario, $domicilio, $sector, $descripcion, $conexion);
+        createQuery($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion, $conexion);
 
     } else {
 
@@ -77,7 +87,7 @@ function countError($checks, $estado, $funcionario, $domicilio, $sector, $descri
 }
 
 // Funcion para crear las querys de los select y aplicar la condicional dependiendo si es teletrabajo o plataforma
-function createQuery($checks, $estado, $funcionario, $domicilio, $sector, $descripcion, $conexion) {
+function createQuery($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion, $conexion) {
 
     $equipo_one = isset($checks[0]) ? $checks[0] : false;
     $equipo_two = isset($checks[1]) ? $checks[1] : false;
@@ -114,7 +124,7 @@ function createQuery($checks, $estado, $funcionario, $domicilio, $sector, $descr
 
     if ($_POST['ubic'] == 'home') {
 
-        insertQueryHome($funcionario, $checks, $modelos, $nombre, $domicilio, $descripcion, $user, $user_id, $conexion);
+        insertQueryHome($funcionario, $checks, $modelos, $nombre, $domicilio, $precinto, $descripcion, $user, $user_id, $conexion);
 
     } elseif ($_POST['ubic'] == 'plataforma') {
         
@@ -124,14 +134,14 @@ function createQuery($checks, $estado, $funcionario, $domicilio, $sector, $descr
 }
 
 // Funcion para gestionar el alta para teletrabajo
-function insertQueryHome($funcionario, $checks, $modelos, $nombre, $domicilio, $descripcion, $user, $user_id, $conexion) {
+function insertQueryHome($funcionario, $checks, $modelos, $nombre, $domicilio, $precinto, $descripcion, $user, $user_id, $conexion) {
     
     $fecha_actual = date('Y-m-d H:i:s');
 
     foreach ($checks as $index => $equipo) {
         if ($equipo != null && $modelos[$index]) {
             $sql = "INSERT INTO altas_productos 
-                    VALUES(NULL, '$funcionario', '$equipo', '" . mysqli_real_escape_string($conexion, $modelos[$index]) . "', '$nombre', '$fecha_actual', '$domicilio', NULL, '$descripcion', '$user', 1);";
+                    VALUES(NULL, '$funcionario', '$equipo', '" . mysqli_real_escape_string($conexion, $modelos[$index]) . "', '$nombre', '$fecha_actual', '$domicilio', NULL, '$precinto', '$descripcion', '$user', 1);";
             $insert_query = mysqli_query($conexion, $sql);
 
             $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', '$fecha_actual');";
@@ -162,9 +172,10 @@ function insertQueryPlat($funcionario, $checks, $modelos, $nombre, $sector, $pue
     $fecha_actual = date('Y-m-d H:i:s');
 
     foreach ($checks as $index => $equipo) {
+        
         if ($equipo != null && $modelos[$index]) {
             $sql = "INSERT INTO altas_productos 
-                    VALUES(NULL, '$funcionario', '$equipo', '" . mysqli_real_escape_string($conexion, $modelos[$index]) . "', '$nombre', '$fecha_actual', '$sector', '$puesto', '$descripcion', '$user', 1);";
+                    VALUES(NULL, '$funcionario', '$equipo', '" . mysqli_real_escape_string($conexion, $modelos[$index]) . "', '$nombre', '$fecha_actual', '$sector', '$puesto', NULL, '$descripcion', '$user', 1);";
             $insert_query = mysqli_query($conexion, $sql);
 
             $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', '$fecha_actual');";

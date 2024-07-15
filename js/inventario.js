@@ -21,13 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 const nameColumnOne = row.getElementsByTagName('td')[0]; // Cambiar el índice según la estructura real de tu tabla
                 const nameColumnTwo = row.getElementsByTagName('td')[1]; // Cambiar el índice según la estructura real de tu tabla
                 const nameColumnThree = row.getElementsByTagName('td')[2]; // Cambiar el índice según la estructura real de tu tabla
+                const nameColumnFour = row.getElementsByTagName('td')[3]; // Cambiar el índice según la estructura real de tu tabla
+                const nameColumnFive = row.getElementsByTagName('td')[4]; // Cambiar el índice según la estructura real de tu tabla
     
-                if (nameColumnOne && nameColumnTwo && nameColumnThree) {
+                if (nameColumnOne && nameColumnTwo && nameColumnThree && nameColumnFour && nameColumnFive) {
                     const productNameOne = nameColumnOne.textContent.toLowerCase();
                     const productNameTwo = nameColumnTwo.textContent.toLowerCase();
                     const productNameThree = nameColumnThree.textContent.toLowerCase();
+                    const productNameFour = nameColumnFour.textContent.toLowerCase();
+                    const productNameFive = nameColumnFive.textContent.toLowerCase();
     
-                    if (productNameOne.includes(searchValue ) || productNameTwo.includes(searchValue) || productNameThree.includes(searchValue)) {
+                    if (productNameOne.includes(searchValue ) || productNameTwo.includes(searchValue) || productNameThree.includes(searchValue) || productNameFour.includes(searchValue) || productNameFive.includes(searchValue)) {
                         table.style.display = '';
                     } else {
                         table.style.display = 'none';

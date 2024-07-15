@@ -108,7 +108,17 @@ if(!isset($_SESSION['user'])) {
                 
                 <?php endif; ?>
             </select>
-            
+        
+            <?=mostrarErrores('errores', 'sector');?>
+            <?php if(mysqli_num_rows($list_sectores_query) > 0) :?>
+                <select id="select_sect" name="sect">
+                    <?php while($result_sector = mysqli_fetch_assoc($list_sectores_query)) : ?>
+                            <option value="<?=$result_sector['nombre']?>"><?=$result_sector['nombre']?></option>
+                    <?php endwhile;?>
+                </select>
+
+            <?php endif;?>
+
             <?=mostrarErrores('errores', 'comentario');?>
             <label id="label_area" for="description">Comentarios</label>
             <textarea id="text_area" name="description" placeholder="Comentario sobre el alta del producto..."></textarea>

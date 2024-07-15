@@ -89,6 +89,7 @@ if(!isset($_SESSION['user'])) {
                     <table id="table_prod" name="table_func" value="<?=$result_prod['id_funcionario'];?>">
                         <thead>
                             <tr>
+                                <th>ID_Func:</th>
                                 <th>ID:</th>
                                 <th>Modelo:</th>
                                 <th>Marca:</th>

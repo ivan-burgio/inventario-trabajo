@@ -59,6 +59,8 @@ if(!isset($_SESSION['user'])) {
                             <th>Id</th>
                             <th>Marca</th>
                             <th>Modelo</th>
+                            <th>Lugar de uso</th>
+                            <th>Funcionario</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,6 +68,13 @@ if(!isset($_SESSION['user'])) {
                             <td><?=$producto['id_prod']?></td>
                             <td><?=$producto['marca']?></td>
                             <td><?=$producto['modelo']?></td>
+                            <?php if(empty($producto['lugar_trabajo'] && $producto['nombre_func'])) :?>
+                                <td>Disponible</td>
+                                <td>Sin asignar</td>
+                            <?php else : ?>
+                                <td><?=$producto['lugar_trabajo']?></td>
+                                <td><a href="historico.php?id=<?=$producto['id_funcionario']?>"><?=$producto['nombre_func']?></a></td>
+                            <?php endif;?>
                             <td>
                                 <a href="producto.php?modelo=<?=$producto['id_prod']?>"><img src="../assets/eye.svg" alt="Ver"/></a> 
                             </td>

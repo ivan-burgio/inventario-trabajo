@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const select_ubic = document.querySelector('#ubic');
     const label_area = document.querySelector('#label_area');
     const input_submit = document.querySelector('#submit');
-
+    const select_sect = document.querySelector('#select_sect');
 
     //-------------------------EVENTOS----------------------------------
 
@@ -54,9 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const label_direccion_exist = document.querySelector('label[for="direc"]');
         const input_direccion_exist = document.querySelector('#direc');
         const label_sect_exist = document.querySelector('label[for="sect"]');
-        const input_sect_exist = document.querySelector('#sect');
+        const select_sect_exist = document.querySelector('#sect');
         const label_box_exist = document.querySelector('label[for="box"]');
         const input_box_exist = document.querySelector('#box');
+        const label_precinto_exist = document.querySelector('label[for="precinto"]');
+        const input_precinto_exist = document.querySelector('#precinto');
     
         if (label_direccion_exist) {
             form_altas.removeChild(label_direccion_exist);
@@ -67,14 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (label_sect_exist) {
             form_altas.removeChild(label_sect_exist);
         }
-        if (input_sect_exist) {
-            form_altas.removeChild(input_sect_exist);
+        if (select_sect_exist) {
+            form_altas.removeChild(select_sect_exist);
         }
         if (label_box_exist) {
             form_altas.removeChild(label_box_exist);
         }
         if (input_box_exist) {
             form_altas.removeChild(input_box_exist);
+        }
+        if (label_precinto_exist) {
+            form_altas.removeChild(label_precinto_exist);
+        }
+        if (input_precinto_exist) {
+            form_altas.removeChild(input_precinto_exist);
         }
     
         // Obtener el valor seleccionado en el select con id 'ubic'
@@ -94,14 +102,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 label_precinto.setAttribute('for', 'precinto');
                 label_precinto.textContent = 'Precinto';
+
+                select_sect.style.display = 'none';
     
                 input_direccion.setAttribute('type', 'text');
                 input_direccion.setAttribute('id', 'direc');
                 input_direccion.setAttribute('name', 'direc');
 
                 input_precinto.setAttribute('type', 'text');
-                input_precinto.setAttribute('id', 'direc');
-                input_precinto.setAttribute('name', 'direc');
+                input_precinto.setAttribute('id', 'precinto');
+                input_precinto.setAttribute('name', 'precinto');
     
                 form_altas.insertBefore(label_direccion, label_area);
                 form_altas.insertBefore(input_direccion, label_area);
@@ -113,16 +123,13 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'plataforma':
 
                 let label_sect = document.createElement('label');
-                let input_sect = document.createElement('input');
                 let label_box = document.createElement('label');
                 let input_box = document.createElement('input');
     
                 label_sect.setAttribute('for', 'sect');
                 label_sect.textContent = 'Sector';
 
-                input_sect.setAttribute('type', 'text');
-                input_sect.setAttribute('id', 'sect');
-                input_sect.setAttribute('name', 'sect');
+                select_sect.style.display = 'block';
 
                 label_box.setAttribute('for', 'box');
                 label_box.textContent = 'Puesto';
@@ -131,8 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 input_box.setAttribute('id', 'box');
                 input_box.setAttribute('name', 'box');
     
-                form_altas.insertBefore(label_sect, label_area);
-                form_altas.insertBefore(input_sect, label_area);
+                form_altas.insertBefore(label_sect, select_sect);
                 form_altas.insertBefore(label_box, label_area);
                 form_altas.insertBefore(input_box, label_area);
 
@@ -140,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
             default:
                 // En caso de otro valor, no se añaden campos adicionales
+                select_sect.style.display = 'none';
                 break;
         };
     };

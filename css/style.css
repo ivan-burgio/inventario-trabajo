@@ -167,6 +167,18 @@ h2 {
 
 }
 
+.select_history {
+
+    width: 40%;
+    display: flex;
+    margin-bottom: 2%;
+}
+
+#select_sect {
+
+    display: none;
+}
+
 
 .product_func h3 {
 
