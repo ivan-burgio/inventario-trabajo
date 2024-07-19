@@ -1,6 +1,7 @@
 <?php 
 
 require_once 'lib/login_sql.php'; 
+require_once 'autoload.php';
 
 if(!isset($_SESSION)) {
 
@@ -8,7 +9,6 @@ if(!isset($_SESSION)) {
 };
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es">

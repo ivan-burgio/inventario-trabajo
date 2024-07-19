@@ -1,6 +1,9 @@
 <?php
 require_once '../includes/conexion.php';
 
+$select_tipos = "SELECT * FROM tipos";
+$select_tipos_query = mysqli_query($conexion, $select_tipos);
+
 //Validar e ingresar los datos de los productos que se ingresan a la tabla productos.
 if($_POST) {
 

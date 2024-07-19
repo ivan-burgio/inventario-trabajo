@@ -63,9 +63,9 @@ if(!isset($_SESSION['user'])) {
 
             <div id="select_prod" name="select_prod">
 
-                <?php if(mysqli_num_rows($list_prod_query) > 0) : ?>
+                <?php if(mysqli_num_rows($lista_func) > 0) : ?>
 
-                    <?php while($result_prod = mysqli_fetch_assoc($list_prod_query)) : ?>
+                    <?php while($result_prod = mysqli_fetch_assoc($lista_func)) : ?>
                         <table id="table_prod">
                             <thead>
                                 <tr>

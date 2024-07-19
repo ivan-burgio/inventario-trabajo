@@ -2,17 +2,9 @@
 require_once '../includes/conexion.php';
 require_once '../includes/helpers.php';
 
+
 //--------------CONSULTAS MYSQL---------------------
 
-$list = "SELECT f.id_funcionario, f.nombre, f.apellido, s.nombre AS nombre_sector FROM funcionarios f
-         INNER JOIN sectores s ON f.sector = s.id_sector";
-$list_query = mysqli_query($conexion, $list);
-
-$list_prod = "SELECT id, id_prod, marca, modelo FROM productos WHERE status = 1;";
-$list_prod_query = mysqli_query($conexion, $list_prod);
-
-$list_sectores = "SELECT * FROM sectores;";
-$list_sectores_query = mysqli_query($conexion, $list_sectores);
 
 
 //------------VALIDACIÓN DE CAMPOS-------------------

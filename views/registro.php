@@ -2,6 +2,7 @@
 
 require_once '../includes/helpers.php'; 
 require_once '../includes/conexion.php';
+require_once '../lib/registro_sql.php';
 
 if(!isset($_SESSION['user'])) {
 
@@ -70,6 +71,15 @@ if(!isset($_SESSION['user'])) {
                 <option value="perife">Periferico</option>
 
             </select>
+
+            <label for="tipo">Tipo</label>
+            <?php if(mysqli_num_rows($select_tipos_query) > 0) : ?>
+                <select name="tipo">
+                    <?php while($result_tipos =  mysqli_fetch_assoc($select_tipos_query)) : ?>
+                        <option value="<?=$result_tipos['id'];?>"><?=$result_tipos['nombre'];?></option>
+                    <?php endwhile;?>
+                </select>
+            <?php endif;?>
 
             <?=mostrarErrores('estado', 'descripcion'); ?>
             <label for="description">Descripcion y comentario inicial</label>

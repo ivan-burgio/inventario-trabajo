@@ -23,6 +23,7 @@ CREATE TABLE productos (
 
 id              INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 id_prod         VARCHAR(50) NOT NULL,
+tipo_prod       VARCHAR(10),
 marca           VARCHAR(100) NOT NULL,
 modelo          VARCHAR(100) NOT NULL,
 procesador      CHAR(20),
@@ -31,6 +32,17 @@ almacenamiento  CHAR(10),
 alta            DATE,
 descripcion     TEXT,
 usuario         VARCHAR(50),
+status          INT,
+
+FOREIGN KEY (tipo_prod) REFERENCES tipos(codigo)
+
+)ENGINE=InnoDB;
+
+CREATE TABLE tipos (
+
+id              INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nombre          VARCHAR(50),
+codigo          VARCHAR(10) UNIQUE,
 status          INT
 
 )ENGINE=InnoDB;
@@ -58,9 +70,11 @@ FOREIGN KEY (id_producto) REFERENCES productos(id)
 )ENGINE=InnoDB;
 
 CREATE TABLE altas_productos (
+
 id                  INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 id_funcionario      INT,
 id_producto         INT,
+tipo_prod           VARCHAR(10),
 marca_produ         VARCHAR(100),
 nombre_func         VARCHAR(60),
 fecha               DATETIME,

@@ -1,9 +1,8 @@
 <?php
 
-require_once 'conexion.php';
+require_once '../includes/conexion.php';
 
-
- if(isset($_SESSION['user'])) {
+if(isset($_SESSION['user'])) {
 
     session_destroy();
 };
