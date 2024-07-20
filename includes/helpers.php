@@ -1,8 +1,8 @@
 <?php
 
-require_once 'conexion.php';
-require '../FPDF/fpdf.php';
-require '../PHPMailer/envio_mail.php';
+require_once 'config/conexion.php';
+require 'FPDF/fpdf.php';
+require 'PHPMailer/envio_mail.php';
 date_default_timezone_set('America/Montevideo');
 
 //Función creada para mostrar los errores en los campos de registro

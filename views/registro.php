@@ -1,50 +1,13 @@
 <?php 
 
-require_once '../includes/helpers.php'; 
-require_once '../includes/conexion.php';
-require_once '../lib/registro_sql.php';
+require_once 'includes/helpers.php';
 
-if(!isset($_SESSION['user'])) {
-
-    header('Location: ../index.php');
-}
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css" type="text/css" />
-    <title>Registro</title>
-</head>
-<body>
-
-    <header class="header">
-        <div class="user">
-            <h1 class="name">Bienvenido, <?=$_SESSION['user']['nombre'];?> <?=$_SESSION['user']['apellido'];?></h1>
-            <a href="../includes/cerrar_login.php"><img src="../assets/close.svg" alt="Cerrar sesión" /></a>
-        </div>
-        <ul class="list">
-        <?php if($_SESSION['user']['access'] == 2) :?>
-                <li><a href="inventario.php">Inventario</a></li>
-                <li><a href="registro.php">Registro</a></li>
-                <li><a href="altas.php">Altas de equipos</a></li>
-                <li><a href="bajas.php">Bajas de equipos</a></li>
-                <li><a href="pdf.php">PDF</a></li>
-            <?php else :?>
-                <li><a href="altas.php">Altas de equipos</a></li>
-                <li><a href="bajas.php">Bajas de equipos</a></li>
-                <li><a href="pdf.php">PDF</a></li>
-            <?php endif;?>
-        </ul>
-    </header>
-
-
     <div class="container container-regYMod">
         
-        <form id="form" action="../lib/registro_sql.php" method="POST">
+        <form id="form" action="<?=base_url?>?controller=Registro&action=save" method="POST">
 
             <h2>Registros de productos</h2>
             
@@ -73,9 +36,9 @@ if(!isset($_SESSION['user'])) {
             </select>
 
             <label for="tipo">Tipo</label>
-            <?php if(mysqli_num_rows($select_tipos_query) > 0) : ?>
+            <?php if($types->num_rows > 0) : ?>
                 <select name="tipo">
-                    <?php while($result_tipos =  mysqli_fetch_assoc($select_tipos_query)) : ?>
+                    <?php while($result_tipos =  $types->fetch_assoc()) : ?>
                         <option value="<?=$result_tipos['id'];?>"><?=$result_tipos['nombre'];?></option>
                     <?php endwhile;?>
                 </select>
@@ -88,7 +51,4 @@ if(!isset($_SESSION['user'])) {
             <input id="submit" type="submit" value="Registrar" />
         </form>
     </div>
-    <?php require_once '../includes/footer.php'; ?>
     <script src="../js/registro.js"></script>
-</body>
-</html>

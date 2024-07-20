@@ -1,50 +1,153 @@
 <?php
-require_once '../includes/conexion.php';
-require_once '../includes/helpers.php';
 
+require_once 'models/AltasBajasModels.php';
 
-//--------------CONSULTAS MYSQL---------------------
+class AltasBajasController {
 
+    public function altas() {
 
+        if(!isset($_SESSION['user'])) {
 
-//------------VALIDACIÓN DE CAMPOS-------------------
+            header('Location:'.base_url.'?controller=Login&action=loginview');
+            exit();
+        };
 
+        $altaModel = new AltasModels();
 
-if($_POST) {
-
-
-
-    unset($_SESSION['estado']);
-    unset($_SESSION['errores']);
-    unset($_SESSION['producto']);
-
-    $checks = isset($_POST['check']) ? $_POST['check'] : false;
-
-    if ($checks) {
-
-        $funcionario = isset($_POST['select_func']) ? $_POST['select_func'] : false;
-        $domicilio = isset($_POST['direc']) ? $_POST['direc'] : false;
-        $sector = isset($_POST['sect']) ? $_POST['sect'] : false;
-        $precinto = isset($_POST['precinto']) ? $_POST['precinto'] : false;
-        $descripcion = isset($_POST['description']) ? $_POST['description'] : false;
-
-        $estado = array();
-
-        validarCampos($checks, $funcionario, $domicilio, $sector, $precinto, $descripcion, $estado, $conexion);
-
-        header('Location: ../pages/altas.php');
-        exit();
-
-    } else {
-
-        $_SESSION['producto']['error'] = 'Seleccione por lo menos un producto';
-        header('Location: ../pages/altas.php');
-        exit();
+        $funcs = $altaModel->getFuncionario();
+        $products = $altaModel->getProduct();
+        $sectores = $altaModel->getSector();
+        $altaModel->closeConnection();
+        require_once 'views/altas.php';
     }
 
+    public function bajas() {
+
+        $altaModel = new AltasModels();
+
+        if(!isset($_SESSION['user'])) {
+
+            header('Location:'.base_url.'?controller=Login&action=loginview');
+            exit();
+        };
+
+        $funcAltas = $altaModel->getAltasFunc();
+        $producAltas = $altaModel->getAltasProduct();
+        require_once 'views/bajas.php';
+    }
+
+    public function bajasProdu() {
+
+        if($_POST) {
+
+            $bajasProdu = new AltasBajasModels();
+
+            unset($_SESSION['errores']);
+            unset($_SESSION['exitoBaja']);
+        
+            // Verificar y obtener datos del formulario
+            if(isset($_POST['check_baja'])) {
+        
+                $check_prod = $_POST['check_baja'];
+                $descripcion = isset($_POST['description']) ? $_POST['description'] : '';
+                $user = $_SESSION['user']['nombre'] . ' ' . $_SESSION['user']['apellido'];
+                $user_admin = $_SESSION['user']['id_admin'];
+                
+                $estado = validarCamposBaja($descripcion, $check_prod);
+        
+                if(count($estado) == 0) {
+                     // Realizar la baja y actualizar el estado de los productos
+                    foreach($check_prod as $equipo) {
+        
+                        if(!empty($equipo)) {
+
+                            $bajasProdu->setEquipo($equipo);
+                            $bajasProdu->setDescripcion($descripcion);
+                            $bajasProdu->setUser($user);
+                            $bajasProdu->setUserAdmin($user_admin);
+        
+                            // Insertar la baja en la tabla altas_productos
+                            $bajasProdu->updateAltas();
+        
+                            // Guardar mensaje de éxito en sesión
+                            $estado['exito'] = "Baja realizada con éxito";
+                            $_SESSION['exitoBaja'] = $estado;
+                        
+                        } 
+                    }
+        
+                } else {
+        
+                    $_SESSION['errores'] = $estado;
+                }
+        
+                header('Location:'.base_url.'?controller=AltasBajas&action=bajas');
+            }
+        }
+    }
+
+    public function save() {
+
+        $altaModel = new AltasModels();
+
+        if($_POST) {
+
+            unset($_SESSION['estado']);
+            unset($_SESSION['errores']);
+            unset($_SESSION['producto']);
+        
+            $checks = isset($_POST['check']) ? $_POST['check'] : false;
+        
+            if ($checks) {
+        
+                $funcionario = isset($_POST['select_func']) ? $_POST['select_func'] : false;
+                $domicilio = isset($_POST['direc']) ? $_POST['direc'] : false;
+                $sector = isset($_POST['sect']) ? $_POST['sect'] : false;
+                $precinto = isset($_POST['precinto']) ? $_POST['precinto'] : false;
+                $descripcion = isset($_POST['description']) ? $_POST['description'] : false;
+        
+                $estado = array();
+        
+                validarCampos($checks, $funcionario, $domicilio, $sector, $precinto, $descripcion, $estado, $conexion);
+                
+                $altaModel->closeConnection();
+                header('Location:'.base_url.'?controller=Altas&action=altas');
+        
+            } else {
+        
+                $_SESSION['producto']['error'] = 'Seleccione por lo menos un producto';
+
+                $altaModel->closeConnection();
+                header('Location:'.base_url.'?controller=Altas&action=altas');
+            }
+        
+        }
+    }
 }
 
+
+
+
 //----------------------------------------FUNCIONES----------------------------------------
+
+function validarCamposBaja($descripcion, $check_prod) {
+
+    $estado = [];
+
+    if(empty($descripcion)) {
+        
+        $estado['comentario'] = "Ingrese el motivo de la baja"; 
+        $_SESSION['errores'] = $estado;
+    };
+
+    if(count($check_prod) == 0 ) {
+
+        $estado['producto'] = "Seleccione un producto para la baja";
+        $_SESSION['errores'] = $estado;
+    }
+
+    return $estado;
+}
 
 // Funcion para validar los datos ingresados en los campos del form
 function validarCampos($checks, $funcionario, $domicilio, $sector, $precinto, $descripcion, $estado, $conexion) {
@@ -73,7 +176,7 @@ function countError($checks, $estado, $funcionario, $domicilio, $sector, $precin
     } else {
 
         $_SESSION['errores'] = $estado;
-        header('Location: ../pages/altas.php');
+        header('Location:'.base_url.'?controller=Altas&action=altas');
         exit();
     }
 }

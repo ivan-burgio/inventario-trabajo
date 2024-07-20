@@ -1,91 +1,81 @@
 <?php
 
-require_once __DIR__ . '/../includes/conexion.php';
+require_once 'models/LoginModels.php';
+require_once 'config/parameters.php';
 
-if(!isset($_SESSION)) {
+class LoginController {
 
-    session_start();
-};
+    public function loginview() {
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        require_once 'views/login.php';
+    }
 
-    unset($_SESSION['errores_log']);
+    public function login() {
 
-    $email = isset($_POST['user']) ? mysqli_real_escape_string($conexion, $_POST['user']) : false;
-    $password = isset($_POST['password']) ? mysqli_real_escape_string($conexion, $_POST['password']) : false;
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $errores_log = array();
+            $email = isset($_POST['email']) ? $_POST['email'] : false;
+            $password = isset($_POST['password']) ? $_POST['password'] : false;
 
-    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errores_log = array();
 
-        $errores_log['email'] = "El email ingresado no es valido";
-    };
+            if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        
+                $errores_log['email'] = "El email ingresado no es valido";
+            };
+        
+            if (empty($password)) {
+        
+                $errores_log['password'] = "Ingrese una contraseña";
+            };
+        
+            if (count($errores_log) == 0) {
+        
+        
+                insertQuery($email, $password, $errores_log);
+        
+        
+            } else {
+        
+                $_SESSION['errores_log'] = $errores_log;
+                header('Location:'.base_url.'views/login.php');
+            };
+        
+        }
+    }
 
-    if (empty($password)) {
+    public function closeLogin() {
 
-        $errores_log['password'] = "Ingrese una contraseña";
-    };
+        if(isset($_SESSION['user'])) {
 
-    if (count($errores_log) == 0) {
-
-
-        insertQuery($user, $email, $password, $conexion, $errores_log);
-
-
-    } else {
-
-        $_SESSION['errores_log'] = $errores_log;
-    };
-
-    header('Location: ../index.php');
-
-};
-
-mysqli_close($conexion);
+            session_destroy();
+        };
+        
+        header('Location:'.base_url.'?controller=Login&action=loginview');
+    }
+}
 
 
 //----------------------------------------FUNCIONES----------------------------------------
 
-function insertQuery($user, $email, $password, $conexion, $errores_log) {
+function insertQuery($email, $password, $errores_log) {
 
-    $select_log = "SELECT * FROM admin WHERE email = '$email';";
-    $select_query = mysqli_query($conexion, $select_log);
+    $usuario = new LoginModels();
+    $usuario->setEmail($_POST['email']);
+    $usuario->setPassword($_POST['password']);
+    $identify = $usuario->LoginSql();
 
-    if (mysqli_num_rows($select_query) == 1) {
+    if($identify) {
 
-        $user = mysqli_fetch_assoc($select_query);
-        $verify = password_verify($password, $user['contraseña']);
-
-        verifyUser($verify, $user, $errores_log);
-    }
-
-}
-
-function verifyUser($verify, $user, $errores_log) {
-
-    if($verify) {
-
-        $_SESSION['user'] = $user;
+        header('Location:'.base_url.'?controller=Inventario&action=inventario');
     
     } else {
 
-        $errores_log['not_verify'] = "La contraseña no coincide";
+        $errores_log['login'] = "Login incorrecto";
         $_SESSION['errores_log'] = $errores_log;
+        header('Location:'.base_url.'?controller=Login&action=loginview');
     }
 
-}
-
-//Función creada para mostrar los errores en los campos de registro
-function mostrarErrores($errores, $campo) {
-
-    if(isset($_SESSION[$errores][$campo])) {
-
-        echo "<div class='alert alert_error'>".$_SESSION[$errores][$campo]."</div>";
-
-    } else {
-
-        echo '';
-    }
 }
 
 ?>

@@ -1,49 +1,11 @@
 <?php 
-
-require_once '../lib/altas_sql.php';
-require_once '../includes/helpers.php';
-
-if(!isset($_SESSION['user'])) {
-
-    header('Location: ../index.php');
-};
+require_once 'includes/helpers.php';
 
 ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css" type="text/css" />
-    <title>Altas de equipos para funcionarios</title>
-</head>
-<body>
-
-    <header class="header">
-        <div class="user">
-            <h1 class="name">Bienvenido, <?=$_SESSION['user']['nombre'];?> <?=$_SESSION['user']['apellido'];?></h1>
-            <a href="../includes/cerrar_login.php"><img src="../assets/close.svg" alt="Cerrar sesión" /></a>
-        </div>
-        <ul class="list">
-        <?php if($_SESSION['user']['access'] == 2) :?>
-                <li><a href="inventario.php">Inventario</a></li>
-                <li><a href="registro.php">Registro</a></li>
-                <li><a href="altas.php">Altas de equipos</a></li>
-                <li><a href="bajas.php">Bajas de equipos</a></li>
-                <li><a href="pdf.php">PDF</a></li>
-            <?php else :?>
-                <li><a href="altas.php">Altas de equipos</a></li>
-                <li><a href="bajas.php">Bajas de equipos</a></li>
-                <li><a href="pdf.php">PDF</a></li>
-            <?php endif;?>
-        </ul>
-    </header>
-
     <div class="container container-regYMod">
 
-        <form id="form" action="../lib/altas_sql.php" method="POST">
+        <form id="form" action="<?=base_url?>?controller=Altas&action=save" method="POST">
 
             <h2>Alta de productos para funcionarios</h2>
 
@@ -63,9 +25,9 @@ if(!isset($_SESSION['user'])) {
 
             <div id="select_prod" name="select_prod">
 
-                <?php if(mysqli_num_rows($lista_func) > 0) : ?>
+                <?php if($products->num_rows > 0) : ?>
 
-                    <?php while($result_prod = mysqli_fetch_assoc($lista_func)) : ?>
+                    <?php while($product = $products->fetch_assoc()) : ?>
                         <table id="table_prod">
                             <thead>
                                 <tr>
@@ -77,10 +39,10 @@ if(!isset($_SESSION['user'])) {
 
                                 <tbody>
                                     <tr>
-                                        <td><?=$result_prod['id_prod'];?></td>
-                                        <td><?=$result_prod['modelo'];?></td>
-                                        <td><?=$result_prod['marca'];?></td>
-                                        <td><input class="check" type="checkbox" name="check[]" value="<?=$result_prod['id'];?>" /></td>
+                                        <td><?=$product['id_prod'];?></td>
+                                        <td><?=$product['modelo'];?></td>
+                                        <td><?=$product['marca'];?></td>
+                                        <td><input class="check" type="checkbox" name="check[]" value="<?=$product['id'];?>" /></td>
                                     </tr>
                                 </tbody>
                         </table>
@@ -94,11 +56,11 @@ if(!isset($_SESSION['user'])) {
 
             <select id="select_func" name="select_func">
 
-                <?php if(mysqli_num_rows($list_query) > 0) : ?>
+                <?php if($func->num_rows > 0) : ?>
 
-                    <?php while($result = mysqli_fetch_assoc($list_query)) : ?>
+                    <?php while($func = $funcs->fetch_assoc()) : ?>
 
-                        <option value="<?=$result['id_funcionario'];?>">N°<?=$result['id_funcionario'].', '.$result['nombre'].' '.$result['apellido'].', '.$result['nombre_sector'];?></option>
+                        <option value="<?=$func['id_funcionario'];?>">N°<?=$func['id_funcionario'].', '.$func['nombre'].' '.$func['apellido'].', '.$func['nombre_sector'];?></option>
 
                     <?php endwhile; ?>
 
@@ -110,10 +72,10 @@ if(!isset($_SESSION['user'])) {
             </select>
         
             <?=mostrarErrores('errores', 'sector');?>
-            <?php if(mysqli_num_rows($list_sectores_query) > 0) :?>
+            <?php if($sectores->num_rows > 0) :?>
                 <select id="select_sect" name="sect">
-                    <?php while($result_sector = mysqli_fetch_assoc($list_sectores_query)) : ?>
-                            <option value="<?=$result_sector['nombre']?>"><?=$result_sector['nombre']?></option>
+                    <?php while($sector = $sectores->fetch_assoc()) : ?>
+                            <option value="<?=$sector['nombre']?>"><?=$sector['nombre']?></option>
                     <?php endwhile;?>
                 </select>
 
@@ -127,6 +89,3 @@ if(!isset($_SESSION['user'])) {
         </form>
     </div>
     <script src="../js/alta_func.js"></script>
-    <?php require_once '../includes/footer.php'; ?>
-</body>
-</html>

@@ -1,13 +1,13 @@
 <?php
 
 date_default_timezone_set('America/Montevideo');
+session_start();
 
 class Conexion {
 
     public static function Connect() {
 
-        $db = new mysqli('Localhost', 'root', '', 'inventario');
-        $db->query("SET NAMES 'utf-8'");
+        $db = new mysqli('Localhost', 'ivanY', '', 'inventario');
         return $db;
     }
 }

@@ -1,0 +1,10 @@
+<ifModule mod_rewrite.c>
+    RewriteEngine on
+    ErrorDocument 404 http://localhost/inventario-trabajo/error/index
+
+    # Redirigir todas las solicitudes a index.php, excepto cuando el archivo o directorio exista
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+
+    RewriteRule ^/?([a-zA-Z]+)/([a-zA-Z]+) index.php?controller=$1&action=$2
+</ifModule>

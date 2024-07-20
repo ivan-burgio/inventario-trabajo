@@ -1,63 +1,47 @@
 <?php 
-
-require_once 'lib/login_sql.php'; 
+require_once 'config/conexion.php';
 require_once 'autoload.php';
+require_once 'config/parameters.php';
+require_once 'views/layout/header.php';
 
-if(!isset($_SESSION)) {
+    if(isset($_GET['controller'])) {
 
-    session_start();
-};
+        $nombre_controlador = $_GET['controller']. 'Controller';
 
+    } elseif(!isset($_GET['controller']) && !isset($_GET['action'])) {
+
+        $nombre_controlador = controller_default;
+
+    } else {
+
+        $error = new ErrorController();
+        $error->index();
+        exit();
+    }
+
+
+
+
+    if(class_exists($nombre_controlador)) {
+
+        $controlador = new $nombre_controlador;
+
+        if(isset($_GET['action']) && method_exists($controlador, $_GET['action'])) {
+
+            $action = $_GET['action'];
+            $controlador->$action();
+        
+        } else {
+
+            echo "La pagina que buscas no existe";
+        }
+
+    } else {
+
+        $error = new ErrorController();
+        $error->index();
+    }
+
+require_once 'views/layout/footer.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
-    <title>Inicio</title>
-</head>
-<body>
-
-    <?php if(!isset($_SESSION['user'])) :?>
-
-        <div class="container container-login">
-
-            <h1>Inventario - <span class="title">Skytel</span> Avanza <span class="title">Uruguay</span></h1>
-
-            <form id="form-login" action="lib/login_sql.php" method="POST">
-
-                <?=mostrarErrores('errores_log', 'email');?>
-                <label for="user">Usuario</label>
-                <input type="email" name="user" id="user"/>
-
-                <?=mostrarErrores('errores_log', 'password');?>
-                <?=mostrarErrores('errores_log', 'not_verify');?>
-                <label for="password">Contraseña</label>
-                <input type="password" name="password" id="password" />
-
-                <input type="submit" value="Ingresar" />
-
-            </form>
-
-        </div>
-
-    <?php else : ?>
-        
-        <?php if($_SESSION['user']['access'] == 2) : ?>
-
-            <?php header('Location: pages/inventario.php');?>
-
-        <?php else :?>
-
-            <?php header('Location: pages/altas.php');?>
-
-        <?php endif; ?>
-
-    <?php endif; ?>
-    
-    <?php require_once 'includes/footer.php';?>
-
-</body>
-</html>

@@ -1,73 +1,99 @@
 <?php
-require_once '../includes/conexion.php';
+require_once 'models/RegistroModels.php';
 
-$select_tipos = "SELECT * FROM tipos";
-$select_tipos_query = mysqli_query($conexion, $select_tipos);
 
-//Validar e ingresar los datos de los productos que se ingresan a la tabla productos.
-if($_POST) {
-
-    unset($_SESSION['estado']);
-
-    $id = isset($_POST['id']) ? $_POST['id'] : false;                               //Se valida la existencia de datos enviados por POST
-    $marca = isset($_POST['marca']) ? $_POST['marca'] : false;                      //Se valida la existencia de datos enviados por POST
-    $modelo = isset($_POST['modelo']) ? $_POST['modelo'] : false;                   //Se valida la existencia de datos enviados por POST
-    $procesador = isset($_POST['proce']) ? $_POST['proce'] : false;                 //Se valida la existencia de datos enviados por POST
-    $ram = isset($_POST['ram']) ? $_POST['ram'] : false;                            //Se valida la existencia de datos enviados por POST
-    $almacenamiento = isset($_POST['almace']) ? $_POST['almace'] : false;           //Se valida la existencia de datos enviados por POST
-    $descripcion = isset($_POST['description']) ? $_POST['description'] : false;    //Se valida la existencia de datos enviados por POST
-    $user = $_SESSION['user']['nombre'].' '.$_SESSION['user']['apellido'];
-    $user_admin = $_SESSION['user']['id_admin'];
-
-    $estado = array();     //Se crea array de estado
-
-    validacionCampos($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $estado, $conexion);
+class RegistroController {
     
-    //Redirigue la ubicación de la página hacia el registro
-    header('Location: ../pages/registro.php');
-    exit();
-};
+    public function registro() {
+
+        if(!isset($_SESSION['user'])) {
+
+            header('Location: ../index.php');
+            exit();
+        };
+
+        $registro_prod = new RegistroModels();
+        $types = $registro_prod->showTypes();
+        
+        require_once 'views/registro.php';
+    }
+
+    public function save() {
+
+        //Validar e ingresar los datos de los productos que se ingresan a la tabla productos.
+        if($_POST) {
+
+            unset($_SESSION['estado']);
+
+            $registro = new RegistroModels();
+
+            $id_prod = isset($_POST['id']) ? $_POST['id'] : false;                               //Se valida la existencia de datos enviados por POST
+            $marca = isset($_POST['marca']) ? $_POST['marca'] : false;                      //Se valida la existencia de datos enviados por POST
+            $modelo = isset($_POST['modelo']) ? $_POST['modelo'] : false;                   //Se valida la existencia de datos enviados por POST
+            $procesador = isset($_POST['proce']) ? $_POST['proce'] : false;                 //Se valida la existencia de datos enviados por POST
+            $ram = isset($_POST['ram']) ? $_POST['ram'] : false;                            //Se valida la existencia de datos enviados por POST
+            $almacenamiento = isset($_POST['almace']) ? $_POST['almace'] : false;           //Se valida la existencia de datos enviados por POST
+            $descripcion = isset($_POST['description']) ? $_POST['description'] : false;    //Se valida la existencia de datos enviados por POST
+            $user = $_SESSION['user']->nombre.' '.$_SESSION['user']->apellido;
+
+            $estado = array();     //Se crea array de estado
+
+            validarCampos($id_prod, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $estado, $registro);
+            
+            $registro->closeConnection();
+            header('Location:'.base_url. 'views/registro.php');
+        };
+    }
+}
+
 
 //----------------------------------------FUNCIONES----------------------------------------
 
+function ValidarCampos($id_prod, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $estado, $registro) {
 
-function validacionCampos($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $estado, $conexion) {
+    if(empty($id_prod)) {
 
-    //Validación de los campos
-    if(empty($id)) {
+        $estado['id_prod'] = "Ingrese un id para el producto";
+    }
 
-        $estado['id'] = "Ingrese un ID";
-    };
+    if(empty($marca)) {
 
-    if(empty($marca) || preg_match("[/0-9/]", $marca)) {
-
-        $estado['marca'] = "Ingrese la marca del equipo";
-    };
-
-    if(empty($modelo)) {
-
-        $estado['modelo'] = "Ingrese el modelo del equipo";
-    };
+        $estado['marca'] = "Ingrese la marca del producto";
+    }
 
     if(empty($descripcion)) {
 
-        $estado['descripcion'] = "Ingrese una descripción generica del equipo";
-    };
+        $estado['descripcion'] = "Ingrese una descripcion del producto";
+    }
 
-    validarTipoProducto($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $estado, $conexion);
+    if(count($estado) == 0) {
+
+        $registro->setId_Prod($id_prod);
+        $registro->setMarca($marca);
+        $registro->setModelo($modelo);
+        $registro->setProcesador($procesador);
+        $registro->setRam($ram);
+        $registro->setAlmacenamiento($almacenamiento);
+        $registro->setDescripcion($descripcion);
+        $registro->setUsuario($user);
+
+        validarTipoProducto($id_prod, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $estado, $registro);
+
+    }
 }
 
-function validarTipoProducto($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $user_admin, $estado, $conexion) {
+
+function validarTipoProducto($id_prod, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $estado, $registro) {
 
     //Se valida el tipo de valor del select
     if($_POST['select'] && $_POST['select'] == 'torre') { //En caso de que sea 'torre' se validan los otros campos
 
-        countErrorTorre($estado, $id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user);
+        countErrorTorre($estado, $id_prod, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $registro);
 
     //Se valida el tipo de valor del select
     } elseif($_POST['select'] && $_POST['select'] == 'perife') { //En caso de que sea 'perife' se realiza la validación del array de estado
 
-        countErrorPerife($estado, $id, $marca, $modelo, $descripcion, $conexion);
+        countErrorPerife($estado, $id_prod, $marca, $modelo, $descripcion, $user, $registro);
 
     } else {
 
@@ -78,11 +104,11 @@ function validarTipoProducto($id, $marca, $modelo, $procesador, $ram, $almacenam
     
 }
 
-function countErrorTorre($estado, $id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user) {
+function countErrorTorre($estado, $id_prod, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $registro) {
 
     if(count($estado) == 0) { //Si el array de estado está vacio, entonces se realiza la inserción a la BD
 
-        ingresarProducTorre($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user);
+        ingresarProducTorre($id_prod, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $registro);
         $estado['exito_torre'] = "Se registró el periferico con éxito";
         $_SESSION['estado'] = $estado;
 
@@ -93,11 +119,11 @@ function countErrorTorre($estado, $id, $marca, $modelo, $procesador, $ram, $alma
 
 }
 
-function countErrorPerife($estado, $id, $marca, $modelo, $descripcion, $conexion) {
+function countErrorPerife($estado, $id_prod, $marca, $modelo, $descripcion, $user, $registro) {
 
     if(count($estado) == 0) { //Si el array de estado está vacio, entonces se realiza la inserción a la BD
 
-        ingresarProducPerife($id, $marca, $modelo, $descripcion, $conexion);
+        ingresarProducPerife($id_prod, $marca, $modelo, $descripcion, $user, $registro);
         $estado['exito_perife'] = "Se registró el periferico con éxito";
         $_SESSION['estado'] = $estado;
 
@@ -108,36 +134,18 @@ function countErrorPerife($estado, $id, $marca, $modelo, $descripcion, $conexion
     };
 }
 
-function ingresarProducTorre($id, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $conexion, $user) {
-
-    $id_verify = mysqli_real_escape_string($conexion, $id);                         //Se aplica función para evitar inyecciones SQL
-    $marca_verify = mysqli_real_escape_string($conexion, $marca);                   //Se aplica función para evitar inyecciones SQL
-    $modelo_verify = mysqli_real_escape_string($conexion, $modelo);                 //Se aplica función para evitar inyecciones SQL
-    $proce_verify = mysqli_real_escape_string($conexion, $procesador);              //Se aplica función para evitar inyecciones SQL
-    $ram_verify = mysqli_real_escape_string($conexion, $ram);                       //Se aplica función para evitar inyecciones SQL
-    $almace_verify = mysqli_real_escape_string($conexion, $almacenamiento);         //Se aplica función para evitar inyecciones SQL
-    $descripcion_verify = mysqli_real_escape_string($conexion, $descripcion);       //Se aplica función para evitar inyecciones SQL
+function ingresarProducTorre($id_prod, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user, $registro) {
 
     //Se genera la consulta para la BD
-    $registro_equip = "INSERT INTO productos VALUES(NULL, '$id_verify', '$marca_verify', '$modelo_verify', '$proce_verify', '$ram_verify', '$almace_verify', CURDATE(), '$descripcion_verify', '$user', 1);";
-    //Se inserta la consulta en la BD
-    $insert = mysqli_query($conexion, $registro_equip);
+    $registro->registroTorre($id_prod, $marca, $modelo, $procesador, $ram, $almacenamiento, $descripcion, $user);
+
 
 }
 
-function ingresarProducPerife($id, $marca, $modelo, $descripcion, $conexion) {
-
-    $id_verify = mysqli_real_escape_string($conexion, $id);                         //Se aplica función para evitar inyecciones SQL
-    $marca_verify = mysqli_real_escape_string($conexion, $marca);                   //Se aplica función para evitar inyecciones SQL
-    $modelo_verify = mysqli_real_escape_string($conexion, $modelo);                 //Se aplica función para evitar inyecciones SQL
-    $descripcion_verify = mysqli_real_escape_string($conexion, $descripcion);       //Se aplica función para evitar inyecciones SQL
+function ingresarProducPerife($id_prod, $marca, $modelo, $descripcion, $user, $registro) {
 
     //Se genera la consulta para la BD
-    $registro_perife = "INSERT INTO productos VALUES(NULL, '$id_verify', '$marca_verify', '$modelo_verify',NULL, NULL, NULL, CURDATE(), '$descripcion_verify', '$user', 1);";
-    
-    //Se inserta la consulta en la BD
-    $insert = mysqli_query($conexion, $registro_perife);
-
+    $registro->registroPerife($id_prod, $marca, $modelo, $descripcion, $user);
 }
 
 ?>

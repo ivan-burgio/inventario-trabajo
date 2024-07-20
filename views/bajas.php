@@ -1,45 +1,4 @@
-<?php
 
-require_once '../lib/bajas_sql.php';
-require_once '../includes/helpers.php';
-
-if(!isset($_SESSION['user'])) {
-
-    header('Location: ../index.php');
-}
-
-?>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css" type="text/css" />
-    <title>Baja de productos para funcionarios</title>
-</head>
-<body>
-
-    <header class="header">
-        <div class="user">
-            <h1 class="name">Bienvenido, <?=$_SESSION['user']['nombre'];?> <?=$_SESSION['user']['apellido'];?></h1>
-            <a href="../includes/cerrar_login.php"><img src="../assets/close.svg" alt="Cerrar sesión" /></a>
-        </div>
-        <ul class="list">
-        <?php if($_SESSION['user']['access'] == 2) :?>
-                <li><a href="inventario.php">Inventario</a></li>
-                <li><a href="registro.php">Registro</a></li>
-                <li><a href="altas.php">Altas de equipos</a></li>
-                <li><a href="bajas.php">Bajas de equipos</a></li>
-                <li><a href="pdf.php">PDF</a></li>
-            <?php else :?>
-                <li><a href="altas.php">Altas de equipos</a></li>
-                <li><a href="bajas.php">Bajas de equipos</a></li>
-                <li><a href="pdf.php">PDF</a></li>
-            <?php endif;?>
-        </ul>
-    </header>
 
     <div class="container container-bajas">
 
@@ -47,10 +6,10 @@ if(!isset($_SESSION['user'])) {
             <input type="text" id="id_func" name="id_func" placeholder="N° de funcionario o nombre..."/>
 
             <h3>Funcionarios con productos</h3>
-            <?php if(mysqli_num_rows($select_altas_query) > 0) : ?>
-                <?php while($result = mysqli_fetch_assoc($select_altas_query)) : ?>
+            <?php if($funcAltas->num_rows > 0) : ?>
+                <?php while($func = $funcsAlta->fetchAssoc()) : ?>
 
-                    <button class="btn_func" value="<?=$result['id_funcionario'];?>">
+                    <button class="btn_func" value="<?=$func['id_funcionario'];?>">
                         <table id="table_baja">
                             <thead>
                                 <tr>
@@ -62,10 +21,10 @@ if(!isset($_SESSION['user'])) {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><?=$result['id_funcionario']?></td>
-                                    <td><?=$result['nombre_func']?></td>
-                                    <td><?=$result['lugar_trabajo']?></td>
-                                    <td><?=$result['puesto']?></td>
+                                    <td><?=$func['id_funcionario']?></td>
+                                    <td><?=$func['nombre_func']?></td>
+                                    <td><?=$func['lugar_trabajo']?></td>
+                                    <td><?=$func['puesto']?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -80,12 +39,12 @@ if(!isset($_SESSION['user'])) {
             <?php endif; ?>
         </div>
         
-        <form action="../lib/bajas_sql.php" method="POST" class="product_func">
+        <form action="<?=base_url?>?controller=AltasBajas&action=bajasProdu" method="POST" class="product_func">
 
             <h3>Productos del funcionario seleccionado</h3>        
 
             <div class="table_prod_func">
-                <?php while($result_prod = mysqli_fetch_assoc($select_product_query)) : ?>
+                <?php while($product = $produAltas->fetch_assoc()) : ?>
                     <table id="table_prod" name="table_func" value="<?=$result_prod['id_funcionario'];?>">
                         <thead>
                             <tr>
@@ -98,11 +57,11 @@ if(!isset($_SESSION['user'])) {
 
                         <tbody>
                             <tr>
-                                <td><?=$result_prod['id_funcionario'];?></td>
-                                <td><?=$result_prod['id_prod'];?></td>
-                                <td><?=$result_prod['modelo'];?></td>
-                                <td><?=$result_prod['marca'];?></td>
-                                <td><input class="check" type="checkbox" name="check_baja[]" value="<?=$result_prod['id_producto'];?>" /></td>
+                                <td><?=$product['id_funcionario'];?></td>
+                                <td><?=$product['id_prod'];?></td>
+                                <td><?=$product['modelo'];?></td>
+                                <td><?=$product['marca'];?></td>
+                                <td><input class="check" type="checkbox" name="check_baja[]" value="<?=$product['id_producto'];?>" /></td>
                             </tr>
                         </tbody>
                     </table>
@@ -114,6 +73,3 @@ if(!isset($_SESSION['user'])) {
         </form>
     </div>
     <script src="../js/bajas_func.js"></script>
-    <?php require_once '../includes/footer.php'; ?>
-</body>
-</html>
