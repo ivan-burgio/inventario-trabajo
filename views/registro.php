@@ -51,4 +51,4 @@ require_once 'includes/helpers.php';
             <input id="submit" type="submit" value="Registrar" />
         </form>
     </div>
-    <script src="../js/registro.js"></script>
+    <script src="js/registro.js"></script>

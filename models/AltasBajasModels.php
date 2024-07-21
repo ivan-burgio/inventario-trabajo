@@ -76,14 +76,55 @@ class AltasModels {
         return $this->db->query($update_inv);
     }
 
+    public function getModeloSelect($equipo) {
+
+        $sql = "SELECT * FROM productos WHERE id = '$equipo';";
+        return $this->db->query($sql);
+    }
+
+    public function getNombreFunc($funcionario) {
+
+        $sql_nombre_func = "SELECT nombre, apellido FROM funcionarios WHERE id_funcionario = '$funcionario';";
+        return $this->db->query($sql_nombre_func);
+    }
+
+    public function setAltaHome($funcionario, $equipo, $modelos, $types, $nombre, $domicilio, $precinto, $descripcion, $user, $user_id, $fecha_actual) {
+
+        $sql = "INSERT INTO altas_productos 
+                VALUES(NULL, '$funcionario', '$equipo', '$types','$modelos', '$nombre', '$fecha_actual', '$domicilio', NULL, '$precinto', '$descripcion', '$user', 1);";
+        
+        $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', '$fecha_actual');";
+
+        $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
+
+        $this->db->query($sql);
+        $this->db->query($comentario_inicial);        
+        $this->db->query($modify_status);
+    }
+
+    public function setAltaPlat($funcionario, $equipo, $modelos, $types, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $fecha_actual) {
+
+        $sql = "INSERT INTO altas_productos 
+                VALUES(NULL, '$funcionario', '$equipo', '$types', '$modelos', '$nombre', '$fecha_actual', '$sector', '$puesto', NULL, '$descripcion', '$user', 1);";
+    
+        $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', '$fecha_actual');";
+    
+        $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
+    
+        $this->db->query($sql);
+        $this->db->query($comentario_inicial);        
+        $this->db->query($modify_status);
+    }
+    
+
     public function updateAltas() {
 
         $fecha_actual = date('Y-m-d H:i:s');
 
-        $equipo = $this->getEquipo();
-        $descripcion = $this->getDescripcion();
-        $user = $this->getUser();
-        $user_admin = $this->getUserAdmin();
+        $equipo = strval($this->getEquipo());
+        $descripcion = strval($this->getDescripcion());
+        $user = strval($this->getUser());
+        $user_admin = strval($this->getUserAdmin());
 
         // Actualizar la última entrada de altas_productos para el producto específico
         $update_alta = "UPDATE altas_productos

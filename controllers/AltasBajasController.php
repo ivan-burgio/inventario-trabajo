@@ -40,7 +40,7 @@ class AltasBajasController {
 
         if($_POST) {
 
-            $bajasProdu = new AltasBajasModels();
+            $bajasProdu = new AltasModels();
 
             unset($_SESSION['errores']);
             unset($_SESSION['exitoBaja']);
@@ -108,17 +108,17 @@ class AltasBajasController {
         
                 $estado = array();
         
-                validarCampos($checks, $funcionario, $domicilio, $sector, $precinto, $descripcion, $estado, $conexion);
+                validarCampos($checks, $funcionario, $domicilio, $sector, $precinto, $descripcion, $estado);
                 
                 $altaModel->closeConnection();
-                header('Location:'.base_url.'?controller=Altas&action=altas');
+                header('Location:'.base_url.'?controller=AltasBajas&action=altas');
         
             } else {
         
                 $_SESSION['producto']['error'] = 'Seleccione por lo menos un producto';
 
                 $altaModel->closeConnection();
-                header('Location:'.base_url.'?controller=Altas&action=altas');
+                header('Location:'.base_url.'?controller=AltasBajas&action=altas');
             }
         
         }
@@ -150,7 +150,7 @@ function validarCamposBaja($descripcion, $check_prod) {
 }
 
 // Funcion para validar los datos ingresados en los campos del form
-function validarCampos($checks, $funcionario, $domicilio, $sector, $precinto, $descripcion, $estado, $conexion) {
+function validarCampos($checks, $funcionario, $domicilio, $sector, $precinto, $descripcion, $estado) {
 
     if(empty($descripcion)) {
 
@@ -163,15 +163,15 @@ function validarCampos($checks, $funcionario, $domicilio, $sector, $precinto, $d
         $estado['sector'] = "Seleccione un sector";
     }
 
-    countError($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion, $conexion);
+    countError($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion);
 }
 
 // Funcion para contar los posibles errores en los campos del form
-function countError($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion, $conexion) {
+function countError($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion) {
 
     if (count($estado) == 0) {
 
-        createQuery($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion, $conexion);
+        createQuery($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion);
 
     } else {
 
@@ -182,7 +182,9 @@ function countError($checks, $estado, $funcionario, $domicilio, $sector, $precin
 }
 
 // Funcion para crear las querys de los select y aplicar la condicional dependiendo si es teletrabajo o plataforma
-function createQuery($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion, $conexion) {
+function createQuery($checks, $estado, $funcionario, $domicilio, $sector, $precinto, $descripcion) {
+
+    $altaModel = new AltasModels();
 
     $equipo_one = isset($checks[0]) ? $checks[0] : false;
     $equipo_two = isset($checks[1]) ? $checks[1] : false;
@@ -200,94 +202,70 @@ function createQuery($checks, $estado, $funcionario, $domicilio, $sector, $preci
     foreach ([$equipo_one, $equipo_two, $equipo_three, $equipo_four, $equipo_five, $equipo_six, $equipo_seven, $equipo_eight, $equipo_nine, $equipo_ten] as $equipo) {
 
         if ($equipo != null) {
-            $sql_marca_prod = "SELECT modelo FROM productos WHERE id = '" . mysqli_real_escape_string($conexion, $equipo) . "';";
-            $select_marca_prod = mysqli_query($conexion, $sql_marca_prod);
-            $marca_prod = mysqli_fetch_assoc($select_marca_prod);
-            $modelos[] = $marca_prod['modelo'];
+            
+            $producto = $altaModel->getModeloSelect($equipo);
+            $product = $producto->fetch_assoc();
+            $modelos[] = $product['modelo'];
+            $types[] = $product['tipo_prod'];
+
         } else {
+
             $modelos[] = false;
+            $type[] = false;
         }
     }
 
-    $sql_nombre_func = "SELECT nombre, apellido FROM funcionarios WHERE id_funcionario = '" . mysqli_real_escape_string($conexion, $funcionario) . "';";
-    $select_nombre_func = mysqli_query($conexion, $sql_nombre_func);
-    $nombre_func = mysqli_fetch_assoc($select_nombre_func);
+    $funcionario_name = $altaModel->getNombreFunc($funcionario);
+    $nombre_func = $funcionario_name->fetch_assoc();
     $nombre = $nombre_func['nombre'] . ' ' . $nombre_func['apellido'];
 
-    $user = $_SESSION['user']['nombre'] . ' ' . $_SESSION['user']['apellido'];
-    $user_id = $_SESSION['user']['id_admin'];
+    $user = $_SESSION['user']->nombre . ' ' . $_SESSION['user']->apellido;
+    $user_id = $_SESSION['user']->id_admin;
 
     if ($_POST['ubic'] == 'home') {
 
-        insertQueryHome($funcionario, $checks, $modelos, $nombre, $domicilio, $precinto, $descripcion, $user, $user_id, $conexion);
+        insertQueryHome($funcionario, $checks, $modelos, $types, $nombre, $domicilio, $precinto, $descripcion, $user, $user_id, $altaModel);
 
     } elseif ($_POST['ubic'] == 'plataforma') {
         
         $puesto = isset($_POST['box']) ? $_POST['box'] : false;
-        insertQueryPlat($funcionario, $checks, $modelos, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $conexion);
+        insertQueryPlat($funcionario, $checks, $modelos, $types, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $altaModel);
     }
 }
 
 // Funcion para gestionar el alta para teletrabajo
-function insertQueryHome($funcionario, $checks, $modelos, $nombre, $domicilio, $precinto, $descripcion, $user, $user_id, $conexion) {
+function insertQueryHome($funcionario, $checks, $modelos, $types, $nombre, $domicilio, $precinto, $descripcion, $user, $user_id, $altaModel) {
     
     $fecha_actual = date('Y-m-d H:i:s');
 
     foreach ($checks as $index => $equipo) {
-        if ($equipo != null && $modelos[$index]) {
-            $sql = "INSERT INTO altas_productos 
-                    VALUES(NULL, '$funcionario', '$equipo', '" . mysqli_real_escape_string($conexion, $modelos[$index]) . "', '$nombre', '$fecha_actual', '$domicilio', NULL, '$precinto', '$descripcion', '$user', 1);";
-            $insert_query = mysqli_query($conexion, $sql);
-
-            $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', '$fecha_actual');";
-            $insert_comentario = mysqli_query($conexion, $comentario_inicial);
-
-            $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
-            $modify_query = mysqli_query($conexion, $modify_status);
+        if ($equipo != null && $modelos[$index] && $types[$index]) {
+           
+            $altaModel->setAltaHome($funcionario, $equipo, $modelos[$index], $types[$index], $nombre, $domicilio, $precinto, $descripcion, $user, $user_id, $fecha_actual);
         }
     }
 
     $fecha = date('d-m-Y');
+    archivoTT($funcionario, $nombre, $fecha);
+    $estado['exito'] = "Alta para teletrabajo generada con exito";
+    $_SESSION['estado'] = $estado;
 
-    if (!$insert_query) {
-        $error = mysqli_error($conexion);
-        echo $error;
-        exit();
-    } else {
-        archivoTT($funcionario, $nombre, $fecha);
-        $estado['exito'] = "Alta para teletrabajo generada con exito";
-        $_SESSION['estado'] = $estado;
-        exit();
-    }
 }
 
 // Funcion para gestioanr el alta para plataforma
-function insertQueryPlat($funcionario, $checks, $modelos, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $conexion) {
+function insertQueryPlat($funcionario, $checks, $modelos, $types, $nombre, $sector, $puesto, $descripcion, $user, $user_id, $altaModel) {
 
     $fecha_actual = date('Y-m-d H:i:s');
 
     foreach ($checks as $index => $equipo) {
         
-        if ($equipo != null && $modelos[$index]) {
-            $sql = "INSERT INTO altas_productos 
-                    VALUES(NULL, '$funcionario', '$equipo', '" . mysqli_real_escape_string($conexion, $modelos[$index]) . "', '$nombre', '$fecha_actual', '$sector', '$puesto', NULL, '$descripcion', '$user', 1);";
-            $insert_query = mysqli_query($conexion, $sql);
-
-            $comentario_inicial = "INSERT INTO comentarios VALUES(NULL, '$user_id', '$equipo', '$descripcion', '$fecha_actual');";
-            $insert_comentario = mysqli_query($conexion, $comentario_inicial);
-
-            $modify_status = "UPDATE productos SET status = 2 WHERE id = '$equipo';";
-            $modify_query = mysqli_query($conexion, $modify_status);
+        if ($equipo != null && $modelos[$index]&& $types[$index]) {
+            
+            $altaModel->setAltaPlat($funcionario, $equipo, $modelos[$index], $types[$index], $nombre, $sector, $puesto, $descripcion, $user, $user_id, $fecha_actual);
         }
     }
 
-    if (!$insert_query) {
-        $error = mysqli_error($conexion);
-        echo $error;
-        exit();
-    } else {
-        $estado['exito'] = "Alta para plataforma generada con exito";
-        $_SESSION['estado'] = $estado;
-    }
+    $estado['exito'] = "Alta para plataforma generada con exito";
+    $_SESSION['estado'] = $estado;
 }
 ?>

@@ -5,7 +5,7 @@ require_once 'includes/helpers.php';
 
     <div class="container container-regYMod">
 
-        <form id="form" action="<?=base_url?>?controller=Altas&action=save" method="POST">
+        <form id="form" action="<?=base_url?>?controller=AltasBajas&action=save" method="POST">
 
             <h2>Alta de productos para funcionarios</h2>
 
@@ -56,7 +56,7 @@ require_once 'includes/helpers.php';
 
             <select id="select_func" name="select_func">
 
-                <?php if($func->num_rows > 0) : ?>
+                <?php if($funcs->num_rows > 0) : ?>
 
                     <?php while($func = $funcs->fetch_assoc()) : ?>
 
@@ -88,4 +88,4 @@ require_once 'includes/helpers.php';
             <input id="submit" type="submit" value="Registrar" />
         </form>
     </div>
-    <script src="../js/alta_func.js"></script>
+    <script src="js/alta_func.js"></script>

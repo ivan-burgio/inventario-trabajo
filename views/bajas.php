@@ -7,7 +7,7 @@
 
             <h3>Funcionarios con productos</h3>
             <?php if($funcAltas->num_rows > 0) : ?>
-                <?php while($func = $funcsAlta->fetchAssoc()) : ?>
+                <?php while($func = $funcAltas->fetch_assoc()) : ?>
 
                     <button class="btn_func" value="<?=$func['id_funcionario'];?>">
                         <table id="table_baja">
@@ -44,8 +44,8 @@
             <h3>Productos del funcionario seleccionado</h3>        
 
             <div class="table_prod_func">
-                <?php while($product = $produAltas->fetch_assoc()) : ?>
-                    <table id="table_prod" name="table_func" value="<?=$result_prod['id_funcionario'];?>">
+                <?php while($product = $producAltas->fetch_assoc()) : ?>
+                    <table id="table_prod" name="table_func" value="<?=$product['id_funcionario'];?>">
                         <thead>
                             <tr>
                                 <th>ID_Func:</th>
@@ -72,4 +72,4 @@
             </div>
         </form>
     </div>
-    <script src="../js/bajas_func.js"></script>
+    <script src="js/bajas_func.js"></script>

@@ -47,4 +47,4 @@
         <?php endif; ?>
 
     </div>
-    <script src="../js/inventario.js"></script>
+    <script src="js/inventario.js"></script>
